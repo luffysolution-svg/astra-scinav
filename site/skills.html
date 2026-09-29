@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>科研 SKILL · Astra 星图</title>
+  <meta name="description" content="收录 GitHub 上面向科研的开源 Agent Skills（Claude Code 等），按领域分类，附安装命令与仓库链接。">
+  <meta name="theme-color" content="#040406">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="skills">
+  <canvas id="galaxy" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Astra 星图 首页">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span class="brand-name">Astra<em>星图</em></span>
+    </a>
+    <nav class="page-nav" aria-label="页面">
+      <a href="./">导航</a>
+      <a href="skills.html" aria-current="page">科研 SKILL</a>
+      <a href="prompts.html">科研 Prompt</a>
+    </nav>
+    <span class="spacer"></span>
+    <button class="motion" id="motion" type="button" aria-pressed="false" title="暂停背景动画">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><ellipse cx="12" cy="12" rx="9.5" ry="3.6" transform="rotate(-18 12 12)"/></svg>
+      <span class="sr-only">暂停背景动画</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero sub">
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>Agent Skills for Science</p>
+      <h1 class="title"><span class="line shimmer">科研 SKILL</span></h1>
+      <p class="lede">Skill 是给 AI 智能体的能力包：一个含 <code>SKILL.md</code> 的文件夹，装上后 Claude Code 等工具会在需要时自动调用。这里收录 GitHub 上面向科研的开源 Skill 仓库，附安装命令。</p>
+      <form class="search" id="search" role="search" autocomplete="off">
+        <div class="field">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" name="q" placeholder="搜索仓库或 Skill，如 latex、pubmed、单细胞…" aria-label="搜索 Skill">
+        </div>
+      </form>
+      <details class="guide">
+        <summary>怎么安装 Skill？</summary>
+        <ul>
+          <li><b>Claude Code 插件市场</b>：在 Claude Code 里运行 <code>/plugin marketplace add 作者/仓库</code>，再用 <code>/plugin install 插件名@市场名</code> 安装。插件名以各仓库说明为准，卡片里已列出。</li>
+          <li><b>手动安装</b>：把含 <code>SKILL.md</code> 的文件夹复制到 <code>~/.claude/skills/</code>（所有项目可用）或项目内的 <code>.claude/skills/</code>（随项目共享）。</li>
+          <li><b>其他工具</b>：部分其他 Agent 工具也兼容 SKILL.md 格式，安装目录以各工具文档为准。</li>
+          <li><b>安全提示</b>：Skill 可以携带并执行脚本，安装前请先浏览仓库内容，只装来源可信的 Skill。</li>
+        </ul>
+      </details>
+      <dl class="stats" id="stats"></dl>
+    </section>
+
+    <div class="layout">
+      <aside class="side" aria-label="分类目录"><nav id="sideNav"></nav></aside>
+      <div class="content" id="content"></div>
+    </div>
+    <p class="empty" id="empty" hidden>没有匹配的 Skill，换个关键词试试。</p>
+  </main>
+
+  <footer class="foot">
+    <p>Astra 星图 · 科研 SKILL · <span id="gen"></span></p>
+    <p class="muted">星标数与更新时间来自 GitHub，定期同步；收录不代表担保，请自行评估后使用</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+
+  <script src="data/skills.js"></script>
+  <script src="galaxy.js"></script>
+  <script src="common.js"></script>
+  <script src="collection.js"></script>
+</body>
+</html>

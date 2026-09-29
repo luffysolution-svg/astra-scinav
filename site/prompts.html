@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>科研 Prompt 合集 · Astra 星图</title>
+  <meta name="description" content="从开源仓库精选的科研提示词：选题综述、论文写作、润色翻译、审稿回复、数据分析与基金申请，一键复制。">
+  <meta name="theme-color" content="#040406">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="prompts">
+  <canvas id="galaxy" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Astra 星图 首页">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span class="brand-name">Astra<em>星图</em></span>
+    </a>
+    <nav class="page-nav" aria-label="页面">
+      <a href="./">导航</a>
+      <a href="skills.html">科研 SKILL</a>
+      <a href="prompts.html" aria-current="page">科研 Prompt</a>
+    </nav>
+    <span class="spacer"></span>
+    <button class="motion" id="motion" type="button" aria-pressed="false" title="暂停背景动画">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><ellipse cx="12" cy="12" rx="9.5" ry="3.6" transform="rotate(-18 12 12)"/></svg>
+      <span class="sr-only">暂停背景动画</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero sub">
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>Prompts for Research</p>
+      <h1 class="title"><span class="line shimmer">科研 Prompt</span></h1>
+      <p class="lede">从开源仓库精选的科研提示词，按科研流程分类。<mark class="ph">[方括号]</mark> 是需要替换的内容，点「复制」即可粘贴到任意 AI 对话中。</p>
+      <form class="search" id="search" role="search" autocomplete="off">
+        <div class="field">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" name="q" placeholder="搜索提示词，如 润色、审稿、摘要…" aria-label="搜索提示词">
+        </div>
+        <div class="under">
+          <div class="access" id="langs" role="group" aria-label="按语言筛选"></div>
+        </div>
+      </form>
+      <dl class="stats" id="stats"></dl>
+    </section>
+
+    <div class="layout">
+      <aside class="side" aria-label="分类目录"><nav id="sideNav"></nav></aside>
+      <div class="content" id="content"></div>
+    </div>
+    <p class="empty" id="empty" hidden>没有匹配的提示词，换个关键词试试。</p>
+  </main>
+
+  <footer class="foot">
+    <p>Astra 星图 · 科研 Prompt · <span id="gen"></span></p>
+    <p class="muted">提示词版权归原仓库作者，按各自开源协议使用，点卡片「来源」查看原文</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+
+  <script src="data/prompts.js"></script>
+  <script src="galaxy.js"></script>
+  <script src="common.js"></script>
+  <script src="collection.js"></script>
+</body>
+</html>

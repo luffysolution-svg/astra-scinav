@@ -6,30 +6,22 @@
     { id: 'lab', no: '03', t: '研究', en: 'Laboratory', d: '写作翻译、文档解析、科学数据、绘图与申报' },
     { id: 'kit', no: '04', t: '工具', en: 'Toolkit', d: '学者社区、公开课、开发云服务与日常效率' },
   ];
-  // bang：输入框以 "!s 关键词" 开头即直达对应引擎
   const ENGINES = [
     { id: 'site', t: '站内' },
-    { id: 'google', t: 'Google', b: 'g', u: 'https://www.google.com/search?q=' },
-    { id: 'scholar', t: '谷歌学术', b: 's', u: 'https://scholar.google.com/scholar?q=' },
-    { id: 'baidu', t: '百度', b: 'bd', u: 'https://www.baidu.com/s?wd=' },
-    { id: 'bing', t: '必应', b: 'b', u: 'https://www.bing.com/search?q=' },
-    { id: 'cnki', t: '知网', b: 'k', u: 'https://kns.cnki.net/kns8s/defaultresult/index?kw=' },
-    { id: 'pubmed', t: 'PubMed', b: 'p', u: 'https://pubmed.ncbi.nlm.nih.gov/?term=' },
+    { id: 'google', t: 'Google', u: 'https://www.google.com/search?q=' },
+    { id: 'scholar', t: '谷歌学术', u: 'https://scholar.google.com/scholar?q=' },
+    { id: 'baidu', t: '百度', u: 'https://www.baidu.com/s?wd=' },
+    { id: 'bing', t: '必应', u: 'https://www.bing.com/search?q=' },
+    { id: 'cnki', t: '知网', u: 'https://kns.cnki.net/kns8s/defaultresult/index?kw=' },
+    { id: 'pubmed', t: 'PubMed', u: 'https://pubmed.ncbi.nlm.nih.gov/?term=' },
   ];
   const TAGS = { vpn: { t: '代理', k: '代理 vpn' }, campus: { t: '机构', k: '机构 校园网 campus' } };
   const ACCESS = [['all', '全部'], ['direct', '免代理'], ['vpn', '需代理'], ['campus', '需机构权限']];
-  const DEFAULT_HINT = '<kbd>↑</kbd><kbd>↓</kbd> 选择 · <kbd>Enter</kbd> 打开 · <kbd>!s</kbd> 谷歌学术 <kbd>!k</kbd> 知网 <kbd>!p</kbd> PubMed';
 
-  const $ = s => document.querySelector(s);
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const { $, esc, store, toast } = Astra;
   const bySec = id => NAV.filter(c => c.sec === id);
   const total = NAV.reduce((n, c) => n + c.s.length, 0);
 
-  /* ---------- 本地存储 ---------- */
-  const store = {
-    get(k, d) { try { return JSON.parse(localStorage.getItem('astra:' + k)) ?? d; } catch { return d; } },
-    set(k, v) { try { localStorage.setItem('astra:' + k, JSON.stringify(v)); } catch { /* 隐私模式或配额已满 */ } },
-  };
   // 只接受 http(s)，防止 javascript: 等协议经导入或表单混入
   const safeUrl = u => { try { const x = new URL(String(u).trim()); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; } };
   const SITES = new Map();
@@ -287,19 +279,11 @@
     } catch { toast('导入失败：不是有效的 Astra 备份文件'); }
   });
 
-  let toastT;
-  function toast(t) {
-    const el = $('#toast');
-    el.textContent = t;
-    el.classList.add('on');
-    clearTimeout(toastT);
-    toastT = setTimeout(() => el.classList.remove('on'), 2400);
-  }
   /* ---------- 搜索 ---------- */
-  const q = $('#q'), engBox = $('#engines'), hint = $('#hint');
+  const q = $('#q'), engBox = $('#engines');
   let engine = ENGINES.find(x => x.id === store.get('engine')) || ENGINES[0];
   engBox.innerHTML = ENGINES.map(e =>
-    `<button type="button" role="tab" data-e="${e.id}" aria-selected="${e === engine}"${e.b ? ` title="快捷前缀 !${e.b}"` : ''}>${e.t}</button>`).join('') + '<span class="thumb" aria-hidden="true"></span>';
+    `<button type="button" role="tab" data-e="${e.id}" aria-selected="${e === engine}">${e.t}</button>`).join('') + '<span class="thumb" aria-hidden="true"></span>';
   const thumb = engBox.querySelector('.thumb');
   function moveThumb() {
     const b = engBox.querySelector('[aria-selected="true"]');
@@ -321,14 +305,11 @@
   addEventListener('resize', moveThumb);
   requestAnimationFrame(() => setEngine(engine));
 
-  // "!s 关键词" → [引擎, 关键词]
-  const bang = v => { const m = v.match(/^!(\w+)\s+(.*)$/); const e = m && ENGINES.find(x => x.b === m[1].toLowerCase()); return e ? [e, m[2].trim()] : null; };
   const open = u => window.open(u, '_blank', 'noopener');
   let jumped = false;
   function onInput() {
-    const v = q.value, b = bang(v);
-    hint.innerHTML = b ? `按 <kbd>Enter</kbd> 在 ${esc(b[0].t)} 中搜索「${esc(b[1])}」` : DEFAULT_HINT;
-    terms = engine.u || b ? [] : v.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const v = q.value;
+    terms = engine.u ? [] : v.trim().toLowerCase().split(/\s+/).filter(Boolean);
     apply();
     // 同步到地址栏，便于分享或设为浏览器自定义搜索引擎
     const url = new URL(location.href);
@@ -343,10 +324,9 @@
   });
   $('#search').addEventListener('submit', e => {
     e.preventDefault();
-    const v = q.value.trim(), b = bang(v);
+    const v = q.value.trim();
     const r = q.getBoundingClientRect();
     window.astraPulse(r.right - 30, r.top + r.height / 2, 1.4);
-    if (b) return void open(b[0].u + encodeURIComponent(b[1]));
     if (!v && access === 'all') return;
     if (engine.u) return void open(engine.u + encodeURIComponent(v));
     const list = visibleCells(), c = list[Math.max(active, 0)];
@@ -400,20 +380,6 @@
     }
   });
 
-  /* ---------- 背景动画开关：默认跟随系统"减弱动态效果" ---------- */
-  const motionBtn = $('#motion');
-  function setCalm(on) {
-    document.documentElement.classList.toggle('calm', on);
-    motionBtn.setAttribute('aria-pressed', on);
-    motionBtn.title = motionBtn.querySelector('.sr-only').textContent = on ? '恢复背景动画' : '暂停背景动画';
-    window.astraMotion?.(!on);
-  }
-  setCalm(store.get('calm', matchMedia('(prefers-reduced-motion: reduce)').matches));
-  motionBtn.addEventListener('click', () => {
-    const on = !document.documentElement.classList.contains('calm');
-    store.set('calm', on); setCalm(on);
-  });
-
   /* ---------- 进场动画与导航高亮 ---------- */
   const reveal = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
@@ -438,20 +404,12 @@
   }), { rootMargin: '-35% 0px -60% 0px' });
   document.querySelectorAll('.sec:not(.mine) .cat').forEach(c => spy.observe(c));
 
-  addEventListener('scroll', () => document.body.classList.toggle('scrolled', scrollY > 40), { passive: true });
-
-  /* ---------- 从地址栏 ?q= 进入：bang 直接跳转，否则站内搜索 ---------- */
+  /* ---------- 从地址栏 ?q= 进入：直接站内搜索 ---------- */
   const q0 = new URLSearchParams(location.search).get('q');
   if (q0) {
-    const b = bang(q0.trim());
-    if (b) location.replace(b[0].u + encodeURIComponent(b[1]));
-    else {
-      q.value = q0;
-      setEngine(ENGINES[0]);
-      onInput();
-      requestAnimationFrame(() => $('#search').scrollIntoView({ block: 'start' }));
-    }
-  } else onInput();
-
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+    q.value = q0;
+    setEngine(ENGINES[0]);
+    requestAnimationFrame(() => $('#search').scrollIntoView({ block: 'start' }));
+  }
+  onInput();
 })();

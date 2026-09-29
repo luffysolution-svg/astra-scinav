@@ -5,7 +5,8 @@
   "scripts": {
     "pinyin": "node scripts/pinyin.mjs",
     "check": "node scripts/check.mjs",
-    "linkcheck": "node scripts/linkcheck.mjs"
+    "linkcheck": "node scripts/linkcheck.mjs",
+    "sync": "node scripts/sync_collections.mjs"
   },
   "devDependencies": {
     "pinyin-pro": "3.29.4"

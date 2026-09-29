@@ -1,0 +1,21 @@
+<!doctype html>
+<!-- PWA 图标模板：满版底色 + 居中缩放的 favicon（留出 maskable 安全区）。
+     用法：chrome --headless --screenshot=site/icon-512.png --window-size=512,512 scripts/icon.html -->
+<html><body style="margin:0;background:#060608">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="display:block;width:100vw;height:100vh">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0.42" stop-color="#000"/>
+      <stop offset="0.5" stop-color="#ffe2b0"/>
+      <stop offset="0.62" stop-color="#f2a654"/>
+      <stop offset="1" stop-color="#f2a654" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" fill="#060608"/>
+  <g transform="translate(32 32) scale(.72) translate(-32 -32)">
+    <circle cx="32" cy="32" r="22" fill="url(#g)"/>
+    <ellipse cx="32" cy="33" rx="28" ry="5" fill="none" stroke="#ffc98a" stroke-width="2.4" transform="rotate(-8 32 32)"/>
+    <circle cx="32" cy="32" r="9.5" fill="#000"/>
+  </g>
+</svg>
+</body></html>

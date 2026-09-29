@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Astra 星图 · 科研与 AI 资源导航</title>
+  <meta name="description" content="收录 300+ 文献检索、AI 科研、论文写作、数据库与效率工具的资源导航。">
+  <meta name="theme-color" content="#040406">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="search" type="application/opensearchdescription+xml" href="opensearch.xml" title="Astra 星图">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="galaxy" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Astra 星图 首页">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span class="brand-name">Astra<em>星图</em></span>
+    </a>
+    <nav class="sec-nav" id="secNav" aria-label="主分区"></nav>
+    <button class="kbd-hint" id="kbdHint" type="button" aria-label="聚焦搜索框"><kbd>/</kbd> 搜索</button>
+    <button class="motion" id="motion" type="button" aria-pressed="false" title="暂停背景动画">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><ellipse cx="12" cy="12" rx="9.5" ry="3.6" transform="rotate(-18 12 12)"/></svg>
+      <span class="sr-only">暂停背景动画</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>A curated atlas for researchers</p>
+      <h1 class="title">
+        <span class="line">在知识的银河里</span>
+        <span class="line shimmer">找到你的坐标</span>
+      </h1>
+      <p class="lede">文献检索、AI 科研、论文写作、数据库与效率工具。<br>一个入口，覆盖科研的每一步。</p>
+
+      <form class="search" id="search" role="search" autocomplete="off">
+        <div class="engines" id="engines" role="tablist" aria-label="搜索引擎"></div>
+        <div class="field">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" name="q" placeholder="搜索站内资源…" aria-label="搜索" aria-describedby="hint">
+          <button type="submit" class="go" aria-label="执行搜索">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="under">
+          <div class="access" id="access" role="group" aria-label="按访问条件筛选"></div>
+          <p class="hint" id="hint"></p>
+        </div>
+      </form>
+
+      <dl class="stats" id="stats"></dl>
+    </section>
+
+    <div class="layout">
+      <aside class="side" aria-label="分类目录">
+        <nav id="sideNav"></nav>
+      </aside>
+      <div class="content" id="content"></div>
+    </div>
+    <p class="empty" id="empty" hidden>没有匹配的资源。按 <kbd>Enter</kbd> 用当前引擎搜索全网。</p>
+  </main>
+
+  <footer class="foot">
+    <p>Astra 星图 · 收录源自科研通导航、个人书签与公开资源，已去重重分类</p>
+    <p class="muted">标有「代理」「机构」的站点需相应网络环境或学术机构权限 · <button type="button" class="link" data-act="suggest">推荐站点</button></p>
+  </footer>
+
+  <dialog class="dlg" id="dlg" aria-labelledby="dlg-t">
+    <form name="suggest" method="post" data-netlify="true" netlify-honeypot="bot-field" id="dlgForm">
+      <h2 id="dlg-t">添加站点</h2>
+      <input type="hidden" name="form-name" value="suggest">
+      <p class="hp" aria-hidden="true"><label>勿填 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label>名称<input name="name" maxlength="40" placeholder="可留空，默认用域名"></label>
+      <label>链接<input name="url" type="url" required placeholder="https://"></label>
+      <label>简介<input name="desc" maxlength="80" placeholder="一句话说明用途（可选）"></label>
+      <fieldset>
+        <legend class="sr-only">保存方式</legend>
+        <label class="check"><input type="checkbox" id="optSave" checked>保存到「我的星座」（仅存于本浏览器）</label>
+        <label class="check"><input type="checkbox" id="optSuggest">推荐给站长收录</label>
+      </fieldset>
+      <p class="dlg-msg" id="dlgMsg" role="alert"></p>
+      <div class="dlg-act">
+        <button type="button" class="btn" data-act="close">取消</button>
+        <button type="submit" class="btn primary">确定</button>
+      </div>
+    </form>
+  </dialog>
+  <input type="file" id="importFile" accept="application/json,.json" hidden>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+
+  <script src="data/ai.js"></script>
+  <script src="data/lit.js"></script>
+  <script src="data/lab.js"></script>
+  <script src="data/kit.js"></script>
+  <script src="data/icons.js"></script>
+  <script src="data/pinyin.js"></script>
+  <script src="galaxy.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

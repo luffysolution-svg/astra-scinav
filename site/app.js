@@ -33,6 +33,9 @@
   let favs = store.get('favs', []).filter(u => SITES.has(u));
   let recent = store.get('recent', []).filter(lookup);
   let recentDirty = false;
+  // 子页面收藏的 SKILL 仓库名与 Prompt id；数据按需加载，未加载前保留原样
+  const strs = a => (Array.isArray(a) ? a : []).filter(x => typeof x === 'string' && x.length < 200);
+  let favSkills = strs(store.get('favSkills', [])), favPrompts = strs(store.get('favPrompts', []));
   function visit(u) {
     if (!lookup(u)) return;
     recent = [u, ...recent.filter(x => x !== u)].slice(0, 12);
@@ -66,16 +69,28 @@
       </a>${act}
     </div>`;
   }
+  // 科研 SKILL / Prompt 条目卡片：链到子页面对应卡片，星标收藏到 favSkills / favPrompts
+  const isXFav = k => (k[0] === 's' ? favSkills : favPrompts).includes(k.slice(2));
+  function xcard(x, hue, i) {
+    return `<div class="cell" style="--h:${hue};--i:${Math.min(i, 14)}" data-q="${esc(x.hay.toLowerCase())}">
+      <a class="card" href="${esc(x.href)}">
+        <span class="ava" style="--h:${hue}" aria-hidden="true">${esc([...x.name][0].toUpperCase())}</span>
+        <span class="meta"><span class="name"><span>${esc(x.name)}</span></span><span class="desc">${esc(x.desc)}</span></span>
+        <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a><button type="button" class="pin" data-xfav="${esc(x.k)}" aria-pressed="${isXFav(x.k)}" aria-label="收藏 ${esc(x.name)}">${STAR}</button>
+    </div>`;
+  }
   // items：[[站点数组, 色相], ...]；extra 追加在网格末尾（如"添加站点"）
-  function category(c, items, { dup, mode, extra = '' } = {}) {
-    return `<section class="cat" id="${c.id}" style="--h:${c.hue}" aria-labelledby="${c.id}-t"${dup ? ' data-dup' : ''}>
+  // mode 'x' 表示 SKILL/Prompt 条目；only 表示只在关键词搜索时显示
+  function category(c, items, { dup, only, mode, extra = '' } = {}) {
+    return `<section class="cat" id="${c.id}" style="--h:${c.hue}" aria-labelledby="${c.id}-t"${dup ? ' data-dup' : ''}${only ? ' data-only' : ''}>
       <header class="cat-head">
         <span class="orb" aria-hidden="true"></span>
         <h3 id="${c.id}-t">${esc(c.t)}</h3>
         <span class="en">${esc(c.en)}</span>
         <span class="count">${items.length}</span>
       </header>
-      <div class="grid">${items.map(([s, h], i) => card(s, h, i, mode)).join('')}${extra}</div>
+      <div class="grid">${items.map(([s, h], i) => mode === 'x' ? xcard(s, h, i) : card(s, h, i, mode)).join('')}${extra}</div>
     </section>`;
   }
   $('#content').innerHTML = '<section class="sec mine" id="sec-mine" aria-labelledby="sec-mine-t"></section>' + SECTIONS.map(s => `
@@ -88,20 +103,52 @@
         </div>
       </header>
       ${bySec(s.id).map(c => category(c, c.s.map(x => [x, c.hue]))).join('')}
-    </section>`).join('');
+    </section>`).join('') + '<section class="sec more" id="sec-more" aria-labelledby="sec-more-t"></section>';
+  /* ---------- 全站搜索：按需加载 SKILL / Prompt 数据 ---------- */
+  const X_HUE = { s: 265, p: 200 };
+  const EXTRA = new Map();   // 's:作者/仓库' 或 'p:review-3' → 卡片数据
+  let extraP = null;
+  function loadExtra() {
+    extraP ??= Promise.all(['skills', 'prompts'].map(n => new Promise((ok, no) =>
+      document.head.appendChild(Object.assign(document.createElement('script'), { src: `data/${n}.js`, onload: ok, onerror: no })))))
+      .then(() => {
+        for (const c of SKILLS.categories) for (const r of c.repos) EXTRA.set('s:' + r.repo, {
+          k: 's:' + r.repo, name: r.name, desc: r.desc, href: 'skills.html#' + encodeURIComponent(r.repo),
+          hay: [r.name, r.repo, r.desc, c.t, 'skill', ...(r.skills || []).map(s => s.name)].join(' '),
+        });
+        for (const c of PROMPTS.categories) for (const p of c.prompts) EXTRA.set('p:' + p.id, {
+          k: 'p:' + p.id, name: p.t, desc: `${c.t} · ${p.lang === 'en' ? 'English' : '中文'}`, href: 'prompts.html#' + encodeURIComponent(p.id),
+          hay: `${p.t} ${c.t} prompt 提示词`,
+        });
+        $('#sec-more').innerHTML = `
+          <header class="sec-head">
+            <span class="sec-no">05</span>
+            <div><h2 id="sec-more-t">延伸<span>Skills &amp; Prompts</span></h2><p>来自科研 SKILL 与科研 Prompt 页面的匹配结果</p></div>
+          </header>
+          ${category({ id: 'more-skills', t: '科研 SKILL', en: 'Skills', hue: X_HUE.s }, [...EXTRA.values()].filter(x => x.k[0] === 's').map(x => [x, X_HUE.s]), { only: true, mode: 'x' })}
+          ${category({ id: 'more-prompts', t: '科研 Prompt', en: 'Prompts', hue: X_HUE.p }, [...EXTRA.values()].filter(x => x.k[0] === 'p').map(x => [x, X_HUE.p]), { only: true, mode: 'x' })}`;
+        // 这组只在搜索时出现，不走进场动画
+        $('#sec-more').querySelectorAll('.cat, .sec-head').forEach(el => el.classList.add('in'));
+        renderMine();
+      })
+      .catch(() => { extraP = null; });   // 离线等加载失败时，下次搜索再试
+    return extraP;
+  }
+
   /* ---------- 我的星座：收藏、最近访问、自定义 ---------- */
   const mineBox = $('#sec-mine');
   let mineShown = false;
   function renderMine() {
     const pick = list => list.map(u => lookup(u)).filter(Boolean).map(x => [x.s, x.hue]);
     const fav = pick(favs), rec = pick(recent.slice(0, 8));
+    const xfav = [...favSkills.map(k => 's:' + k), ...favPrompts.map(k => 'p:' + k)].map(k => EXTRA.get(k)).filter(Boolean).map(x => [x, X_HUE[x.k[0]]]);
     const add = `<button type="button" class="cell add" data-act="add"><span class="ava" aria-hidden="true">+</span><span class="meta"><span class="name">添加站点</span><span class="desc">仅保存在本浏览器</span></span></button>`;
     mineBox.innerHTML = `
       <header class="sec-head">
         <span class="sec-no">00</span>
         <div>
           <h2 id="sec-mine-t" tabindex="-1">我的<span>Constellation</span></h2>
-          <p>收藏、最近访问与自定义站点，只保存在本浏览器${fav.length || rec.length || custom.length ? '' : ' · 点卡片右上角的星标即可收藏'}</p>
+          <p>收藏、最近访问与自定义站点，只保存在本浏览器${fav.length || xfav.length || rec.length || custom.length ? '' : ' · 点卡片右上角的星标即可收藏'}</p>
         </div>
         <div class="sec-tools">
           <button type="button" class="btn" data-act="export">导出</button>
@@ -109,6 +156,7 @@
         </div>
       </header>
       ${fav.length ? category({ id: 'mine-fav', t: '收藏', en: 'Pinned', hue: 42 }, fav, { dup: true }) : ''}
+      ${xfav.length ? category({ id: 'mine-x', t: 'SKILL 与 Prompt', en: 'Skills & Prompts', hue: 265 }, xfav, { dup: true, mode: 'x' }) : ''}
       ${rec.length ? category({ id: 'mine-recent', t: '最近访问', en: 'Recent', hue: 210 }, rec, { dup: true }) : ''}
       ${category({ id: 'mine-custom', t: '自定义', en: 'Custom', hue: 30 }, custom.map(x => [customSite(x), 30]), { mode: 'custom', extra: add })}`;
     // 首次渲染交给进场动画；之后的重绘直接显示，避免每次收藏都重播动画
@@ -116,7 +164,7 @@
     mineShown = true;
     recentDirty = false;
     const side = $('#sideMine b');
-    if (side) side.textContent = fav.length + custom.length;
+    if (side) side.textContent = fav.length + xfav.length + custom.length;
     collect();
     apply();
   }
@@ -157,7 +205,8 @@
     for (const c of cats) {
       const n = c.querySelectorAll('.cell[data-q]:not([hidden])').length;
       // 收藏/最近是其他分类的副本，过滤时隐藏以免结果重复；自定义分类过滤时无结果也隐藏
-      c.hidden = filtering && (c.hasAttribute('data-dup') || !n);
+      // SKILL / Prompt 延伸结果只在输入关键词时出现
+      c.hidden = c.hasAttribute('data-only') ? !terms.length || !n : filtering && (c.hasAttribute('data-dup') || !n);
       c.querySelector('.count').textContent = n;
     }
     for (const s of secs) s.hidden = !s.querySelector('.cat:not([hidden])');
@@ -181,15 +230,16 @@
   }
   /* ---------- 卡片操作：收藏、删除、记录访问 ---------- */
   document.addEventListener('click', e => {
-    const t = e.target.closest('[data-fav], [data-del], [data-act], .card');
+    const t = e.target.closest('[data-fav], [data-xfav], [data-del], [data-act], .card');
     if (!t) return;
     if (t.dataset.fav) toggleFav(t.dataset.fav);
+    else if (t.dataset.xfav) toggleXFav(t.dataset.xfav);
     else if (t.dataset.del) removeCustom(t.dataset.del);
     else if (t.dataset.act) ({ add: () => openDlg(false), suggest: () => openDlg(true), close: () => dlg.close(), export: exportData, import: () => $('#importFile').click() })[t.dataset.act]?.();
-    else visit(t.dataset.u);
+    else if (t.dataset.u) visit(t.dataset.u);
   });
   // 中键点击同样算访问
-  document.addEventListener('auxclick', e => { const c = e.button === 1 && e.target.closest('.card'); if (c) visit(c.dataset.u); });
+  document.addEventListener('auxclick', e => { const c = e.button === 1 && e.target.closest('.card[data-u]'); if (c) visit(c.dataset.u); });
   // 回到页面时再刷新最近访问，避免点击后卡片在眼前跳动
   document.addEventListener('visibilitychange', () => { if (!document.hidden && recentDirty) renderMine(); });
 
@@ -204,6 +254,26 @@
     if (inMine) ([...mineBox.querySelectorAll('[data-fav]')].find(b => b.dataset.fav === u) || $('#sec-mine-t')).focus?.();
     toast(on ? `已收藏 ${SITES.get(u).s[0]}` : '已取消收藏');
   }
+  // k 形如 's:作者/仓库' 或 'p:review-3'
+  function toggleXFav(k) {
+    const id = k.slice(2), key = k[0] === 's' ? 'favSkills' : 'favPrompts';
+    const list = k[0] === 's' ? favSkills : favPrompts, on = !list.includes(id);
+    const next = on ? [id, ...list] : list.filter(x => x !== id);
+    if (k[0] === 's') favSkills = next; else favPrompts = next;
+    store.set(key, next);
+    const inMine = document.activeElement?.closest('#sec-mine');
+    renderMine();
+    syncXFav();
+    if (inMine) ([...mineBox.querySelectorAll('[data-xfav]')].find(b => b.dataset.xfav === k) || $('#sec-mine-t')).focus?.();
+    toast(on ? `已收藏 ${EXTRA.get(k)?.name || ''}` : '已取消收藏');
+  }
+  const syncXFav = () => document.querySelectorAll('[data-xfav]').forEach(b => b.setAttribute('aria-pressed', isXFav(b.dataset.xfav)));
+  // 在子页面收藏后切回首页时同步
+  addEventListener('storage', e => {
+    if (e.key !== 'astra:favSkills' && e.key !== 'astra:favPrompts') return;
+    favSkills = strs(store.get('favSkills', [])); favPrompts = strs(store.get('favPrompts', []));
+    if (EXTRA.size) { renderMine(); syncXFav(); } else if (favSkills.length || favPrompts.length) loadExtra();
+  });
   function removeCustom(u) {
     const x = custom.find(c => c.url === u);
     custom = custom.filter(c => c.url !== u);
@@ -252,11 +322,11 @@
   });
   /* ---------- 导入导出 ---------- */
   function exportData() {
-    const blob = new Blob([JSON.stringify({ app: 'astra', v: 1, favs, custom }, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify({ app: 'astra', v: 2, favs, custom, favSkills, favPrompts }, null, 2)], { type: 'application/json' });
     const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `astra-${new Date().toISOString().slice(0, 10)}.json` });
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    toast(`已导出 ${favs.length} 个收藏、${custom.length} 个自定义站点`);
+    toast(`已导出 ${favs.length + favSkills.length + favPrompts.length} 个收藏、${custom.length} 个自定义站点`);
   }
   $('#importFile').addEventListener('change', async e => {
     const f = e.target.files[0];
@@ -265,17 +335,23 @@
     try {
       const d = JSON.parse(await f.text());
       if (d?.app !== 'astra') throw 0;
-      const n0 = favs.length, c0 = custom.length;
+      const n0 = favs.length + favSkills.length + favPrompts.length, c0 = custom.length;
       favs = [...new Set([...favs, ...(Array.isArray(d.favs) ? d.favs : []).filter(u => SITES.has(u))])];
       for (const x of Array.isArray(d.custom) ? d.custom : []) {
         const url = x && safeUrl(x.url);
         if (!url || typeof x.name !== 'string' || custom.some(c => c.url === url)) continue;
         custom.push({ name: x.name.trim().slice(0, 40) || new URL(url).hostname, url, desc: typeof x.desc === 'string' ? x.desc.slice(0, 80) : '' });
       }
+      // v1 备份没有这两项；条目是否仍存在留到渲染时判断
+      favSkills = [...new Set([...favSkills, ...strs(d.favSkills)])];
+      favPrompts = [...new Set([...favPrompts, ...strs(d.favPrompts)])];
       store.set('favs', favs); store.set('custom', custom);
+      store.set('favSkills', favSkills); store.set('favPrompts', favPrompts);
       renderMine();
       document.querySelectorAll('[data-fav]').forEach(b => b.setAttribute('aria-pressed', favs.includes(b.dataset.fav)));
-      toast(`已导入 ${favs.length - n0} 个收藏、${custom.length - c0} 个自定义站点`);
+      syncXFav();
+      if (favSkills.length || favPrompts.length) loadExtra();
+      toast(`已导入 ${favs.length + favSkills.length + favPrompts.length - n0} 个收藏、${custom.length - c0} 个自定义站点`);
     } catch { toast('导入失败：不是有效的 Astra 备份文件'); }
   });
 
@@ -310,6 +386,7 @@
   function onInput() {
     const v = q.value;
     terms = engine.u ? [] : v.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (terms.length) loadExtra();
     apply();
     // 同步到地址栏，便于分享或设为浏览器自定义搜索引擎
     const url = new URL(location.href);
@@ -330,7 +407,11 @@
     if (!v && access === 'all') return;
     if (engine.u) return void open(engine.u + encodeURIComponent(v));
     const list = visibleCells(), c = list[Math.max(active, 0)];
-    if (c) { const a = c.querySelector('.card'); visit(a.dataset.u); open(a.href); }
+    if (c) {
+      const a = c.querySelector('.card');
+      // SKILL / Prompt 结果是站内页面，当前标签页打开
+      if (a.dataset.u) { visit(a.dataset.u); open(a.href); } else location.href = a.href;
+    }
     else if (v) open(ENGINES[1].u + encodeURIComponent(v));
   });
   addEventListener('keydown', e => {
@@ -386,6 +467,7 @@
   }), { rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.cat, .sec-head').forEach(c => reveal.observe(c));
   renderMine();
+  if (favSkills.length || favPrompts.length) loadExtra();
 
   const sideLinks = new Map([...document.querySelectorAll('#sideNav a[data-cat]')].map(a => [a.dataset.cat, a]));
   const topLinks = new Map([...document.querySelectorAll('#secNav a')].map(a => [a.dataset.sec, a]));

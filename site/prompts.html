@@ -58,8 +58,24 @@
 
   <footer class="foot">
     <p>Astra 星图 · 科研 Prompt · <span id="gen"></span></p>
-    <p class="muted">提示词版权归原仓库作者，按各自开源协议使用，点卡片「来源」查看原文</p>
+    <p class="muted">提示词版权归原仓库作者，按各自开源协议使用，点卡片「来源」查看原文 · <button type="button" class="link" data-act="suggest">推荐提示词</button></p>
   </footer>
+
+  <dialog class="dlg" id="dlg" aria-labelledby="dlg-t">
+    <form name="suggest-prompt" method="post" data-netlify="true" netlify-honeypot="bot-field" id="dlgForm">
+      <h2 id="dlg-t">推荐提示词</h2>
+      <input type="hidden" name="form-name" value="suggest-prompt">
+      <p class="hp" aria-hidden="true"><label>勿填 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label>用途<input name="title" required maxlength="40" placeholder="如：审稿意见逐条回复"></label>
+      <label>提示词<textarea name="prompt" rows="6" required maxlength="4000" placeholder="需要替换的内容用 [方括号] 标出"></textarea></label>
+      <label>来源链接<input name="url" type="url" placeholder="GitHub 仓库或原文链接（可选，便于核实协议）"></label>
+      <p class="dlg-msg" id="dlgMsg" role="alert"></p>
+      <div class="dlg-act">
+        <button type="button" class="btn" data-act="close">取消</button>
+        <button type="submit" class="btn primary">提交</button>
+      </div>
+    </form>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <p class="sr-only" id="live" aria-live="polite"></p>
 

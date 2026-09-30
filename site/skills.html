@@ -64,8 +64,23 @@
 
   <footer class="foot">
     <p>Astra 星图 · 科研 SKILL · <span id="gen"></span></p>
-    <p class="muted">星标数与更新时间来自 GitHub，定期同步；收录不代表担保，请自行评估后使用</p>
+    <p class="muted">星标数与更新时间来自 GitHub，定期同步；收录不代表担保，请自行评估后使用 · <button type="button" class="link" data-act="suggest">推荐仓库</button></p>
   </footer>
+
+  <dialog class="dlg" id="dlg" aria-labelledby="dlg-t">
+    <form name="suggest-skill" method="post" data-netlify="true" netlify-honeypot="bot-field" id="dlgForm">
+      <h2 id="dlg-t">推荐 Skill 仓库</h2>
+      <input type="hidden" name="form-name" value="suggest-skill">
+      <p class="hp" aria-hidden="true"><label>勿填 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label>GitHub 仓库<input name="url" type="url" required placeholder="https://github.com/作者/仓库"></label>
+      <label>推荐理由<textarea name="desc" rows="3" maxlength="300" placeholder="适合哪个领域、有哪些好用的 Skill（可选）"></textarea></label>
+      <p class="dlg-msg" id="dlgMsg" role="alert"></p>
+      <div class="dlg-act">
+        <button type="button" class="btn" data-act="close">取消</button>
+        <button type="submit" class="btn primary">提交</button>
+      </div>
+    </form>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <p class="sr-only" id="live" aria-live="polite"></p>
 

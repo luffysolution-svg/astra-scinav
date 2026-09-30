@@ -1,0 +1,37 @@
+# 每周同步科研 SKILL / Prompt 的 GitHub 星标、更新时间与协议，有变化就提交到 main
+# Netlify 关联本仓库后，推送会自动触发部署
+name: 同步 Skill 与 Prompt 数据
+
+on:
+  schedule:
+    - cron: '0 1 * * 1'   # 每周一 09:00（北京时间）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 同步
+        run: node scripts/sync_collections.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 有变化则提交
+        run: |
+          git add content site/data/skills.js site/data/prompts.js
+          if git diff --cached --quiet; then echo "无变化"; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898278+github-actions[bot]@users.noreply.github.com'
+          git commit -m "同步 Skill 与 Prompt 星标（$(date -u +%F)）"
+          git push

@@ -47,14 +47,21 @@ fs.writeFileSync('site/data/skills.js', `// 自动生成：scripts/sync_collecti
 
 /* ---------- Prompts ---------- */
 const prompts = JSON.parse(fs.readFileSync('content/prompts.json', 'utf8'));
+// 每条 Prompt 有稳定 id（分类 id-序号），用于分享链接与收藏；新增条目自动续号，已有 id 不变
+let idsAdded = 0;
+for (const c of prompts.categories) {
+  let n = Math.max(0, ...c.prompts.map(p => +(p.id || '').slice(c.id.length + 1) || 0));
+  for (const p of c.prompts) if (!p.id) { p.id = `${c.id}-${++n}`; idsAdded++; }
+}
+if (idsAdded) console.log(`新增 ${idsAdded} 个 Prompt id`);
 if (!offline) {
   for (const r of prompts.repos) {
     try { Object.assign(r, (({ stars, updated, license, branch }) => ({ stars, updated, license, branch }))(await refresh(r.repo))); }
     catch (e) { console.warn(`跳过 ${r.repo}：${e.message}`); }
   }
   prompts.generated = today;
-  fs.writeFileSync('content/prompts.json', JSON.stringify(prompts, null, 2) + '\n');
 }
+if (!offline || idsAdded) fs.writeFileSync('content/prompts.json', JSON.stringify(prompts, null, 2) + '\n');
 fs.writeFileSync('site/data/prompts.js', `// 自动生成：scripts/sync_collections.mjs，请编辑 content/prompts.json\nwindow.PROMPTS = ${JSON.stringify(prompts)};\n`);
 
 const nRepo = skills.categories.reduce((n, c) => n + c.repos.length, 0);

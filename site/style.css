@@ -494,6 +494,25 @@ mark.ph { color: var(--amber); background: rgba(255, 201, 120, .12); border-radi
 .src { margin-left: auto; font-size: 12px; color: var(--ink-4); max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .src:hover { color: var(--ink-2); }
 .src-meta { margin-top: 4px; font: 400 11px var(--mono); color: var(--ink-4); }
+.item-head .star { flex: none; margin: -4px -6px -4px -4px; }
+.star svg { stroke-linecap: round; transition: fill .2s, stroke .2s; }
+.star[aria-pressed="true"] svg { fill: var(--amber); stroke: var(--amber); }
+mark.ph.filled { color: var(--cyan); background: rgba(255, 217, 160, .1); }
+/* Prompt 填空面板 */
+.fill { display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 12px; background: rgba(0, 0, 0, .35); border: 1px solid var(--line); }
+.fill[hidden] { display: none; }
+.fill-tip { margin: 0; font-size: 12px; color: var(--ink-4); }
+.fill label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--amber); }
+.fill label span { overflow-wrap: anywhere; }
+.fill textarea, .dlg textarea {
+  resize: none; padding: 8px 10px; border-radius: 9px; font: 13px/1.6 var(--sans); color: var(--ink);
+  background: rgba(255, 255, 255, .04); border: 1px solid var(--line-2); outline: 0;
+}
+.dlg textarea { resize: vertical; padding: 10px 12px; font-size: 14px; }
+.fill textarea:focus, .dlg textarea:focus { border-color: var(--violet); }
+/* 从分享链接定位到的卡片闪一下 */
+.cat .item.hit { opacity: 1; translate: none; animation: hit 1.8s var(--ease); }
+@keyframes hit { 0%, 40% { border-color: hsl(var(--h) 90% 70% / .9); box-shadow: 0 0 0 3px hsl(var(--h) 90% 65% / .25), 0 18px 40px -22px hsl(var(--h) 90% 55% / .55); } }
 .cat .item { opacity: 0; translate: 0 16px; }
 .cat.in .item { animation: pop .8s var(--ease) both; animation-delay: calc(var(--i, 0) * 35ms + 80ms); }
 body.searching .item { opacity: 1; translate: none; animation: none; }

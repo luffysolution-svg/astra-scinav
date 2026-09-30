@@ -1,11 +1,11 @@
 {
-  "generated": "2026-09-29",
+  "generated": "2026-09-30",
   "repos": [
     {
       "repo": "f/prompts.chat",
       "name": "prompts.chat（原 Awesome ChatGPT Prompts）",
       "desc": "全球最大社区 Prompt 库，含审稿、综述、统计等学术角色",
-      "stars": 171584,
+      "stars": 171617,
       "updated": "2026-09-09",
       "license": "其他协议",
       "branch": "main",
@@ -15,7 +15,7 @@
       "repo": "dair-ai/Prompt-Engineering-Guide",
       "name": "Prompt Engineering Guide",
       "desc": "提示工程指南，含论文信息抽取、科学问答等示例",
-      "stars": 78720,
+      "stars": 78727,
       "updated": "2026-03-11",
       "license": "MIT",
       "branch": "main"
@@ -33,7 +33,7 @@
       "repo": "PlexPt/awesome-chatgpt-prompts-zh",
       "name": "ChatGPT 中文调教指南",
       "desc": "中文 Prompt 合集，含论文润色、学术翻译等角色",
-      "stars": 62834,
+      "stars": 62840,
       "updated": "2026-04-28",
       "license": "MIT",
       "branch": "main"
@@ -42,7 +42,7 @@
       "repo": "Leey21/awesome-ai-research-writing",
       "name": "Awesome AI Research Writing",
       "desc": "AI 科研写作 Prompt 库，覆盖翻译润色与图表",
-      "stars": 34477,
+      "stars": 34478,
       "updated": "2026-08-19",
       "license": null,
       "branch": "main"
@@ -61,7 +61,7 @@
       "repo": "langgptai/wonderful-prompts",
       "name": "Wonderful Prompts",
       "desc": "中文 Prompt 精选与结构化 Prompt 写法",
-      "stars": 6326,
+      "stars": 6327,
       "updated": "2026-08-25",
       "license": "MIT",
       "branch": "main"
@@ -79,7 +79,7 @@
       "repo": "zLanqing/codex-claude-academic-skills",
       "name": "Codex/Claude 学术 Skills",
       "desc": "面向文献阅读、论文写作与科学计算的 Agent Skills",
-      "stars": 4414,
+      "stars": 4417,
       "updated": "2026-05-14",
       "license": "MIT",
       "branch": "main"

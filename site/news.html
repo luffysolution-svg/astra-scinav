@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>学术前沿 · Astra 星图</title>
+  <meta name="description" content="每日汇总 Nature、Science、Cell、顶级医学、化学材料、物理、生态与预印本的最新论文：按期刊分组，可看摘要与封面，支持未读、收藏与多条件筛选。">
+  <link rel="canonical" href="https://nav.luffysite.top/news.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Astra 星图">
+  <meta property="og:title" content="学术前沿 · Astra 星图">
+  <meta property="og:description" content="每日汇总 Nature、Science、Cell、顶级医学、化学材料、物理、生态与预印本的最新论文：按期刊分组，可看摘要与封面，支持未读、收藏与多条件筛选。">
+  <meta property="og:url" content="https://nav.luffysite.top/news.html">
+  <meta property="og:image" content="https://nav.luffysite.top/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#040406">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="news">
+  <canvas id="galaxy" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Astra 星图 首页">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span class="brand-name">Astra<em>星图</em></span>
+    </a>
+    <nav class="page-nav" aria-label="页面">
+      <a href="./">导航</a>
+      <a href="skills.html">科研 SKILL</a>
+      <a href="prompts.html">科研 Prompt</a>
+      <a href="figures.html">科研绘图</a>
+      <a href="news.html" aria-current="page">学术前沿</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="blog-link" href="https://luffysite.top/" title="Luffy 的个人博客">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg><span>博客</span>
+    </a>
+    <button class="motion" id="motion" type="button" aria-pressed="false" title="暂停背景动画">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><ellipse cx="12" cy="12" rx="9.5" ry="3.6" transform="rotate(-18 12 12)"/></svg>
+      <span class="sr-only">暂停背景动画</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero sub">
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>Latest Papers from Top Journals</p>
+      <h1 class="title"><span class="line shimmer">学术前沿</span></h1>
+      <p class="lede">每日从期刊官方 RSS、Crossref 与预印本官方接口汇总近 30 天的新论文，按期刊分组。点标题在阅读面板看摘要与封面，已读和收藏保存在本浏览器。</p>
+      <form class="search" id="search" role="search" autocomplete="off">
+        <div class="field">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" name="q" placeholder="搜索标题关键词，如 perovskite、单细胞、CRISPR…" aria-label="搜索论文">
+        </div>
+        <div class="under">
+          <div class="access chips" id="cats" role="group" aria-label="按分类筛选"></div>
+        </div>
+        <div class="under nw-bar">
+          <label class="nw-journal"><span class="sr-only">按期刊筛选</span><select id="journal"></select></label>
+          <label class="nw-journal"><span class="sr-only">发表时间</span><select id="since">
+            <option value="">全部时间</option><option value="1">今天</option><option value="3">近 3 天</option><option value="7">近 7 天</option><option value="14">近 14 天</option>
+          </select></label>
+          <label class="nw-journal"><span class="sr-only">排列方式</span><select id="view">
+            <option value="journal">按期刊分组</option><option value="time">按时间排列</option>
+          </select></label>
+          <div class="access chips" id="flags" role="group" aria-label="更多筛选"></div>
+        </div>
+      </form>
+      <dl class="stats" id="stats"></dl>
+    </section>
+
+    <div class="layout">
+      <aside class="side" aria-label="分类目录"><nav id="sideNav"></nav></aside>
+      <div class="content" id="content"><noscript><p class="empty">本页的列表与搜索需要启用 JavaScript，请在浏览器设置中开启后刷新。</p></noscript></div>
+    </div>
+    <p class="empty" id="empty" hidden>没有匹配的论文，换个关键词、分类或期刊试试。</p>
+  </main>
+
+  <footer class="foot">
+    <p>Astra 星图 · 学术前沿 · <span id="gen"></span> · <a class="link" href="https://luffysite.top/">回到博客</a></p>
+    <p class="muted">标题、摘要、封面与 DOI 等元数据来自各期刊官方 Feed、Crossref、Europe PMC 与预印本官方接口，论文版权归出版方与作者</p>
+  </footer>
+  <dialog class="viewer reader" id="reader" aria-labelledby="rd-t">
+    <div class="vw-stage" id="rdStage"></div>
+    <div class="vw-info">
+      <header class="vw-head">
+        <div><p class="nw-meta" id="rdMeta"></p><h2 id="rd-t"></h2></div>
+        <button type="button" class="icon-btn" data-act="rd-close" aria-label="关闭阅读面板"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </header>
+      <div class="vw-body" id="rdBody"></div>
+      <nav class="vw-nav" aria-label="切换论文">
+        <button type="button" class="btn" data-act="rd-prev" aria-label="上一篇"><kbd>←</kbd> 上一篇</button>
+        <span class="vw-count" id="rdCount"></span>
+        <button type="button" class="btn" data-act="rd-next" aria-label="下一篇">下一篇 <kbd>→</kbd></button>
+      </nav>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+
+  <script src="data/news.js"></script>
+  <script src="galaxy.js"></script>
+  <script src="common.js"></script>
+  <script src="news.js"></script>
+</body>
+</html>

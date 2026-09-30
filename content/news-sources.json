@@ -1,0 +1,988 @@
+{
+  "categories": [
+    {
+      "id": "nature",
+      "t": "Nature 系列",
+      "en": "Nature Portfolio",
+      "hue": 150
+    },
+    {
+      "id": "science",
+      "t": "Science 系列",
+      "en": "Science Family",
+      "hue": 0
+    },
+    {
+      "id": "cell",
+      "t": "Cell 系列",
+      "en": "Cell Press",
+      "hue": 200
+    },
+    {
+      "id": "medical",
+      "t": "顶级医学",
+      "en": "Medicine",
+      "hue": 340
+    },
+    {
+      "id": "multidisciplinary",
+      "t": "综合与开放获取",
+      "en": "Multidisciplinary & OA",
+      "hue": 42
+    },
+    {
+      "id": "ecology",
+      "t": "生态与进化",
+      "en": "Ecology & Evolution",
+      "hue": 105
+    },
+    {
+      "id": "chem-materials",
+      "t": "化学、材料、能源与催化",
+      "en": "Chemistry · Materials · Energy",
+      "hue": 20
+    },
+    {
+      "id": "physics",
+      "t": "物理",
+      "en": "Physics",
+      "hue": 250
+    },
+    {
+      "id": "preprints",
+      "t": "预印本",
+      "en": "Preprints",
+      "hue": 285
+    }
+  ],
+  "sources": [
+    {
+      "id": "nature",
+      "name": "Nature",
+      "category": "nature",
+      "site": "https://www.nature.com/nature",
+      "api": "rss",
+      "feed": "https://www.nature.com/nature.rss",
+      "issn": "0028-0836"
+    },
+    {
+      "id": "ncomms",
+      "name": "Nature Communications",
+      "category": "nature",
+      "site": "https://www.nature.com/ncomms",
+      "api": "rss",
+      "feed": "https://www.nature.com/ncomms.rss",
+      "issn": "2041-1723"
+    },
+    {
+      "id": "nm",
+      "name": "Nature Medicine",
+      "category": "nature",
+      "site": "https://www.nature.com/nm",
+      "api": "rss",
+      "feed": "https://www.nature.com/nm.rss",
+      "issn": "1078-8956"
+    },
+    {
+      "id": "nmeth",
+      "name": "Nature Methods",
+      "category": "nature",
+      "site": "https://www.nature.com/nmeth",
+      "api": "rss",
+      "feed": "https://www.nature.com/nmeth.rss",
+      "issn": "1548-7091"
+    },
+    {
+      "id": "neuro",
+      "name": "Nature Neuroscience",
+      "category": "nature",
+      "site": "https://www.nature.com/neuro",
+      "api": "rss",
+      "feed": "https://www.nature.com/neuro.rss",
+      "issn": "1097-6256"
+    },
+    {
+      "id": "nbt",
+      "name": "Nature Biotechnology",
+      "category": "nature",
+      "site": "https://www.nature.com/nbt",
+      "api": "rss",
+      "feed": "https://www.nature.com/nbt.rss",
+      "issn": "1087-0156"
+    },
+    {
+      "id": "nphys",
+      "name": "Nature Physics",
+      "category": "nature",
+      "site": "https://www.nature.com/nphys",
+      "api": "rss",
+      "feed": "https://www.nature.com/nphys.rss",
+      "issn": "1745-2473"
+    },
+    {
+      "id": "natastron",
+      "name": "Nature Astronomy",
+      "category": "nature",
+      "site": "https://www.nature.com/natastron",
+      "api": "rss",
+      "feed": "https://www.nature.com/natastron.rss",
+      "issn": "2397-3366"
+    },
+    {
+      "id": "natcancer",
+      "name": "Nature Cancer",
+      "category": "nature",
+      "site": "https://www.nature.com/natcancer",
+      "api": "rss",
+      "feed": "https://www.nature.com/natcancer.rss",
+      "issn": "2662-1347"
+    },
+    {
+      "id": "ni",
+      "name": "Nature Immunology",
+      "category": "nature",
+      "site": "https://www.nature.com/ni",
+      "api": "rss",
+      "feed": "https://www.nature.com/ni.rss",
+      "issn": "1529-2908"
+    },
+    {
+      "id": "nrmicro",
+      "name": "Nature Reviews Microbiology",
+      "category": "nature",
+      "site": "https://www.nature.com/nrmicro",
+      "api": "rss",
+      "feed": "https://www.nature.com/nrmicro.rss",
+      "issn": "1740-1526"
+    },
+    {
+      "id": "nrc",
+      "name": "Nature Reviews Cancer",
+      "category": "nature",
+      "site": "https://www.nature.com/nrc",
+      "api": "rss",
+      "feed": "https://www.nature.com/nrc.rss",
+      "issn": "1474-1768"
+    },
+    {
+      "id": "nrd",
+      "name": "Nature Reviews Drug Discovery",
+      "category": "nature",
+      "site": "https://www.nature.com/nrd",
+      "api": "rss",
+      "feed": "https://www.nature.com/nrd.rss",
+      "issn": "1474-1776"
+    },
+    {
+      "id": "nri",
+      "name": "Nature Reviews Immunology",
+      "category": "nature",
+      "site": "https://www.nature.com/nri",
+      "api": "rss",
+      "feed": "https://www.nature.com/nri.rss",
+      "issn": "1474-1741"
+    },
+    {
+      "id": "science",
+      "name": "Science",
+      "category": "science",
+      "site": "https://www.science.org/journal/science",
+      "api": "rss",
+      "feed": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=science",
+      "issn": "0036-8075"
+    },
+    {
+      "id": "sciadv",
+      "name": "Science Advances",
+      "category": "science",
+      "site": "https://www.science.org/journal/sciadv",
+      "api": "rss",
+      "feed": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=sciadv",
+      "issn": "2375-2548"
+    },
+    {
+      "id": "sciimmunol",
+      "name": "Science Immunology",
+      "category": "science",
+      "site": "https://www.science.org/journal/sciimmunol",
+      "api": "rss",
+      "feed": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=sciimmunol",
+      "issn": "2470-9468"
+    },
+    {
+      "id": "scirobotics",
+      "name": "Science Robotics",
+      "category": "science",
+      "site": "https://www.science.org/journal/scirobotics",
+      "api": "rss",
+      "feed": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=scirobotics",
+      "issn": "2470-9476"
+    },
+    {
+      "id": "stm",
+      "name": "Science Translational Medicine",
+      "category": "science",
+      "site": "https://www.science.org/journal/stm",
+      "api": "rss",
+      "feed": "https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=stm",
+      "issn": "1946-6234"
+    },
+    {
+      "id": "science-news",
+      "name": "Science News",
+      "category": "science",
+      "site": "https://www.science.org/news",
+      "api": "rss",
+      "feed": "https://www.science.org/rss/news_current.xml",
+      "enabled": false,
+      "note": "官方 Feed 可用，但内容是新闻报道而非论文，不收录"
+    },
+    {
+      "id": "cell",
+      "name": "Cell",
+      "category": "cell",
+      "site": "https://www.cell.com/cell/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/cell/inpress.rss",
+      "issn": "0092-8674"
+    },
+    {
+      "id": "chom",
+      "name": "Cell Host & Microbe",
+      "category": "cell",
+      "site": "https://www.cell.com/cell-host-microbe/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/cell-host-microbe/inpress.rss",
+      "issn": "1931-3128"
+    },
+    {
+      "id": "stem",
+      "name": "Cell Stem Cell",
+      "category": "cell",
+      "site": "https://www.cell.com/cell-stem-cell/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/cell-stem-cell/inpress.rss",
+      "issn": "1934-5909"
+    },
+    {
+      "id": "celrep",
+      "name": "Cell Reports",
+      "category": "cell",
+      "site": "https://www.cell.com/cell-reports/home",
+      "api": "crossref",
+      "issn": "2211-1247",
+      "note": "官方 RSS（www.cell.com/cell-reports/inpress.rss）只有 1 条在线优先文章，Crossref 覆盖更全，继续按 ISSN 查询（2026-09-30 复测）"
+    },
+    {
+      "id": "immuni",
+      "name": "Immunity",
+      "category": "cell",
+      "site": "https://www.cell.com/immunity/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/immunity/inpress.rss",
+      "issn": "1074-7613"
+    },
+    {
+      "id": "chembiol",
+      "name": "Cell Chemical Biology",
+      "category": "cell",
+      "site": "https://www.cell.com/cell-chemical-biology/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/cell-chemical-biology/inpress.rss",
+      "issn": "2451-9456"
+    },
+    {
+      "id": "molcel",
+      "name": "Molecular Cell",
+      "category": "cell",
+      "site": "https://www.cell.com/molecular-cell/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/molecular-cell/inpress.rss",
+      "issn": "1097-2765"
+    },
+    {
+      "id": "str",
+      "name": "Structure",
+      "category": "cell",
+      "site": "https://www.cell.com/structure/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/structure/inpress.rss",
+      "issn": "0969-2126"
+    },
+    {
+      "id": "xgen",
+      "name": "Cell Genomics",
+      "category": "cell",
+      "site": "https://www.cell.com/cell-genomics/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/cell-genomics/inpress.rss",
+      "issn": "2666-979X"
+    },
+    {
+      "id": "xcrm",
+      "name": "Cell Reports Medicine",
+      "category": "cell",
+      "site": "https://www.cell.com/cell-reports-medicine/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/cell-reports-medicine/inpress.rss",
+      "issn": "2666-3791"
+    },
+    {
+      "id": "tcb",
+      "name": "Trends in Cell Biology",
+      "category": "cell",
+      "site": "https://www.cell.com/trends/cell-biology/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/trends/cell-biology/inpress.rss",
+      "issn": "0962-8924"
+    },
+    {
+      "id": "tibs",
+      "name": "Trends in Biochemical Sciences",
+      "category": "cell",
+      "site": "https://www.cell.com/trends/biochemical-sciences/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/trends/biochemical-sciences/inpress.rss",
+      "issn": "0968-0004"
+    },
+    {
+      "id": "trecan",
+      "name": "Trends in Cancer",
+      "category": "cell",
+      "site": "https://www.cell.com/trends/cancer/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/trends/cancer/inpress.rss",
+      "issn": "2405-8033"
+    },
+    {
+      "id": "tics",
+      "name": "Trends in Cognitive Sciences",
+      "category": "cell",
+      "site": "https://www.cell.com/trends/cognitive-sciences/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/trends/cognitive-sciences/inpress.rss",
+      "issn": "1364-6613"
+    },
+    {
+      "id": "lancet",
+      "name": "The Lancet",
+      "category": "medical",
+      "site": "https://www.thelancet.com/journals/lancet/home",
+      "api": "rss",
+      "feed": "https://www.thelancet.com/rssfeed/lancet_online.xml",
+      "issn": "0140-6736"
+    },
+    {
+      "id": "nejm",
+      "name": "New England Journal of Medicine",
+      "category": "medical",
+      "site": "https://www.nejm.org/",
+      "api": "rss",
+      "feed": "https://www.nejm.org/action/showFeed?jc=nejm&type=etoc&feed=rss",
+      "issn": "0028-4793"
+    },
+    {
+      "id": "laneur",
+      "name": "The Lancet Neurology",
+      "category": "medical",
+      "site": "https://www.thelancet.com/journals/laneur/home",
+      "api": "crossref",
+      "issn": "1474-4422",
+      "note": "官方 RSS（www.thelancet.com/rssfeed/laneur_online.xml）只有 3 条在线优先文章，Crossref 覆盖更全，继续按 ISSN 查询（2026-09-30 复测）"
+    },
+    {
+      "id": "lanonc",
+      "name": "The Lancet Oncology",
+      "category": "medical",
+      "site": "https://www.thelancet.com/journals/lanonc/home",
+      "api": "crossref",
+      "issn": "1470-2045",
+      "note": "官方 RSS（www.thelancet.com/rssfeed/lanonc_online.xml）只有 8 条在线优先文章，Crossref 覆盖更全，继续按 ISSN 查询（2026-09-30 复测）"
+    },
+    {
+      "id": "jama",
+      "name": "JAMA",
+      "category": "medical",
+      "site": "https://jamanetwork.com/journals/jama",
+      "api": "rss",
+      "feed": "https://jamanetwork.com/rss/site_3/67.xml",
+      "issn": "0098-7484"
+    },
+    {
+      "id": "bmj",
+      "name": "The BMJ",
+      "category": "medical",
+      "site": "https://www.bmj.com/",
+      "api": "rss",
+      "feed": "https://www.bmj.com/rss/recent.xml",
+      "issn": "1756-1833"
+    },
+    {
+      "id": "aim",
+      "name": "Annals of Internal Medicine",
+      "category": "medical",
+      "site": "https://www.acpjournals.org/journal/aim",
+      "api": "rss",
+      "feed": "https://www.acpjournals.org/action/showFeed?type=etoc&feed=rss&jc=aim",
+      "issn": "0003-4819"
+    },
+    {
+      "id": "circ",
+      "name": "Circulation",
+      "category": "medical",
+      "site": "https://www.ahajournals.org/journal/circ",
+      "api": "crossref",
+      "issn": "1524-4539",
+      "note": "ahajournals.org 官方 RSS 返回 404（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "pnas",
+      "name": "PNAS",
+      "category": "multidisciplinary",
+      "site": "https://www.pnas.org/",
+      "api": "rss",
+      "feed": "https://www.pnas.org/action/showFeed?type=etoc&feed=rss&jc=pnas",
+      "issn": "0027-8424"
+    },
+    {
+      "id": "elife",
+      "name": "eLife",
+      "category": "multidisciplinary",
+      "site": "https://elifesciences.org/",
+      "api": "rss",
+      "feed": "https://elifesciences.org/rss/recent.xml",
+      "issn": "2050-084X"
+    },
+    {
+      "id": "rsos",
+      "name": "Royal Society Open Science",
+      "category": "multidisciplinary",
+      "site": "https://royalsocietypublishing.org/journal/rsos",
+      "api": "crossref",
+      "issn": "2054-5703",
+      "note": "royalsocietypublishing.org 官方 RSS 被 Cloudflare 拦截（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "annurev",
+      "name": "Annual Reviews",
+      "category": "multidisciplinary",
+      "site": "https://www.annualreviews.org/",
+      "api": "crossref",
+      "prefix": "10.1146",
+      "note": "旗下 50 余种综述刊，官方 RSS 被 Cloudflare 拦截（2026-09-30 核实）；按 Crossref DOI 前缀 10.1146 查询，期刊名取各篇所属刊"
+    },
+    {
+      "id": "plosone",
+      "name": "PLOS ONE",
+      "category": "multidisciplinary",
+      "site": "https://journals.plos.org/plosone/",
+      "api": "rss",
+      "feed": "https://journals.plos.org/plosone/feed/atom",
+      "issn": "1932-6203"
+    },
+    {
+      "id": "fevo",
+      "name": "Frontiers in Ecology and Evolution",
+      "category": "ecology",
+      "site": "https://www.frontiersin.org/journals/ecology-and-evolution",
+      "api": "rss",
+      "feed": "https://www.frontiersin.org/journals/ecology-and-evolution/rss",
+      "issn": "2296-701X"
+    },
+    {
+      "id": "tree",
+      "name": "Trends in Ecology & Evolution",
+      "category": "ecology",
+      "site": "https://www.cell.com/trends/ecology-evolution/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/trends/ecology-evolution/inpress.rss",
+      "issn": "0169-5347"
+    },
+    {
+      "id": "mee",
+      "name": "Methods in Ecology and Evolution",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/2041210x",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=2041210x",
+      "issn": "2041-210X"
+    },
+    {
+      "id": "ece",
+      "name": "Ecology and Evolution",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/20457758",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=20457758",
+      "issn": "2045-7758"
+    },
+    {
+      "id": "jae",
+      "name": "Journal of Animal Ecology",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/13652656",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=13652656",
+      "issn": "0021-8790"
+    },
+    {
+      "id": "nph",
+      "name": "New Phytologist",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/14698137",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=14698137",
+      "issn": "0028-646X"
+    },
+    {
+      "id": "fe",
+      "name": "Functional Ecology",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/13652435",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=13652435",
+      "issn": "0269-8463"
+    },
+    {
+      "id": "ele",
+      "name": "Ecology Letters",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/14610248",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=14610248",
+      "issn": "1461-023X"
+    },
+    {
+      "id": "gcb",
+      "name": "Global Change Biology",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/13652486",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=13652486",
+      "issn": "1354-1013"
+    },
+    {
+      "id": "cobi",
+      "name": "Conservation Biology",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/15231739",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=15231739",
+      "issn": "0888-8892"
+    },
+    {
+      "id": "jec",
+      "name": "Journal of Ecology",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/13652745",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=13652745",
+      "issn": "1365-2745"
+    },
+    {
+      "id": "mec",
+      "name": "Molecular Ecology",
+      "category": "ecology",
+      "site": "https://onlinelibrary.wiley.com/journal/1365294X",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=1365294X",
+      "issn": "0962-1083"
+    },
+    {
+      "id": "jacs",
+      "name": "Journal of the American Chemical Society",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/jacsat",
+      "api": "crossref",
+      "issn": "0002-7863",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "anie",
+      "name": "Angewandte Chemie International Edition",
+      "category": "chem-materials",
+      "site": "https://onlinelibrary.wiley.com/journal/15213773",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=15213773",
+      "issn": "1433-7851"
+    },
+    {
+      "id": "chemrev",
+      "name": "Chemical Reviews",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/chreay",
+      "api": "crossref",
+      "issn": "0009-2665",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "csr",
+      "name": "Chemical Society Reviews",
+      "category": "chem-materials",
+      "site": "https://pubs.rsc.org/en/journals/journalissues/cs",
+      "api": "crossref",
+      "issn": "0306-0012",
+      "note": "pubs.rsc.org 官方 RSS 需登录跳转并被 Cloudflare 拦截（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "acscatal",
+      "name": "ACS Catalysis",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/accacs",
+      "api": "crossref",
+      "issn": "2155-5435",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "cm",
+      "name": "Chemistry of Materials",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/cmatex",
+      "api": "crossref",
+      "issn": "0897-4756",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "acsel",
+      "name": "ACS Energy Letters",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/aelccp",
+      "api": "crossref",
+      "issn": "2380-8195",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "nl",
+      "name": "Nano Letters",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/nalefd",
+      "api": "crossref",
+      "issn": "1530-6984",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "acsnano",
+      "name": "ACS Nano",
+      "category": "chem-materials",
+      "site": "https://pubs.acs.org/journal/ancac3",
+      "api": "crossref",
+      "issn": "1936-0851",
+      "note": "pubs.acs.org 官方 RSS 对非浏览器请求返回 Cloudflare 403（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "ees",
+      "name": "Energy & Environmental Science",
+      "category": "chem-materials",
+      "site": "https://pubs.rsc.org/en/journals/journalissues/ee",
+      "api": "crossref",
+      "issn": "1754-5692",
+      "note": "pubs.rsc.org 官方 RSS 需登录跳转并被 Cloudflare 拦截（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "jmca",
+      "name": "Journal of Materials Chemistry A",
+      "category": "chem-materials",
+      "site": "https://pubs.rsc.org/en/journals/journalissues/ta",
+      "api": "crossref",
+      "issn": "2050-7488",
+      "note": "pubs.rsc.org 官方 RSS 需登录跳转并被 Cloudflare 拦截（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "adma",
+      "name": "Advanced Materials",
+      "category": "chem-materials",
+      "site": "https://onlinelibrary.wiley.com/journal/15214095",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=15214095",
+      "issn": "0935-9648"
+    },
+    {
+      "id": "adfm",
+      "name": "Advanced Functional Materials",
+      "category": "chem-materials",
+      "site": "https://onlinelibrary.wiley.com/journal/16163028",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=16163028",
+      "issn": "1616-301X"
+    },
+    {
+      "id": "aenm",
+      "name": "Advanced Energy Materials",
+      "category": "chem-materials",
+      "site": "https://onlinelibrary.wiley.com/journal/16146840",
+      "api": "rss",
+      "feed": "https://onlinelibrary.wiley.com/action/showFeed?type=etoc&feed=rss&jc=16146840",
+      "issn": "1614-6832"
+    },
+    {
+      "id": "ensm",
+      "name": "Energy Storage Materials",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/energy-storage-materials",
+      "api": "crossref",
+      "issn": "2405-8297",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "nanoen",
+      "name": "Nano Energy",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/nano-energy",
+      "api": "crossref",
+      "issn": "2211-2855",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "apcatb",
+      "name": "Applied Catalysis B: Environment and Energy",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/applied-catalysis-b-environment-and-energy",
+      "api": "crossref",
+      "issn": "0926-3373",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "jcat",
+      "name": "Journal of Catalysis",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/journal-of-catalysis",
+      "api": "crossref",
+      "issn": "0021-9517",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "cy",
+      "name": "Catalysis Science & Technology",
+      "category": "chem-materials",
+      "site": "https://pubs.rsc.org/en/journals/journalissues/cy",
+      "api": "crossref",
+      "issn": "2044-4753",
+      "note": "pubs.rsc.org 官方 RSS 需登录跳转并被 Cloudflare 拦截（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "actamat",
+      "name": "Acta Materialia",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/acta-materialia",
+      "api": "crossref",
+      "issn": "1359-6454",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "mattod",
+      "name": "Materials Today",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/materials-today",
+      "api": "crossref",
+      "issn": "1369-7021",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "pmatsci",
+      "name": "Progress in Materials Science",
+      "category": "chem-materials",
+      "site": "https://www.sciencedirect.com/journal/progress-in-materials-science",
+      "api": "crossref",
+      "issn": "0079-6425",
+      "note": "ScienceDirect 官方 RSS 不含 DOI 与在线发表日期（2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "nchem",
+      "name": "Nature Chemistry",
+      "category": "chem-materials",
+      "site": "https://www.nature.com/nchem",
+      "api": "rss",
+      "feed": "https://www.nature.com/nchem.rss",
+      "issn": "1755-4330"
+    },
+    {
+      "id": "nmat",
+      "name": "Nature Materials",
+      "category": "chem-materials",
+      "site": "https://www.nature.com/nmat",
+      "api": "rss",
+      "feed": "https://www.nature.com/nmat.rss",
+      "issn": "1476-1122"
+    },
+    {
+      "id": "natcatal",
+      "name": "Nature Catalysis",
+      "category": "chem-materials",
+      "site": "https://www.nature.com/natcatal",
+      "api": "rss",
+      "feed": "https://www.nature.com/natcatal.rss",
+      "issn": "2520-1158"
+    },
+    {
+      "id": "nenergy",
+      "name": "Nature Energy",
+      "category": "chem-materials",
+      "site": "https://www.nature.com/nenergy",
+      "api": "rss",
+      "feed": "https://www.nature.com/nenergy.rss",
+      "issn": "2058-7546"
+    },
+    {
+      "id": "nnano",
+      "name": "Nature Nanotechnology",
+      "category": "chem-materials",
+      "site": "https://www.nature.com/nnano",
+      "api": "rss",
+      "feed": "https://www.nature.com/nnano.rss",
+      "issn": "1748-3387"
+    },
+    {
+      "id": "natsynth",
+      "name": "Nature Synthesis",
+      "category": "chem-materials",
+      "site": "https://www.nature.com/natsynth",
+      "api": "rss",
+      "feed": "https://www.nature.com/natsynth.rss",
+      "issn": "2731-0582"
+    },
+    {
+      "id": "joule",
+      "name": "Joule",
+      "category": "chem-materials",
+      "site": "https://www.cell.com/joule/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/joule/inpress.rss",
+      "issn": "2542-4351"
+    },
+    {
+      "id": "chempr",
+      "name": "Chem",
+      "category": "chem-materials",
+      "site": "https://www.cell.com/chem/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/chem/inpress.rss",
+      "issn": "2451-9294"
+    },
+    {
+      "id": "matt",
+      "name": "Matter",
+      "category": "chem-materials",
+      "site": "https://www.cell.com/matter/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/matter/inpress.rss",
+      "issn": "2590-2385"
+    },
+    {
+      "id": "xcrp",
+      "name": "Cell Reports Physical Science",
+      "category": "chem-materials",
+      "site": "https://www.cell.com/cell-reports-physical-science/home",
+      "api": "crossref",
+      "issn": "2666-3864",
+      "note": "官方 RSS（www.cell.com/cell-reports-physical-science/inpress.rss）只有 3 条在线优先文章，Crossref 覆盖更全，继续按 ISSN 查询（2026-09-30 复测）"
+    },
+    {
+      "id": "trechm",
+      "name": "Trends in Chemistry",
+      "category": "chem-materials",
+      "site": "https://www.cell.com/trends/chemistry/home",
+      "api": "rss",
+      "feed": "https://www.cell.com/trends/chemistry/inpress.rss",
+      "issn": "2589-5974"
+    },
+    {
+      "id": "prx",
+      "name": "Physical Review X",
+      "category": "physics",
+      "site": "https://journals.aps.org/prx/",
+      "api": "rss",
+      "feed": "http://feeds.aps.org/rss/recent/prx.xml",
+      "issn": "2160-3308"
+    },
+    {
+      "id": "prl",
+      "name": "Physical Review Letters",
+      "category": "physics",
+      "site": "https://journals.aps.org/prl/",
+      "api": "rss",
+      "feed": "http://feeds.aps.org/rss/recent/prl.xml",
+      "issn": "0031-9007"
+    },
+    {
+      "id": "rmp",
+      "name": "Reviews of Modern Physics",
+      "category": "physics",
+      "site": "https://journals.aps.org/rmp/",
+      "api": "rss",
+      "feed": "http://feeds.aps.org/rss/recent/rmp.xml",
+      "issn": "0034-6861"
+    },
+    {
+      "id": "pt",
+      "name": "Physics Today",
+      "category": "physics",
+      "site": "https://pubs.aip.org/physicstoday",
+      "api": "crossref",
+      "issn": "1945-0699",
+      "note": "未找到官方论文 RSS（pubs.aip.org/physicstoday/rss 返回 404，2026-09-30 核实），改用 Crossref 按 ISSN 查询"
+    },
+    {
+      "id": "arxiv-cond-mat",
+      "name": "arXiv 凝聚态",
+      "category": "preprints",
+      "site": "https://arxiv.org/list/cond-mat/recent",
+      "api": "arxiv",
+      "query": "cat:cond-mat.str-el OR cat:cond-mat.mes-hall OR cat:cond-mat.supr-con OR cat:cond-mat.stat-mech OR cat:cond-mat.soft"
+    },
+    {
+      "id": "arxiv-mtrl-sci",
+      "name": "arXiv 材料科学",
+      "category": "preprints",
+      "site": "https://arxiv.org/list/cond-mat.mtrl-sci/recent",
+      "api": "arxiv",
+      "query": "cat:cond-mat.mtrl-sci"
+    },
+    {
+      "id": "arxiv-chem-ph",
+      "name": "arXiv 化学物理",
+      "category": "preprints",
+      "site": "https://arxiv.org/list/physics.chem-ph/recent",
+      "api": "arxiv",
+      "query": "cat:physics.chem-ph"
+    },
+    {
+      "id": "arxiv-physics",
+      "name": "arXiv 物理",
+      "category": "preprints",
+      "site": "https://arxiv.org/list/physics/recent",
+      "api": "arxiv",
+      "query": "cat:physics.app-ph OR cat:physics.optics OR cat:physics.comp-ph OR cat:quant-ph"
+    },
+    {
+      "id": "arxiv-ai",
+      "name": "arXiv 人工智能",
+      "category": "preprints",
+      "site": "https://arxiv.org/list/cs.AI/recent",
+      "api": "arxiv",
+      "query": "cat:cs.AI OR cat:cs.LG OR cat:cs.CL"
+    },
+    {
+      "id": "biorxiv",
+      "name": "bioRxiv",
+      "category": "preprints",
+      "site": "https://www.biorxiv.org/",
+      "api": "biorxiv"
+    },
+    {
+      "id": "medrxiv",
+      "name": "medRxiv",
+      "category": "preprints",
+      "site": "https://www.medrxiv.org/",
+      "api": "medrxiv"
+    },
+    {
+      "id": "chemrxiv",
+      "name": "ChemRxiv",
+      "category": "preprints",
+      "site": "https://chemrxiv.org/",
+      "api": "chemrxiv",
+      "enabled": false,
+      "note": "官方 Public API（chemrxiv.org/engage/chemrxiv/public-api）对非浏览器请求返回 Cloudflare 验证页（2026-09-30 核实），暂无稳定官方接口，不抓第三方镜像"
+    }
+  ]
+}

@@ -18,7 +18,10 @@
   const favBtn = (x, cls = '') => `<button type="button" class="icon-btn star${cls}" data-fav="${esc(x.id)}" aria-pressed="${favs.includes(x.id)}" aria-label="收藏 ${esc(x.t)}">${STAR}</button>`;
 
   /* ---------- 模板卡片 ---------- */
-  const cats = D.categories.filter(c => c.items.length);
+  // 生图提示词：来源、模型、标签与比例
+  const promptMeta = x => `<p class="item-meta"><span>${esc(SRC.get(x.src)?.name || x.src)}</span>${x.model ? `<span class="hl">${esc(x.model)}</span>` : ''}${x.aspect ? `<span>${esc(x.aspect)}</span>` : ''}${(x.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</p>`;
+  // 没有条目但写了说明的分类（如尚待授权的生图提示词）也显示，只放说明与来源链接
+  const cats = D.categories.filter(c => c.items.length || c.note);
   const byId = new Map(cats.flatMap(c => c.items.map(x => [x.id, { x, c }])));
   function card(x, c, i) {
     return `<article class="item fig" id="${esc(x.id)}" style="--h:${c.hue};--i:${Math.min(i, 14)}" data-q="${esc(hay.figure(x, c, SRC.get(x.src)))}" data-type="${esc(x.type)}"${x.code ? ' data-code' : ''}>
@@ -30,7 +33,11 @@
         ${favBtn(x)}
       </header>
       <p class="item-desc">${esc(x.desc)}</p>
-      <p class="item-meta"><span>${esc(x.tool)}</span><span>${TYPES[x.type] || esc(x.type)}</span>${x.dl ? '<span class="hl">模板文件</span>' : ''}</p>
+      ${x.type === 'prompt' ? promptMeta(x) : `<p class="item-meta"><span>${esc(x.tool)}</span><span>${TYPES[x.type] || esc(x.type)}</span>${x.dl ? '<span class="hl">模板文件</span>' : ''}</p>`}
+      ${x.prompt ? `<footer class="item-foot">
+        <button type="button" class="btn" data-copy="${keep(x.prompt)}" aria-label="复制 ${esc(x.t)} 的提示词">${COPY}复制提示词</button>
+        <button type="button" class="toggle" data-view="${esc(x.id)}">查看提示词</button>
+      </footer>` : ''}
       ${x.code ? `<footer class="item-foot">
         <button type="button" class="btn" data-copy="${keep(x.code)}" aria-label="复制 ${esc(x.t)} 的${esc(lang(x))}代码">${COPY}复制 ${esc(lang(x))} 代码</button>
         <button type="button" class="toggle" data-view="${esc(x.id)}">查看代码</button>
@@ -45,8 +52,21 @@
         <span class="en">${esc(c.en || '')}</span>
         <span class="count">${c.items.length}</span>
       </header>
-      <div class="items figs">${c.items.map((x, i) => card(x, c, i)).join('')}</div>
+      ${c.note ? `<p class="kit-note">${esc(c.note)}${(c.refs || []).map(r => ` <a class="link" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.t)}</a>`).join('')}</p>` : ''}
+      ${c.subs ? subGroups(c) : c.items.length ? `<div class="items figs">${c.items.map((x, i) => card(x, c, i)).join('')}</div>` : ''}
     </section>`).join('') + kit();
+  // 有子分类（如生图提示词按来源分组）的分类：每个子分类一个小标题 + 卡片网格
+  function subGroups(c) {
+    return c.subs.map(s => {
+      const xs = c.items.filter(x => x.sub === s.id);
+      if (!xs.length) return '';
+      const src = SRC.get(xs[0].src);
+      return `<div class="fig-sub" id="${esc(c.id)}-${esc(s.id)}">
+        <h4 class="kit-t">${esc(s.t)} <small>${xs.length}</small>${src ? ` <a class="src" href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">来源：${esc(src.name)}</a>` : ''}</h4>
+        <div class="items figs">${xs.map((x, i) => card(x, c, i)).join('')}</div>
+      </div>`;
+    }).join('');
+  }
   $('#sideNav').innerHTML = `<div class="side-group">${cats.map(c =>
     `<a href="#${esc(c.id)}" data-cat="${esc(c.id)}" style="--h:${c.hue}"><i></i>${esc(c.t)}<b>${c.items.length}</b></a>`).join('')}
     <a href="#kit" data-cat="kit" style="--h:42"><i></i>投稿速查</a>
@@ -114,7 +134,7 @@
     $('#vwStage').innerHTML = `<img src="${esc(x.thumb)}" alt="${esc(x.t)}" width="${x.w}" height="${x.h}">`;
     $('#vwBody').innerHTML = `
       <p class="item-desc">${esc(x.desc)}</p>
-      <p class="item-meta">${c.t !== x.tool ? `<span>${esc(c.t)}</span>` : ''}<span>${esc(x.tool)}</span><span>${TYPES[x.type] || esc(x.type)}</span></p>
+      ${x.type === 'prompt' ? promptMeta(x) : `<p class="item-meta">${c.t !== x.tool ? `<span>${esc(c.t)}</span>` : ''}<span>${esc(x.tool)}</span><span>${TYPES[x.type] || esc(x.type)}</span></p>`}
       <p class="vw-src">来源：<a class="link" href="${esc(src?.url || x.url)}" target="_blank" rel="noopener noreferrer">${esc(src?.name || x.src)}</a> · ${esc(src?.license || '未声明协议')}${st?.dead ? ' · <b class="warn">原页面疑似失效</b>' : st?.checked ? ` · 核验于 ${esc(st.checked)}` : ''}</p>
       <div class="vw-act">
         <a class="btn primary" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${OUT}查看原页面</a>
@@ -123,6 +143,10 @@
         <button type="button" class="btn" data-report="f:${esc(x.id)}" data-name="${esc(x.t)}" data-url="${esc(x.url)}">${FLAG}报告问题</button>
         ${favBtn(x)}
       </div>
+      ${x.prompt ? `<div class="snip">
+        <div class="snip-head"><b>提示词${x.model ? ` · ${esc(x.model)}` : ''}</b><button type="button" class="btn" data-copy="${keep(x.prompt)}">${COPY}复制提示词</button></div>
+        <p class="prompt-text vw-prompt">${esc(x.prompt)}</p></div>
+        <p class="kit-note">提示词与图片来自 ${esc(src?.name || x.src)} · ${esc(src?.license || '')}</p>` : ''}
       ${x.code ? `<div class="snip">
         <div class="snip-head"><b>${esc(lang(x))} 代码</b><button type="button" class="btn" data-copy="${keep(x.code)}">${COPY}复制代码</button></div>
         <pre class="code"><code>${esc(x.code)}</code></pre></div>
@@ -228,8 +252,9 @@
       && (!onlyFav || favs.includes(it.id)) && match(it.dataset.q, terms));
     for (const s of secs) {
       const n = s.querySelectorAll('.item:not([hidden])').length;
-      s.hidden = !n;
+      s.hidden = !n && (filtering || !!s.querySelector('.item'));   // 只有说明、没有条目的分类仅在筛选时隐藏
       s.querySelector('.count').textContent = n;
+      s.querySelectorAll('.fig-sub').forEach(g => { g.hidden = !g.querySelector('.item:not([hidden])'); });
     }
     const shown = items.filter(i => !i.hidden).length;
     $('#empty').hidden = shown > 0;

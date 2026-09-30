@@ -15,6 +15,10 @@ node scripts/pinyin.mjs              # 重建拼音搜索索引
 node scripts/sync_collections.mjs    # 同步 Skill / Prompt 元数据并生成页面数据
 node scripts/sync_figures.mjs        # 下载科研绘图缩略图并生成页面数据（需 ffmpeg/ffprobe）
 node scripts/sync_figures.mjs --offline  # 仅从现有 JSON 重建绘图页面数据
+node scripts/sync_news.mjs           # 同步学术前沿（官方 RSS/Atom → Crossref → arXiv/bioRxiv/medRxiv API），补摘要与封面（需 ffmpeg），CI 每日 06:00 运行
+node scripts/sync_news.mjs --backfill  # 同上，并为全部缺摘要/封面的文章补抓（默认只补新增的）
+node scripts/sync_news.mjs --offline # 仅由 content/news.json 重建 site/data/news.js 与 news-abstracts.json
+node scripts/import_ai_figure_prompts.mjs raw/<来源id>.json  # 导入生图提示词图库（来源须有 licenseUrl/licenseNote 且非 listOnly），再运行 sync_figures
 netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发布
 ```
 
@@ -25,6 +29,8 @@ netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发
 - 科研绘图源数据：`content/figures.json`；生成文件：`site/data/figures.js`；本地缩略图：`site/figures/*.webp`。
 - 不要直接编辑生成的数据文件，应修改对应的 `content/*.json` 后运行同步脚本。
 - 绘图模板 ID 是收藏和分享链接的一部分，只新增、不重排、不复用。
+- 学术前沿：来源配置 `content/news-sources.json`（九个固定分类；禁用须写 `note`）；快照 `content/news.json` 与 `site/data/{news.js,news-abstracts.json}`、封面 `site/news/*.webp` 由 `sync_news.mjs` 生成。文章字段固定为 `id,title,date,journal,doi,image,abstract,url,category,source`；摘要单独放 `news-abstracts.json` 按需加载；`image` 只能是本地 WebP（CSP 不允许外链图片）。抓取只用自己的 UA，不伪装浏览器、不用无头浏览器或第三方代理绕过 Cloudflare；被拦截的来源靠 ISSN 回退 Crossref。
+- 生图提示词（`type: "prompt"`）用 `prompt` 字段，不用 `code`；`ai-prompts` 分类按来源分子分类（`subs`，条目用 `sub` 指明）；`listOnly` 来源只能列链接，不能收录条目。Ai4Scholar Gallery 未公开再分发协议，是站长决定标注来源后收录的（见其 `licenseNote`），数据由站长本人登录的浏览器从图库页面整理到 `raw/ai4scholar-gallery.json`。
 - 链接字段（`url` 等）只能放单个地址；备注写 `note`，补充链接写 `refs: [{ t, url }]`。
 - 只摘录已声明允许再分发协议的 Prompt；未声明协议或 NC/ND 的来源只列出链接（`validate.mjs` 会拦截）。
 - 首页与子页面的搜索字段、同义词表统一在 `site/common.js`（`Astra.hay` / `SYN`），改检索逻辑只改这里。

@@ -87,6 +87,7 @@ window.Astra = (() => {
   const FIG_TYPES = {
     line: '折线曲线', scatter: '散点气泡', bar: '柱状条形', dist: '分布', heatmap: '热图矩阵', contour: '等高线场图', '3d': '三维',
     polar: '极坐标雷达', stat: '统计', multi: '多面板', omics: '组学', map: '地图', flow: '网络流程', diagram: '示意图素材', style: '风格配色',
+    prompt: '生图提示词',
   };
   const FIG_LANG = { python: 'Python', r: 'R', matlab: 'MATLAB', tikz: 'TikZ', latex: 'LaTeX', mermaid: 'Mermaid', dot: 'Graphviz', gnuplot: 'gnuplot', julia: 'Julia', json: 'Vega-Lite' };
   const low = a => a.filter(Boolean).join(' ').toLowerCase();
@@ -94,7 +95,8 @@ window.Astra = (() => {
     skill: (r, c) => low([r.name, r.repo, r.desc, c?.t, 'skill', ...(r.skills || []).flatMap(s => [s.name, s.desc])]),
     prompt: (p, c, src) => low([p.t, p.p, p.src, src?.name, c?.t, 'prompt 提示词']),
     figure: (x, c, src) => low([x.t, x.en, x.tool, x.desc, FIG_TYPES[x.type], x.type, src?.name, c?.t, '绘图 作图 figure plot',
-      x.code ? `代码 code ${FIG_LANG[x.lang] || x.lang || ''}` : '']),
+      x.code ? `代码 code ${FIG_LANG[x.lang] || x.lang || ''}` : '',
+      x.prompt ? `提示词 prompt 生图 ${x.prompt} ${x.model || ''} ${(x.tags || []).join(' ')} ${x.aspect || ''}` : '']),
   };
   // 中英文同义词与常用缩写：输入其中任意一个都能命中含其他写法的条目
   const SYN = [

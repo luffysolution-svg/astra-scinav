@@ -600,6 +600,7 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
 .snip { display: flex; flex-direction: column; min-width: 0; border-radius: 12px; border: 1px solid var(--line); background: rgba(0, 0, 0, .45); overflow: hidden; }
 .snip-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 8px 14px; border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--ink-2); }
 .snip-head .btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; font-size: 12px; }
+.vw-prompt { padding: 12px 14px; max-height: 360px; overflow: auto; scrollbar-width: thin; }
 .code { margin: 0; padding: 12px 14px; max-height: 360px; overflow: auto; font: 12px/1.65 var(--mono); color: var(--cyan); tab-size: 4; scrollbar-width: thin; }
 
 /* 投稿速查 */
@@ -630,11 +631,65 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
 .pal-act .btn { padding: 4px 11px; font-size: 12px; }
 .snips { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 12px; }
 
+/* ---------- 学术前沿 ---------- */
+.items.nws { grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 10px; }
+.nw { flex-direction: row; align-items: flex-start; gap: 14px; padding: 14px 12px 14px 16px; }
+.nw.read h4 a { color: var(--ink-3); }
+.nw .star { flex: none; margin: -4px -2px 0 0; }
+.nw-dot { display: inline-block; width: 7px; height: 7px; margin: 0 7px 2px 0; border-radius: 50%; vertical-align: middle; background: hsl(var(--h) 90% 66%); box-shadow: 0 0 8px hsl(var(--h) 90% 60% / .6); }
+.nw-tag { padding: 0 6px; border-radius: 6px; font-size: 11px; color: var(--ink-3); border: 1px solid var(--line); }
+.nw-ph, .nw-img { width: 72px; height: 72px; flex: none; border-radius: 12px; }
+.nw-bar { align-items: center; gap: 8px; margin-top: 10px; }
+.nw-bar .chips { flex: 1; }
+.nw-js { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+.nw-js button { padding: 3px 10px; border-radius: 999px; font-size: 12px; color: var(--ink-3); border: 1px solid var(--line); background: rgba(255, 255, 255, .02); }
+.nw-js button:hover, .nw-js button:focus-visible { color: var(--ink); border-color: hsl(var(--h) 80% 65% / .45); }
+.nw-js small { margin-left: 5px; font: 400 10.5px var(--mono); color: var(--ink-4); }
+.nw-group { margin-top: 18px; }
+.nw-gt { display: flex; align-items: center; gap: 9px; margin: 0 0 10px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.nw-gt small { font: 400 11.5px var(--mono); color: var(--ink-4); }
+/* 阅读面板：有封面时左图右文，没有封面时单栏 */
+.reader { width: min(1080px, calc(100vw - 32px)); grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+.reader.no-img { width: min(720px, calc(100vw - 32px)); grid-template-columns: minmax(0, 1fr); }
+.reader.no-img .vw-stage { display: none; }
+.reader.no-img .vw-info { border-left: 0; }
+.reader .vw-stage img { width: 100%; height: auto; max-height: 100%; border-radius: 0; }
+.reader .vw-head .nw-meta { margin-bottom: 8px; }
+.rd-abs { padding: 14px 16px; font-size: 14px; line-height: 1.75; color: var(--ink-2); white-space: normal; }
+.fig-sub { margin-top: 8px; }
+.fig-sub .kit-t small { margin-left: 4px; font: 400 11.5px var(--mono); color: var(--ink-4); }
+.fig-sub .kit-t .src { margin-left: 8px; font-size: 12px; font-weight: 400; }
+.nw-img { object-fit: cover; background: #f6f5f1; }
+.nw-ph {
+  display: grid; place-items: center; font: 700 18px/1 var(--sans); letter-spacing: .02em; color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .3);
+  background: linear-gradient(135deg, hsl(var(--h) 70% 52%), hsl(calc(var(--h) + 40) 65% 38%));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+.nw-ph.sm { width: 24px; height: 24px; border-radius: 7px; font-size: 10px; }
+.nw-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.nw h4 { font-size: 14.5px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.nw h4 a:hover, .nw h4 a:focus-visible { color: hsl(var(--h) 90% 78%); }
+.nw-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0; font-size: 12px; color: var(--ink-4); }
+.nw-j { color: var(--ink-2); }
+.nw-meta time { font-family: var(--mono); }
+.nw-doi { font-family: var(--mono); color: var(--ink-3); overflow-wrap: anywhere; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.nw-doi:hover { color: var(--ink); }
+.nw-more { display: block; margin: 14px auto 0; }
+.nw-journal select {
+  height: 30px; max-width: 280px; padding: 0 10px; border-radius: 999px; font: inherit; font-size: 12.5px; color: var(--ink-2);
+  background: rgba(10, 10, 14, .8); border: 1px solid var(--line); outline: 0;
+}
+.nw-journal select:focus-visible { border-color: var(--blue); }
+.cell.off .card { opacity: .55; }
+.cell.off .src-meta { white-space: normal; }
+
 @media (max-width: 900px) {
   /* minmax(0, …)：否则长代码行会把单列撑宽，整个预览框横向错位 */
   .viewer { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 46%) minmax(0, 1fr); }
   .vw-info { border-left: 0; border-top: 1px solid var(--line); }
   .vw-stage { padding: 12px; }
+  .reader { grid-template-rows: minmax(0, 34%) minmax(0, 1fr); }
+  .reader.no-img { grid-template-rows: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
   .hero.sub { padding-top: 110px; min-height: 0; justify-content: flex-start; }
@@ -644,6 +699,17 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
   .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * clamp(20px, 7vw, 120px)); padding: 0 clamp(20px, 7vw, 120px); }
   .chips::-webkit-scrollbar { display: none; }
   .chips button { flex: none; white-space: nowrap; }
+  .nw-journal, .nw-journal select { width: 100%; max-width: none; }
+  .nw { padding: 12px 8px 12px 12px; gap: 12px; }
+  .nw-ph, .nw-img { width: 56px; height: 56px; }
+  .nw-bar { flex-wrap: wrap; }
+  .nw-bar .nw-journal { flex: 1 1 30%; }
+  .nw-bar .nw-journal:first-child { flex-basis: 100%; }
+  .nw-bar .chips { flex-basis: 100%; }
+  /* 网格子项默认 min-width: auto，不换行的期刊条会把内容列撑宽，整页横向溢出 */
+  .content { min-width: 0; }
+  .nw-js { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .nw-js button { flex: none; white-space: nowrap; }
 }
 @media (max-width: 560px) {
   .brand-name { display: none; }

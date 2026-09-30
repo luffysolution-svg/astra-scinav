@@ -8,7 +8,9 @@
 // 外链是否可访问另用 node scripts/linkcheck.mjs --content --sample 80 分批抽查。
 import fs from 'node:fs';
 import vm from 'node:vm';
+import crypto from 'node:crypto';
 import * as status from './status.mjs';
+import * as news from './sync_news.mjs';
 
 const errors = [], warns = [];
 const err = m => errors.push(m), warn = m => warns.push(m);
@@ -103,7 +105,7 @@ const figs = json('content/figures.json');
 walkUrls(figs, 'figures');
 unique(figs.categories.map(c => c.id), '绘图分类 id');
 unique(figs.sources.map(s => s.id), '绘图来源 id');
-const fSrc = new Set(figs.sources.map(s => s.id));
+const fSrc = new Set(figs.sources.map(s => s.id)), figSrc = new Map(figs.sources.map(s => [s.id, s]));
 for (const s of figs.sources) if (!s.license) err(`绘图来源 ${s.id} 未标注协议`);
 const items = figs.categories.flatMap(c => c.items.map(x => ({ ...x, cat: c.id })));
 unique(items.map(x => x.id), '绘图模板 id');
@@ -111,12 +113,82 @@ for (const x of items) {
   if (!x.id || !ID.test(x.id) || !x.id.startsWith(x.cat + '-')) err(`绘图模板 id 不合法：${x.id}（${x.t}）`);
   if (!fSrc.has(x.src)) err(`绘图模板 ${x.id}：来源 ${x.src} 不在 sources 列表中`);
   if (x.code && !x.lang) err(`绘图模板 ${x.id}：有代码但缺少 lang`);
+  // 子分类：分类声明了 subs 时每条都必须属于其中之一，否则页面不会显示
+  const subs = figs.categories.find(c => c.id === x.cat).subs;
+  if (subs ? !subs.some(s => s.id === x.sub) : x.sub) err(`绘图模板 ${x.id}：子分类 ${x.sub ?? '缺失'} 不在分类 ${x.cat} 的 subs 中`);
+  // 生图提示词：必须有 prompt，不用 code 冒充；来源必须有可核验的再分发授权依据
+  const s = figSrc.get(x.src);
+  if (s?.listOnly) err(`绘图模板 ${x.id}：来源 ${x.src} 未获再分发授权（listOnly），只能列出链接，不能收录条目`);
+  if (x.type === 'prompt') {
+    if (!x.prompt?.trim()) err(`绘图模板 ${x.id}：type 为 prompt 但缺少 prompt`);
+    if (x.code) err(`绘图模板 ${x.id}：Prompt 条目不应带 code，提示词写在 prompt 字段`);
+    if (s && !s.licenseUrl && !s.licenseNote) err(`Prompt 条目 ${x.id}：来源 ${x.src} 缺少授权依据（licenseUrl 或 licenseNote）`);
+    if (x.tags && !(Array.isArray(x.tags) && x.tags.every(t => typeof t === 'string' && t))) err(`Prompt 条目 ${x.id}：tags 必须是字符串数组`);
+    if (x.aspect && !/^\d+(\.\d+)?:\d+(\.\d+)?$/.test(x.aspect)) err(`Prompt 条目 ${x.id}：aspect 应写成 16:9 这样的比例`);
+  } else if (x.prompt) err(`绘图模板 ${x.id}：只有 type 为 prompt 的条目才有 prompt 字段`);
   if (!x.w) warn(`绘图模板 ${x.id} 还没有缩略图，不会上线；请运行 node scripts/sync_figures.mjs`);
   else if (!fs.existsSync(`site/${x.thumb}`)) err(`缩略图缺失：site/${x.thumb}`);
 }
+const promptItems = items.filter(x => x.type === 'prompt');
+const squash = s => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+unique(promptItems.map(x => squash(x.t)), 'Prompt 条目标题');
+unique(promptItems.map(x => squash(x.prompt)), 'Prompt 条目提示词');
+unique(promptItems.map(x => x.img).filter(Boolean), 'Prompt 条目图片');
+// 原图链接不同但内容相同的，看缩略图文件哈希
+unique(promptItems.filter(x => x.w && fs.existsSync(`site/${x.thumb}`)).map(x => crypto.createHash('sha1').update(fs.readFileSync(`site/${x.thumb}`)).digest('hex')), 'Prompt 条目缩略图内容');
 unique(figs.journals.map(j => j.j), '期刊规范');
 for (const j of figs.journals) if (!j.url) err(`期刊 ${j.j} 缺少链接`);
 for (const p of figs.palettes) for (const c of p.c) if (!/^#[0-9a-f]{6}$/i.test(c)) err(`配色 ${p.name} 色值不合法：${c}`);
+
+/* ---------- 学术前沿 ---------- */
+const nCfg = json('content/news-sources.json');
+const nData = fs.existsSync('content/news.json') ? json('content/news.json') : null;
+if (JSON.stringify(nCfg.categories.map(c => c.id)) !== JSON.stringify(news.CATEGORY_IDS)) err(`学术前沿分类必须是固定的 ${news.CATEGORY_IDS.join('、')}（顺序一致）`);
+unique(nCfg.sources.map(s => s.id), '学术前沿来源 id');
+for (const s of nCfg.sources) {
+  const w = `学术前沿来源 ${s.id}`;
+  if (!ID.test(s.id || '')) err(`${w}：id 不合法`);
+  if (!s.name) err(`${w}：缺少 name`);
+  if (!news.CATEGORY_IDS.includes(s.category)) err(`${w}：未知分类 ${s.category}`);
+  if (!news.APIS.includes(s.api)) err(`${w}：未知 api ${s.api}`);
+  checkUrl(s.site, `${w}.site`);
+  if (s.feed) checkUrl(s.feed, `${w}.feed`);
+  if (s.enabled === false && !s.note) err(`${w}：已禁用但没有在 note 写明原因`);
+  if (s.enabled === false) continue;
+  if (s.api === 'rss' && !s.feed) err(`${w}：api 为 rss 但缺少 feed`);
+  if (s.api === 'crossref' && !s.issn && !s.prefix) err(`${w}：api 为 crossref 但缺少 issn 或 prefix`);
+  if (s.issn && !/^\d{4}-\d{3}[\dX]$/.test(s.issn)) err(`${w}：ISSN 格式不对 ${s.issn}`);
+  if (s.api === 'arxiv' && !s.query) err(`${w}：api 为 arxiv 但缺少 query`);
+}
+unique(nCfg.sources.filter(s => s.enabled !== false && !s.prefix).map(s => s.name), '学术前沿启用来源名称（文章按期刊名归属来源）');
+if (!nData) err('缺少 content/news.json，请运行 node scripts/sync_news.mjs');
+else {
+  if (nData.generated !== null && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/.test(nData.generated)) err(`news.json generated 格式不对：${nData.generated}`);
+  unique(nData.articles.map(a => a.id), '学术前沿文章 id');
+  const fields = JSON.stringify(news.FIELDS);
+  for (const a of nData.articles) {
+    const w = `学术前沿文章 ${a.id}（${String(a.title).slice(0, 30)}）`;
+    // 只允许约定的字段，字段顺序固定
+    if (JSON.stringify(Object.keys(a)) !== fields) { err(`${w}：字段必须恰好是 ${news.FIELDS.join(', ')}，实际为 ${Object.keys(a).join(', ')}`); continue; }
+    if (!/^n[0-9a-f]{12}$/.test(a.id) || a.id !== news.makeId(a)) err(`${w}：id 与 DOI / 链接推算的不一致`);
+    if (typeof a.title !== 'string' || !a.title.trim() || /<[a-z/][^>]*>/i.test(a.title)) err(`${w}：标题为空或含 HTML`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(a.date) || (t => Number.isNaN(t) || new Date(t).toISOString().slice(0, 10) !== a.date)(Date.parse(a.date + 'T00:00:00Z'))) err(`${w}：日期不合法 ${a.date}`);
+    if (a.doi !== null && (typeof a.doi !== 'string' || !/^10\.\d{4,9}\/\S+$/.test(a.doi) || a.doi !== a.doi.toLowerCase())) err(`${w}：DOI 格式不对 ${a.doi}（只存小写的 10.xxxx/…，不带 doi.org 前缀）`);
+    checkUrl(a.url, `${w}.url`);
+    if (!news.CATEGORY_IDS.includes(a.category)) err(`${w}：未知分类 ${a.category}`);
+    if (!news.SOURCE_TYPES.includes(a.source)) err(`${w}：未知 source ${a.source}`);
+    const s = news.owner(nCfg.sources, a);
+    if (!s) err(`${w}：期刊 ${a.journal} 不属于任何来源`);
+    else if (s.category !== a.category) err(`${w}：分类 ${a.category} 与来源 ${s.id} 的分类 ${s.category} 不一致`);
+    // 封面：只能是已下载的本地 WebP（页面 CSP 不允许外链图片）
+    if (a.image !== null && (typeof a.image !== 'string' || !/^news\/n[0-9a-f]{12}\.webp$/.test(a.image) || !fs.existsSync(`site/${a.image}`))) err(`${w}：image 必须是已存在的本地 WebP（news/<id>.webp）`);
+    if (a.abstract !== null && (typeof a.abstract !== 'string' || a.abstract.length < 60 || a.abstract.length > 4001 || /<[a-z/][^>]*>/i.test(a.abstract))) err(`${w}：摘要必须是 60–4000 字的纯文本`);
+  }
+  same('site/data/news.js', news.render(nCfg, nData));
+  same('site/data/news-abstracts.json', news.renderAbstracts(nData));
+  const covers = new Set(nData.articles.map(a => a.image).filter(Boolean));
+  if (fs.existsSync('site/news')) for (const f of fs.readdirSync('site/news')) if (!covers.has(`news/${f}`)) warn(`多余的封面文件 site/news/${f}（运行 sync_news.mjs --offline 清理）`);
+}
 
 /* ---------- 5. 生成文件与源数据一致 ---------- */
 function same(file, expected) {
@@ -145,5 +217,5 @@ for (const f of shell) if (f !== './' && !fs.existsSync(`site/${f}`)) err(`sw.js
 if (warns.length) console.log(`\n警告 ${warns.length}：\n  ${warns.join('\n  ')}`);
 if (errors.length) console.log(`\n错误 ${errors.length}：\n  ${errors.join('\n  ')}`);
 const n = NAV.reduce((s, c) => s + c.s.length, 0);
-console.log(`\nnav ${n} · skills ${repos.length} · prompts ${allPrompts.length} · figures ${items.length} · 错误 ${errors.length} · 警告 ${warns.length}`);
+console.log(`\nnav ${n} · skills ${repos.length} · prompts ${allPrompts.length} · figures ${items.length} · news ${nData?.articles.length ?? 0} · 错误 ${errors.length} · 警告 ${warns.length}`);
 process.exit(errors.length ? 1 : 0);

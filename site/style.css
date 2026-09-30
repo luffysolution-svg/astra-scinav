@@ -410,6 +410,13 @@ body.searching .stats { display: none; }
 .motion svg { width: 18px; height: 18px; fill: none; stroke: var(--ink-3); stroke-width: 1.6; transition: stroke .25s; }
 .motion:hover svg { stroke: var(--ink); }
 .motion[aria-pressed="true"] svg ellipse { stroke-dasharray: 2.5 3; }
+/* 顶栏：回到个人博客 */
+.blog-link {
+  flex: none; display: inline-flex; align-items: center; gap: 5px; height: 32px; padding: 0 12px; border-radius: 999px;
+  font-size: 13px; color: var(--ink-3); border: 1px solid var(--line); transition: color .25s, border-color .25s;
+}
+.blog-link:hover { color: var(--ink); border-color: var(--line-2); }
+.blog-link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 .calm .brand-mark i, .calm .pulse { animation: none; }
 .calm .title .shimmer { animation: rise 1.1s .12s var(--ease) both; }
 .calm .field:focus-within::before { animation: none; }
@@ -563,7 +570,11 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
 }
 @media (max-width: 420px) {
   .brand-name { display: none; }
-  .page-nav a { padding: 5px 9px; font-size: 12.5px; }
+  .blog-link { width: 32px; padding: 0; justify-content: center; }
+  .blog-link span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .topbar { gap: 8px; padding: 0 14px; }
+  .topbar .spacer { display: none; }
+  .page-nav a { padding: 5px 8px; font-size: 12.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

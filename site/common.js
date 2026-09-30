@@ -58,6 +58,10 @@ window.Astra = (() => {
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // 顶栏页面切换在窄屏可横滑，把当前页滚到可见处
+  const curPage = document.querySelector('.page-nav [aria-current]');
+  if (curPage) curPage.parentElement.scrollLeft = curPage.offsetLeft - curPage.parentElement.clientWidth / 2 + curPage.offsetWidth / 2;
+
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
   return { $, esc, store, toast, copy };
 })();

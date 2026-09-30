@@ -1,7 +1,7 @@
 /* 离线缓存：同源资源先用缓存秒开，后台再拉新版本（stale-while-revalidate） */
-const CACHE = 'astra-v2';
-const SHELL = ['./', 'skills.html', 'prompts.html', 'style.css', 'common.js', 'app.js', 'collection.js', 'galaxy.js', 'favicon.svg',
-  'data/ai.js', 'data/lit.js', 'data/lab.js', 'data/kit.js', 'data/icons.js', 'data/pinyin.js', 'data/skills.js', 'data/prompts.js'];
+const CACHE = 'astra-v3';
+const SHELL = ['./', 'skills.html', 'prompts.html', 'figures.html', 'style.css', 'common.js', 'app.js', 'collection.js', 'figures.js', 'galaxy.js', 'favicon.svg',
+  'data/ai.js', 'data/lit.js', 'data/lab.js', 'data/kit.js', 'data/icons.js', 'data/pinyin.js', 'data/skills.js', 'data/prompts.js', 'data/figures.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

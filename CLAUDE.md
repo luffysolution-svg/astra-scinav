@@ -36,6 +36,7 @@ netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发
 - 首页与子页面的搜索字段、同义词表统一在 `site/common.js`（`Astra.hay` / `SYN`），改检索逻辑只改这里。
 - 条目状态在 `content/status.json`（键名：导航为链接，其余为 `s:仓库` / `p:id` / `f:id`，与收藏一致）：`added` 由 `status.mjs` 记录，`checked` / `fails` 只由 GitHub Actions 每周的 `linkcheck --write` 更新；本地网络噪声大，不要在本地用 `--write`。
 - 首页收藏分组 `astra:groups`、私人备注 `astra:notes` 只存浏览器，随导出备份（v4）。
+- 绘图工作台 `site/workbench.html` 用 iframe 嵌入独立站点 `https://canvas.luffysite.top`（Netlify 站点 `astra-canvas`，构建自 fork `luffysolution-svg/infinite-canvas` 的 `main`，该分支只跟随上游）。画布站响应头与 SPA 回退在 `deploy/canvas/`，由 `.github/workflows/canvas.yml` 每小时同步上游、构建并部署；不要把画布源码搬进 `site/`。
 
 ## 约束
 

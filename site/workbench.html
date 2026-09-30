@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>科研绘图工作台 · Astra 星图</title>
+  <meta name="description" content="在 Astra 里直接使用开源无限画布 Infinite Canvas：拖拽排版、素材与提示词管理，接入自己的 AI 接口生成图像，作品保存在本浏览器。">
+  <link rel="canonical" href="https://nav.luffysite.top/workbench.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Astra 星图">
+  <meta property="og:title" content="科研绘图工作台 · Astra 星图">
+  <meta property="og:description" content="在 Astra 里直接使用开源无限画布 Infinite Canvas：拖拽排版、素材与提示词管理，接入自己的 AI 接口生成图像，作品保存在本浏览器。">
+  <meta property="og:url" content="https://nav.luffysite.top/workbench.html">
+  <meta property="og:image" content="https://nav.luffysite.top/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#040406">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="workbench" class="scrolled">
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Astra 星图 首页">
+      <span class="brand-mark" aria-hidden="true"><i></i></span>
+      <span class="brand-name">Astra<em>星图</em></span>
+    </a>
+    <nav class="page-nav" aria-label="页面">
+      <a href="./">导航</a>
+      <a href="skills.html">科研 SKILL</a>
+      <a href="prompts.html">科研 Prompt</a>
+      <a href="figures.html">科研绘图</a>
+      <a href="workbench.html" aria-current="page">绘图工作台</a>
+      <a href="news.html">学术前沿</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="blog-link" href="https://luffysite.top/" title="Luffy 的个人博客">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg><span>博客</span>
+    </a>
+  </header>
+
+  <main class="wb">
+    <div class="wb-bar">
+      <div class="wb-intro">
+        <h1>科研绘图工作台</h1>
+        <p>基于开源项目 <a class="link" href="https://github.com/basketikun/infinite-canvas">Infinite Canvas</a>（basketikun，MIT 协议）。作品和 API Key 只保存在本浏览器，AI 请求由画布直连你配置的接口；升级前建议先在画布里导出备份。</p>
+      </div>
+      <div class="wb-act">
+        <button type="button" class="btn" id="wbFull">全屏</button>
+        <a class="btn primary" id="wbOpen" href="https://canvas.luffysite.top/" target="_blank" rel="noopener">独立打开</a>
+      </div>
+    </div>
+    <div class="wb-frame" id="wbBox">
+      <p class="wb-load" id="wbLoad" role="status">正在加载画布…</p>
+      <iframe id="wbFrame" src="https://canvas.luffysite.top/" title="科研绘图工作台（Infinite Canvas）"
+        allow="clipboard-read; clipboard-write; fullscreen; loopback-network; local-network-access"></iframe>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="workbench.js"></script>
+</body>
+</html>

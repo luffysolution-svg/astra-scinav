@@ -1,0 +1,6 @@
+# 画布站（canvas.luffysite.top）响应头：由 .github/workflows/canvas.yml 在部署前复制进构建产物
+# 只限制谁能嵌入；插件用 blob: 动态导入、模型插件用 new Function，AI / WebDAV / 本地 Agent 地址由用户自填，不能套 Astra 的严格 CSP
+/*
+  Content-Security-Policy: frame-ancestors 'self' https://nav.luffysite.top
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,0 +1,137 @@
+# 画布站（canvas.luffysite.top）跟随上游：检查 basketikun/infinite-canvas → 同步 fork main → 构建 → 部署到独立 Netlify 站点
+# fork 的 main 只跟随上游，用 GitHub merge-upstream 接口同步（能快进就快进，fork 有自己的提交则生成合并提交，冲突时报错，从不强推）
+# 部署适配文件（响应头、SPA 回退）在本仓库 deploy/canvas/，构建和部署都在本工作流内完成，不依赖推送去触发别的工作流
+# 任何一步失败都不会执行 netlify deploy，线上保留上一版；每次部署的说明里记录 fork 与上游 commit，线上版本即 Netlify 当前发布的那次部署
+#
+# 需要：Secrets CANVAS_FORK_TOKEN（fork 的 Contents、Workflows 读写）、NETLIFY_AUTH_TOKEN；Variables CANVAS_NETLIFY_SITE_ID
+# 暂停自动同步：Variables 里设 CANVAS_SYNC_PAUSED=true（只影响定时运行，手动运行照常）
+name: 同步画布站
+
+on:
+  schedule:
+    - cron: '17 * * * *'   # 每小时一次；GitHub 定时任务常延迟数分钟到更久，不保证准点
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: '只部署 fork 的指定 commit（回滚用，不同步上游）；留空则同步上游并部署 fork main'
+        required: false
+        default: ''
+      force:
+        description: '即使线上已是该版本也重新构建部署'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: canvas
+  cancel-in-progress: false
+
+env:
+  FORK: luffysolution-svg/infinite-canvas
+  UPSTREAM: basketikun/infinite-canvas
+  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+  NETLIFY_SITE_ID: ${{ vars.CANVAS_NETLIFY_SITE_ID }}
+
+jobs:
+  canvas:
+    if: github.event_name != 'schedule' || vars.CANVAS_SYNC_PAUSED != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: 同步 fork main 与上游
+        if: ${{ !inputs.ref }}
+        env:
+          GH_TOKEN: ${{ secrets.CANVAS_FORK_TOKEN }}
+        run: |
+          gh api -X POST "repos/$FORK/merge-upstream" -f branch=main --jq '"merge_type=\(.merge_type)：\(.message)"' || {
+            echo "::error::同步 fork 失败（409 为合并冲突，需在 fork 手动合并上游；403/404 多为 CANVAS_FORK_TOKEN 权限不足或过期）。线上保持上一版。"
+            exit 1
+          }
+
+      - name: 确定部署版本
+        id: target
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: ${{ inputs.ref }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          sha=$(gh api "repos/$FORK/commits/${REF:-main}" --jq .sha)
+          up=$(gh api "repos/$UPSTREAM/commits/main" --jq .sha)
+          live=$(curl -fsS -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID" | jq -r '.published_deploy.title // ""')
+          if [ -n "$REF" ]; then title="fork $sha · 手动指定"; else title="fork $sha · upstream $up"; fi
+          echo "线上版本：${live:-（无）}"
+          echo "目标版本：$title"
+          { echo "sha=$sha"; echo "title=$title"; echo "live=$live"; } >> "$GITHUB_OUTPUT"
+          skip=false
+          [ "$FORCE" != true ] && [[ "$live" == "fork $sha "* ]] && skip=true
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
+          if [ "$skip" = true ]; then echo "### 画布站无更新，跳过构建部署" >> "$GITHUB_STEP_SUMMARY"; echo "$live" >> "$GITHUB_STEP_SUMMARY"; fi
+
+      # 同一版本构建或部署失败后，定时运行不再每小时重试，等上游有新提交或手动运行
+      - name: 查询该版本是否已失败过
+        id: failed
+        if: steps.target.outputs.skip == 'false' && github.event_name == 'schedule'
+        uses: actions/cache/restore@v4
+        with:
+          path: .canvas-failed
+          key: canvas-failed-${{ steps.target.outputs.sha }}
+          lookup-only: true
+
+      - name: 是否继续
+        id: go
+        run: |
+          go=${{ steps.target.outputs.skip == 'false' && steps.failed.outputs.cache-hit != 'true' }}
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+          [ "${{ steps.failed.outputs.cache-hit }}" = true ] && echo "::warning::该版本此前已失败过，定时运行跳过；修复后请手动运行" || true
+
+      - uses: actions/checkout@v4
+        if: steps.go.outputs.go == 'true'
+        with:
+          sparse-checkout: deploy/canvas
+          path: astra
+
+      - uses: actions/checkout@v4
+        if: steps.go.outputs.go == 'true'
+        with:
+          repository: ${{ env.FORK }}
+          ref: ${{ steps.target.outputs.sha }}
+          path: canvas
+
+      - uses: oven-sh/setup-bun@v2
+        if: steps.go.outputs.go == 'true'
+
+      - name: 构建（与上游 GitHub Pages 工作流相同的 bun install / bun run build）
+        if: steps.go.outputs.go == 'true'
+        working-directory: canvas/web
+        run: |
+          bun install
+          bun run build
+          test -f dist/index.html
+          cp ../../astra/deploy/canvas/_headers ../../astra/deploy/canvas/_redirects dist/
+
+      # 在画布仓库目录内执行，避免 CLI 读到 Astra 根目录的 netlify.toml
+      - name: 部署到 Netlify
+        if: steps.go.outputs.go == 'true'
+        working-directory: canvas/web
+        env:
+          TITLE: ${{ steps.target.outputs.title }}
+        run: |
+          npx -y netlify-cli@26 deploy --prod --no-build --dir dist --message "$TITLE" --json > "$RUNNER_TEMP/deploy.json"
+          jq -r --arg t "$TITLE" '"### 画布站已部署\n- 版本：\($t)\n- 部署：\(.deploy_url)\n- 日志：\(.logs)"' "$RUNNER_TEMP/deploy.json" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 记录失败
+        if: failure()
+        env:
+          LIVE: ${{ steps.target.outputs.live }}
+        run: |
+          echo "### 画布站未更新，线上保持上一版" >> "$GITHUB_STEP_SUMMARY"
+          echo "线上版本：${LIVE:-见 Netlify 后台 Deploys}；失败原因见上方出错步骤的日志" >> "$GITHUB_STEP_SUMMARY"
+          touch .canvas-failed
+
+      - uses: actions/cache/save@v4
+        if: failure() && steps.go.outputs.go == 'true'
+        with:
+          path: .canvas-failed
+          key: canvas-failed-${{ steps.target.outputs.sha }}

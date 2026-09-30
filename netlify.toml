@@ -10,7 +10,8 @@
     Strict-Transport-Security = "max-age=31536000"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
     # 页面大量使用 style="--h:…" 等内联样式变量，style-src 需保留 'unsafe-inline'；脚本全部为同源文件
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    # frame-src 只放行绘图工作台嵌入的画布站；Netlify 对同一路径的多条同名头会合并成多份策略同时生效，无法只给单页放宽，故写在全站策略里
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-src 'self' https://canvas.luffysite.top; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 [[headers]]
   for = "/icons/*"

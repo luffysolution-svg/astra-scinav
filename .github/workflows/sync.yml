@@ -27,9 +27,13 @@ jobs:
         run: node scripts/sync_collections.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 更新新增日期
+        run: node scripts/status.mjs
+      - name: 校验
+        run: node scripts/validate.mjs
       - name: 有变化则提交
         run: |
-          git add content site/data/skills.js site/data/prompts.js
+          git add content site/data/skills.js site/data/prompts.js site/data/status.js
           if git diff --cached --quiet; then echo "无变化"; exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898278+github-actions[bot]@users.noreply.github.com'

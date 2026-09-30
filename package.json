@@ -5,6 +5,7 @@
   "scripts": {
     "pinyin": "node scripts/pinyin.mjs",
     "check": "node scripts/check.mjs",
+    "validate": "node scripts/validate.mjs",
     "linkcheck": "node scripts/linkcheck.mjs",
     "sync": "node scripts/sync_collections.mjs"
   },

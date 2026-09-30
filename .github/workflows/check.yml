@@ -1,0 +1,47 @@
+# 数据校验：每次推送与 PR 运行，出错则阻止合并
+# 每周另抽查一批外链，结果写入 content/status.json（页面显示「最近核验」与「疑似失效」）并提交
+name: 数据校验
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 2 * * 1'   # 每周一 10:00（北京时间）抽查外链
+  workflow_dispatch:
+
+jobs:
+  validate:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/validate.mjs
+
+  links:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: sync
+      cancel-in-progress: false
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/linkcheck.mjs --all --content --sample 150 --write
+      - name: 有变化则提交
+        run: |
+          git add content/status.json site/data/status.js
+          if git diff --cached --quiet; then echo "无变化"; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898278+github-actions[bot]@users.noreply.github.com'
+          git commit -m "链接核验（$(date -u +%F)）"
+          git push

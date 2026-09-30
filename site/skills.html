@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>科研 SKILL · Astra 星图</title>
   <meta name="description" content="收录 GitHub 上面向科研的开源 Agent Skills（Claude Code 等），按领域分类，附安装命令与仓库链接。">
+  <link rel="canonical" href="https://nav.luffysite.top/skills.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Astra 星图">
+  <meta property="og:title" content="科研 SKILL · Astra 星图">
+  <meta property="og:description" content="收录 GitHub 上面向科研的开源 Agent Skills（Claude Code 等），按领域分类，附安装命令与仓库链接。">
+  <meta property="og:url" content="https://nav.luffysite.top/skills.html">
+  <meta property="og:image" content="https://nav.luffysite.top/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#040406">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -61,7 +72,7 @@
 
     <div class="layout">
       <aside class="side" aria-label="分类目录"><nav id="sideNav"></nav></aside>
-      <div class="content" id="content"></div>
+      <div class="content" id="content"><noscript><p class="empty">本站的目录与搜索需要启用 JavaScript，请在浏览器设置中开启后刷新。</p></noscript></div>
     </div>
     <p class="empty" id="empty" hidden>没有匹配的 Skill，换个关键词试试。</p>
   </main>
@@ -89,6 +100,7 @@
   <p class="sr-only" id="live" aria-live="polite"></p>
 
   <script src="data/skills.js"></script>
+  <script src="data/status.js"></script>
   <script src="galaxy.js"></script>
   <script src="common.js"></script>
   <script src="collection.js"></script>

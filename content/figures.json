@@ -2276,7 +2276,18 @@
       "font": "优先无衬线字体（首选 Helvetica）；缩放后文字约 7 pt（约 2.5 mm 高），不小于 5 pt；同一图内字号勿差异过大；符号不小于 6 pt，线宽不小于 0.5 pt",
       "dpi": "初投稿 300 dpi；修改稿：非矢量线稿最终尺寸下至少 300 dpi（越高越好），灰度/彩色图片最终尺寸下至少 300 dpi",
       "fmt": "矢量图首选 PDF、EPS 或 AI；栅格图用 TIFF（≥300 dpi）；矢量+照片组合用 PDF 或 EPS；不接受 PowerPoint",
-      "url": "https://www.science.org/content/page/instructions-preparing-revised-manuscript（官网有 Cloudflare 拦截，经 Wayback Machine 2025-03/2025-08 存档核对，同时参考 instructions-preparing-initial-manuscript）",
+      "url": "https://www.science.org/content/page/instructions-preparing-revised-manuscript",
+      "note": "官网有 Cloudflare 拦截，经 Wayback Machine 2025-03/2025-08 存档核对",
+      "refs": [
+        {
+          "t": "存档",
+          "url": "https://web.archive.org/web/20250801000000/https://www.science.org/content/page/instructions-preparing-revised-manuscript"
+        },
+        {
+          "t": "初投稿指南",
+          "url": "https://www.science.org/content/page/instructions-preparing-initial-manuscript"
+        }
+      ],
       "checked": "2026-09-30"
     },
     {
@@ -2288,7 +2299,14 @@
       "font": "仅用 Arial 并嵌入字体；最终尺寸下文字约 6–8 pt；线宽 0.5–1.5 pt；ChemDraw 标注 Arial 7 pt",
       "dpi": "彩色/灰度 ≥300 dpi；黑白 ≥500 dpi；线稿 ≥1000 dpi（均为最终印刷尺寸）",
       "fmt": "终稿首选 TIFF 和 PDF（TIFF 用于位图，EPS 用于矢量图，也接受 JPG、CDX）；单文件 ≤20 MB；色彩 RGB；Cell 的 Leading Edge 图用 AI/PSD/PPT；初投稿格式不限",
-      "url": "https://www.cell.com/information-for-authors/figure-guidelines（官网有 Cloudflare 拦截，经 Wayback Machine 2025-09-11 存档核对）",
+      "url": "https://www.cell.com/information-for-authors/figure-guidelines",
+      "note": "官网有 Cloudflare 拦截，经 Wayback Machine 2025-09-11 存档核对",
+      "refs": [
+        {
+          "t": "存档",
+          "url": "https://web.archive.org/web/20250911000000/https://www.cell.com/information-for-authors/figure-guidelines"
+        }
+      ],
       "checked": "2026-09-30"
     },
     {
@@ -2300,7 +2318,18 @@
       "font": "全文图统一字体，用 Arial、Helvetica、Times、Symbol 等标准字体并嵌入；缩放后文字、数字、符号不小于 6 pt（2 mm）、不大于 12 pt（6 mm）；图内字号保持一致；线宽 ≥0.25 pt",
       "dpi": "无文字灰度/彩色图 300 dpi；带文字的图（组合图）600–900 dpi；线稿（如柱状图）1000–1200 dpi（均为出版尺寸）",
       "fmt": "TIFF、EPS、PDF 或 PPT（矢量图优先用 Illustrator/EPS 并嵌入字体）；3D 图用 PRC 或 U3D 并附 2D 版本；色彩 RGB；组合图需预先拼好",
-      "url": "https://www.pnas.org/author-center/submitting-your-manuscript（官网有 Cloudflare 拦截，经 Wayback 2026-06-17 存档核对）；尺寸取自该页链接的官方 PDF https://www.pnas.org/pb-assets/authors/digitalart-1675347574760.pdf",
+      "url": "https://www.pnas.org/author-center/submitting-your-manuscript",
+      "note": "官网有 Cloudflare 拦截，经 Wayback 2026-06-17 存档核对；尺寸取自该页链接的官方 PDF",
+      "refs": [
+        {
+          "t": "存档",
+          "url": "https://web.archive.org/web/20260617000000/https://www.pnas.org/author-center/submitting-your-manuscript"
+        },
+        {
+          "t": "官方尺寸 PDF",
+          "url": "https://www.pnas.org/pb-assets/authors/digitalart-1675347574760.pdf"
+        }
+      ],
       "checked": "2026-09-30"
     },
     {
@@ -2312,7 +2341,17 @@
       "font": "优先用 Arial（或 Helvetica）、Courier、Symbol、Times（或 Times New Roman）；印刷尺寸下正文约 7 pt，上下标不小于 6 pt（经验值，具体以期刊指南为准）",
       "dpi": "照片（灰度/彩色半色调）≥300 dpi；组合图 500 dpi；线稿 ≥1000 dpi（线条很细时 1200 dpi）",
       "fmt": "仅推荐 EPS、PDF、TIFF 或 JPEG（也接受 Word/Excel/PPT）；矢量图首选 EPS，位图首选 TIFF，照片也可用最高质量 JPEG；RGB 优先",
-      "url": "https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions/artwork-sizing（另参考同目录 artwork-overview 与 artwork-types）",
+      "url": "https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions/artwork-sizing",
+      "refs": [
+        {
+          "t": "Artwork overview",
+          "url": "https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions/artwork-overview"
+        },
+        {
+          "t": "Artwork types",
+          "url": "https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions/artwork-types"
+        }
+      ],
       "checked": "2026-09-30"
     },
     {
@@ -2324,7 +2363,8 @@
       "font": "Helvetica 或 Arial；出版尺寸下文字不小于 4.5 pt；线宽不小于 0.5 pt",
       "dpi": "黑白线稿 1200 dpi；灰度图 600 dpi；彩色图 300 dpi（插入稿件的图的最低分辨率）",
       "fmt": "图应尽量直接插入稿件正文；作者指南未规定正文图的首选文件格式（封面图用 TIF、JPG、PNG 或 EPS）",
-      "url": "https://researcher-resources.acs.org/publish/author_guidelines?coden=jacsat（JACS 作者指南 Appendix 2: Preparing Graphics，ACS 各刊通用格式）",
+      "url": "https://researcher-resources.acs.org/publish/author_guidelines?coden=jacsat",
+      "note": "JACS 作者指南 Appendix 2: Preparing Graphics，ACS 各刊通用格式",
       "checked": "2026-09-30"
     },
     {
@@ -2348,7 +2388,13 @@
       "font": null,
       "dpi": "彩色/灰度图 >300 dpi；黑白线稿 >600 dpi；组合图未单独规定；优先提交矢量图",
       "fmt": "接受 PS、EPS、PDF、PNG、TIFF；矢量格式（PS、EPS、PDF）优先；Office 文件（DOC/PPT/XLS）仅限原本用其绘制的图；不接受 VSD、GIF、BMP",
-      "url": "https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-journal-article/create-graphics-for-your-article/resolution-and-size/（另参考同目录 file-formatting/）",
+      "url": "https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-journal-article/create-graphics-for-your-article/resolution-and-size/",
+      "refs": [
+        {
+          "t": "File formatting",
+          "url": "https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-journal-article/create-graphics-for-your-article/file-formatting/"
+        }
+      ],
       "checked": "2026-09-30"
     },
     {
@@ -2372,7 +2418,14 @@
       "font": "通用图只要求文字、数值、比例尺清晰易读；化学结构图说明/原子标注用 Arial/Helvetica 7 pt",
       "dpi": "图、Scheme、Chart ≥600 dpi；照片尽可能高分辨率（最低 600 dpi）；未单独规定组合图",
       "fmt": "首选 TIFF（也可交 EPS 或 PDF，终稿会转为 TIFF）；照片可用 TIFF、PDF 或 JPEG；化学结构图存为 TIFF、EPS 或 PDF",
-      "url": "https://www.rsc.org/journals-books-databases/author-and-reviewer-hub/authors-information/prepare-and-format/figures-graphics-images/（官网有 Cloudflare 拦截，经 Wayback 2025-06-03 存档核对）",
+      "url": "https://www.rsc.org/journals-books-databases/author-and-reviewer-hub/authors-information/prepare-and-format/figures-graphics-images/",
+      "note": "官网有 Cloudflare 拦截，经 Wayback 2025-06-03 存档核对",
+      "refs": [
+        {
+          "t": "存档",
+          "url": "https://web.archive.org/web/20250603000000/https://www.rsc.org/journals-books-databases/author-and-reviewer-hub/authors-information/prepare-and-format/figures-graphics-images/"
+        }
+      ],
       "checked": "2026-09-30"
     }
   ],

@@ -1,0 +1,2066 @@
+{
+ "https://chatgpt.com/": {
+  "added": "2026-09-29"
+ },
+ "https://claude.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://gemini.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://chat.deepseek.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.kimi.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.doubao.com/chat/": {
+  "added": "2026-09-29"
+ },
+ "https://yuanbao.tencent.com/chat/": {
+  "added": "2026-09-29"
+ },
+ "https://www.tongyi.com/": {
+  "added": "2026-09-29"
+ },
+ "https://chat.qwen.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://chatglm.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://yiyan.baidu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://grok.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.perplexity.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://poe.com/": {
+  "added": "2026-09-29"
+ },
+ "https://copilot.microsoft.com/": {
+  "added": "2026-09-29"
+ },
+ "https://chat.mistral.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://huggingface.co/chat/": {
+  "added": "2026-09-29"
+ },
+ "https://xinghuo.xfyun.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://metaso.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://consensus.app/": {
+  "added": "2026-09-29"
+ },
+ "https://elicit.com/": {
+  "added": "2026-09-29"
+ },
+ "https://scispace.com/": {
+  "added": "2026-09-29"
+ },
+ "https://scite.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://www.researchrabbit.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://www.connectedpapers.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.litmaps.com/": {
+  "added": "2026-09-29"
+ },
+ "https://notebooklm.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.alphaxiv.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.undermind.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://app.txyz.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://www.scholarcy.com/": {
+  "added": "2026-09-29"
+ },
+ "https://suppr.wilddata.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://ai4scholar.net/": {
+  "added": "2026-09-29"
+ },
+ "https://sciverse.space/": {
+  "added": "2026-09-29"
+ },
+ "https://www.bohrium.com/": {
+  "added": "2026-09-29"
+ },
+ "https://agentmira.io/": {
+  "added": "2026-09-29"
+ },
+ "https://www.scienceone.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://dsh-research.com/": {
+  "added": "2026-09-29"
+ },
+ "https://discovery.intern-ai.org.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.chatpdf.com/": {
+  "added": "2026-09-29"
+ },
+ "https://chatdoc.com/": {
+  "added": "2026-09-29"
+ },
+ "https://paperpal.com/": {
+  "added": "2026-09-29"
+ },
+ "https://inciteful.xyz/": {
+  "added": "2026-09-29"
+ },
+ "https://www.futurehouse.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.claude.com/product/claude-code": {
+  "added": "2026-09-29"
+ },
+ "https://cursor.com/": {
+  "added": "2026-09-29"
+ },
+ "https://antigravity.google/": {
+  "added": "2026-09-29"
+ },
+ "https://github.com/features/copilot": {
+  "added": "2026-09-29"
+ },
+ "https://openclaw.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://manus.im/": {
+  "added": "2026-09-29"
+ },
+ "https://www.genspark.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://v0.app/": {
+  "added": "2026-09-29"
+ },
+ "https://bolt.new/": {
+  "added": "2026-09-29"
+ },
+ "https://lovable.dev/": {
+  "added": "2026-09-29"
+ },
+ "https://www.coze.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://dify.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://bloome.im/": {
+  "added": "2026-09-29"
+ },
+ "https://windsurf.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.trae.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://replit.com/": {
+  "added": "2026-09-29"
+ },
+ "https://lingma.aliyun.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.lovart.ai/zh": {
+  "added": "2026-09-29"
+ },
+ "https://www.midjourney.com/": {
+  "added": "2026-09-29"
+ },
+ "https://jimeng.jianying.com/": {
+  "added": "2026-09-29"
+ },
+ "https://klingai.com/": {
+  "added": "2026-09-29"
+ },
+ "https://runwayml.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.liblib.tv/": {
+  "added": "2026-09-29"
+ },
+ "https://www.liblib.art/": {
+  "added": "2026-09-29"
+ },
+ "https://www.krea.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://ideogram.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://nanophoto.ai/zh": {
+  "added": "2026-09-29"
+ },
+ "https://www.oiioii.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://www.updream.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://suno.com/": {
+  "added": "2026-09-29"
+ },
+ "https://elevenlabs.io/": {
+  "added": "2026-09-29"
+ },
+ "https://civitai.com/": {
+  "added": "2026-09-29"
+ },
+ "https://lumalabs.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://tongyi.aliyun.com/wanxiang/": {
+  "added": "2026-09-29"
+ },
+ "https://gamma.app/": {
+  "added": "2026-09-29"
+ },
+ "https://opennana.com/awesome-prompt-gallery/": {
+  "added": "2026-09-29"
+ },
+ "https://nanobananaprompt.org/prompts/": {
+  "added": "2026-09-29"
+ },
+ "https://youmind.com/zh-CN/nano-banana-pro-prompts": {
+  "added": "2026-09-29"
+ },
+ "https://glidea.github.io/banana-prompt-quicker/": {
+  "added": "2026-09-29"
+ },
+ "https://prompthero.com/": {
+  "added": "2026-09-29"
+ },
+ "https://lexica.art/": {
+  "added": "2026-09-29"
+ },
+ "https://learnprompting.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.aishort.top/": {
+  "added": "2026-09-29"
+ },
+ "https://www.promptingguide.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://platform.openai.com/": {
+  "added": "2026-09-29"
+ },
+ "https://console.anthropic.com/": {
+  "added": "2026-09-29"
+ },
+ "https://aistudio.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://console.cloud.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://platform.deepseek.com/": {
+  "added": "2026-09-29"
+ },
+ "https://bailian.console.aliyun.com/": {
+  "added": "2026-09-29"
+ },
+ "https://platform.qianwenai.com/": {
+  "added": "2026-09-29"
+ },
+ "https://home.qwencloud.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.volcengine.com/product/ark": {
+  "added": "2026-09-29"
+ },
+ "https://seed.bytedance.com/zh/": {
+  "added": "2026-09-29"
+ },
+ "https://siliconflow.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://openrouter.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://fal.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://www.atlascloud.ai/zh": {
+  "added": "2026-09-29"
+ },
+ "https://agnes-ai.com/": {
+  "added": "2026-09-29"
+ },
+ "https://replicate.com/": {
+  "added": "2026-09-29"
+ },
+ "https://huggingface.co/": {
+  "added": "2026-09-29"
+ },
+ "https://modelscope.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://ollama.com/": {
+  "added": "2026-09-29"
+ },
+ "https://lmstudio.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://groq.com/": {
+  "added": "2026-09-29"
+ },
+ "https://platform.moonshot.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://open.bigmodel.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://qianfan.cloud.baidu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://scholar.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://xueshu.baidu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.semanticscholar.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.aminer.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://openalex.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.x-mol.com/": {
+  "added": "2026-09-29"
+ },
+ "https://pubmed.ncbi.nlm.nih.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://app.dimensions.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://www.base-search.net/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ablesci.com/so": {
+  "added": "2026-09-29"
+ },
+ "https://www.lens.org/": {
+  "added": "2026-09-29"
+ },
+ "https://pubscholar.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://europepmc.org/": {
+  "added": "2026-09-29"
+ },
+ "https://dblp.org/": {
+  "added": "2026-09-29"
+ },
+ "https://openreview.net/": {
+  "added": "2026-09-29"
+ },
+ "https://www.webofscience.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.scopus.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.engineeringvillage.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.cnki.net/": {
+  "added": "2026-09-29"
+ },
+ "https://www.wanfangdata.com.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.cqvip.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.proquest.com/": {
+  "added": "2026-09-29"
+ },
+ "https://search.ebscohost.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.nstl.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://sciencechina.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://qikan.chaoxing.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.duxiu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ncpssd.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.jstor.org/": {
+  "added": "2026-09-29"
+ },
+ "https://cir.nii.ac.jp/": {
+  "added": "2026-09-29"
+ },
+ "https://www.jstage.jst.go.jp/": {
+  "added": "2026-09-29"
+ },
+ "https://www.kci.go.kr/": {
+  "added": "2026-09-29"
+ },
+ "https://arxiv.org/": {
+  "added": "2026-09-29"
+ },
+ "https://chemrxiv.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.biorxiv.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.medrxiv.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ssrn.com/": {
+  "added": "2026-09-29"
+ },
+ "https://doaj.org/": {
+  "added": "2026-09-29"
+ },
+ "https://core.ac.uk/": {
+  "added": "2026-09-29"
+ },
+ "https://unpaywall.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.academia.edu/": {
+  "added": "2026-09-29"
+ },
+ "http://www.paper.edu.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://chinaxiv.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.researchsquare.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.preprints.org/": {
+  "added": "2026-09-29"
+ },
+ "https://osf.io/preprints/": {
+  "added": "2026-09-29"
+ },
+ "https://hal.science/": {
+  "added": "2026-09-29"
+ },
+ "https://www.scielo.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.sciencedirect.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.nature.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.science.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.cell.com/": {
+  "added": "2026-09-29"
+ },
+ "https://pubs.acs.org/": {
+  "added": "2026-09-29"
+ },
+ "https://pubs.rsc.org/": {
+  "added": "2026-09-29"
+ },
+ "https://onlinelibrary.wiley.com/": {
+  "added": "2026-09-29"
+ },
+ "https://link.springer.com/": {
+  "added": "2026-09-29"
+ },
+ "https://ieeexplore.ieee.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.tandfonline.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.mdpi.com/": {
+  "added": "2026-09-29"
+ },
+ "https://plos.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.pnas.org/": {
+  "added": "2026-09-29"
+ },
+ "https://journals.aps.org/": {
+  "added": "2026-09-29"
+ },
+ "https://iopscience.iop.org/": {
+  "added": "2026-09-29"
+ },
+ "https://academic.oup.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.cambridge.org/core": {
+  "added": "2026-09-29"
+ },
+ "https://www.sciengine.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.letpub.com.cn/index.php?page=journalapp": {
+  "added": "2026-09-29"
+ },
+ "https://www.ablesci.com/journal": {
+  "added": "2026-09-29"
+ },
+ "https://jcr.clarivate.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.scimagojr.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.fenqubiao.com/": {
+  "added": "2026-09-29"
+ },
+ "https://journalfinder.elsevier.com/": {
+  "added": "2026-09-29"
+ },
+ "https://journalsuggester.springer.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mjl.clarivate.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.sherpa.ac.uk/romeo/": {
+  "added": "2026-09-29"
+ },
+ "https://retractionwatch.com/": {
+  "added": "2026-09-29"
+ },
+ "https://sci-hub.st/": {
+  "added": "2026-09-29"
+ },
+ "https://tool.yovisun.com/scihub/": {
+  "added": "2026-09-29"
+ },
+ "https://zh.annas-archive.gd/": {
+  "added": "2026-09-29"
+ },
+ "https://z-library.sk/": {
+  "added": "2026-09-29"
+ },
+ "https://welib.org/": {
+  "added": "2026-09-29"
+ },
+ "http://www.wytsg.com/e/action/ListInfo/?classid=62": {
+  "added": "2026-09-29"
+ },
+ "https://www.pidantuan.com/": {
+  "added": "2026-09-29"
+ },
+ "https://jbiaojerry.github.io/ebook-treasure-chest/": {
+  "added": "2026-09-29"
+ },
+ "https://openaccessbutton.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.nlc.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.zjlib.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://www.whlib.org.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://www.gxlib.org.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://www.gzlib.com.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://wenku.baidu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.doc88.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.docin.com/": {
+  "added": "2026-09-29"
+ },
+ "https://ishare.iask.sina.com.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://www.calis.edu.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://archive.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.hathitrust.org/": {
+  "added": "2026-09-29"
+ },
+ "https://cn.overleaf.com/": {
+  "added": "2026-09-29"
+ },
+ "https://oleafly.com/zh-cn/": {
+  "added": "2026-09-29"
+ },
+ "https://typst.app/": {
+  "added": "2026-09-29"
+ },
+ "https://www.zotero.org/": {
+  "added": "2026-09-29"
+ },
+ "https://endnote.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.grammarly.com/": {
+  "added": "2026-09-29"
+ },
+ "https://quillbot.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.writefull.com/": {
+  "added": "2026-09-29"
+ },
+ "http://www.1checker.com/": {
+  "added": "2026-09-29"
+ },
+ "https://linggle.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.phrasebank.manchester.ac.uk/": {
+  "added": "2026-09-29"
+ },
+ "https://www.zerogpt.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.mendeley.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.inoteexpress.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.jabref.org/": {
+  "added": "2026-09-29"
+ },
+ "https://zbib.org/": {
+  "added": "2026-09-29"
+ },
+ "https://languagetool.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.deepl.com/translator": {
+  "added": "2026-09-29"
+ },
+ "https://immersivetranslate.com/": {
+  "added": "2026-09-29"
+ },
+ "https://pdf2zh.com/": {
+  "added": "2026-09-29"
+ },
+ "https://translate.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://fanyi.baidu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://cidian.youdao.com/": {
+  "added": "2026-09-29"
+ },
+ "https://cn.bing.com/dict": {
+  "added": "2026-09-29"
+ },
+ "https://dict.cnki.net/": {
+  "added": "2026-09-29"
+ },
+ "https://fanyi.caiyunapp.com/": {
+  "added": "2026-09-29"
+ },
+ "https://niutrans.com/": {
+  "added": "2026-09-29"
+ },
+ "https://fanyi.qq.com/": {
+  "added": "2026-09-29"
+ },
+ "https://dictionary.cambridge.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.termonline.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://mineru.net/": {
+  "added": "2026-09-29"
+ },
+ "https://doc2x.noedgeai.com/": {
+  "added": "2026-09-29"
+ },
+ "https://aistudio.baidu.com/paddleocr": {
+  "added": "2026-09-29"
+ },
+ "https://www.textin.com/": {
+  "added": "2026-09-29"
+ },
+ "https://snip.mathpix.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ilovepdf.com/zh-cn": {
+  "added": "2026-09-29"
+ },
+ "https://smallpdf.com/cn": {
+  "added": "2026-09-29"
+ },
+ "https://tools.pdf24.org/zh/": {
+  "added": "2026-09-29"
+ },
+ "https://lookscanned.io/": {
+  "added": "2026-09-29"
+ },
+ "https://markdown.com.cn/editor": {
+  "added": "2026-09-29"
+ },
+ "https://aippt.wps.cn/aippt/convert-ppt/home": {
+  "added": "2026-09-29"
+ },
+ "https://simpletex.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.stirlingpdf.com/": {
+  "added": "2026-09-29"
+ },
+ "https://cloudconvert.com/": {
+  "added": "2026-09-29"
+ },
+ "https://pubchem.ncbi.nlm.nih.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://www.reaxys.com/": {
+  "added": "2026-09-29"
+ },
+ "https://scifinder-n.cas.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.chemspider.com/": {
+  "added": "2026-09-29"
+ },
+ "https://webbook.nist.gov/chemistry/": {
+  "added": "2026-09-29"
+ },
+ "https://next-gen.materialsproject.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ccdc.cam.ac.uk/": {
+  "added": "2026-09-29"
+ },
+ "https://www.crystallography.net/cod/": {
+  "added": "2026-09-29"
+ },
+ "https://www.drugfuture.com/chemdata/": {
+  "added": "2026-09-29"
+ },
+ "https://dianshi.opendatalab.org.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.chemcalc.org/": {
+  "added": "2026-09-29"
+ },
+ "https://ptable.com/": {
+  "added": "2026-09-29"
+ },
+ "https://icsd.products.fiz-karlsruhe.de/": {
+  "added": "2026-09-29"
+ },
+ "https://aflowlib.org/": {
+  "added": "2026-09-29"
+ },
+ "https://oqmd.org/": {
+  "added": "2026-09-29"
+ },
+ "https://nomad-lab.eu/": {
+  "added": "2026-09-29"
+ },
+ "https://jarvis.nist.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://materials.springer.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ebi.ac.uk/chembl/": {
+  "added": "2026-09-29"
+ },
+ "https://commonchemistry.cas.org/": {
+  "added": "2026-09-29"
+ },
+ "https://sdbs.db.aist.go.jp/": {
+  "added": "2026-09-29"
+ },
+ "https://srdata.nist.gov/xps/": {
+  "added": "2026-09-29"
+ },
+ "https://molview.org/": {
+  "added": "2026-09-29"
+ },
+ "https://jp-minerals.org/vesta/en/": {
+  "added": "2026-09-29"
+ },
+ "https://www.crystalimpact.com/diamond/": {
+  "added": "2026-09-29"
+ },
+ "https://avogadro.cc/": {
+  "added": "2026-09-29"
+ },
+ "https://www.pymol.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.blender.org/": {
+  "added": "2026-09-29"
+ },
+ "https://revvitysignals.com/products/research/chemdraw": {
+  "added": "2026-09-29"
+ },
+ "https://www.kingdraw.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.cgl.ucsf.edu/chimerax/": {
+  "added": "2026-09-29"
+ },
+ "https://molstar.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ks.uiuc.edu/Research/vmd/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ovito.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ncbi.nlm.nih.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://www.rcsb.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.uniprot.org/": {
+  "added": "2026-09-29"
+ },
+ "https://alphafold.ebi.ac.uk/": {
+  "added": "2026-09-29"
+ },
+ "https://datasetsearch.research.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://zenodo.org/": {
+  "added": "2026-09-29"
+ },
+ "https://figshare.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.kaggle.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ensembl.org/": {
+  "added": "2026-09-29"
+ },
+ "https://genome.ucsc.edu/": {
+  "added": "2026-09-29"
+ },
+ "https://www.kegg.jp/": {
+  "added": "2026-09-29"
+ },
+ "https://reactome.org/": {
+  "added": "2026-09-29"
+ },
+ "https://string-db.org/": {
+  "added": "2026-09-29"
+ },
+ "https://ngdc.cncb.ac.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://datadryad.org/": {
+  "added": "2026-09-29"
+ },
+ "https://data.mendeley.com/": {
+  "added": "2026-09-29"
+ },
+ "https://dataverse.harvard.edu/": {
+  "added": "2026-09-29"
+ },
+ "https://www.scidb.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://patents.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://worldwide.espacenet.com/": {
+  "added": "2026-09-29"
+ },
+ "http://www.soopat.com/": {
+  "added": "2026-09-29"
+ },
+ "https://pss-system.cponline.cnipa.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.drugfuture.com/cnpat/cn_patent.asp": {
+  "added": "2026-09-29"
+ },
+ "https://www.drugfuture.com/uspat/us_patent.asp": {
+  "added": "2026-09-29"
+ },
+ "https://www.drugfuture.com/eppat/patent.asp": {
+  "added": "2026-09-29"
+ },
+ "https://openstd.samr.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://www.csres.com/": {
+  "added": "2026-09-29"
+ },
+ "http://www.standardcn.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.sacinfo.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://www.bzko.com/": {
+  "added": "2026-09-29"
+ },
+ "https://patentscope.wipo.int/": {
+  "added": "2026-09-29"
+ },
+ "https://www.uspto.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://std.samr.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.nsfc.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://kd.nsfc.cn/": {
+  "added": "2026-09-29"
+ },
+ "http://fz.people.com.cn/skygb/sk/index.php/Index/index": {
+  "added": "2026-09-29"
+ },
+ "https://www.funresearch.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.most.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://service.most.gov.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://reporter.nih.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://www.nsf.gov/": {
+  "added": "2026-09-29"
+ },
+ "https://www.biorender.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.figdraw.com/": {
+  "added": "2026-09-29"
+ },
+ "https://app.diagrams.net/": {
+  "added": "2026-09-29"
+ },
+ "https://excalidraw.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.tldraw.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.mermaidchart.com/": {
+  "added": "2026-09-29"
+ },
+ "https://markmap.js.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.edrawmax.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.edraw.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://ai-draw-nexus.aizhi.site/": {
+  "added": "2026-09-29"
+ },
+ "https://www.vectorizer.io/": {
+  "added": "2026-09-29"
+ },
+ "https://bioicons.com/": {
+  "added": "2026-09-29"
+ },
+ "https://scidraw.io/": {
+  "added": "2026-09-29"
+ },
+ "https://www.originlab.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.graphpad.com/": {
+  "added": "2026-09-29"
+ },
+ "https://imagej.net/": {
+  "added": "2026-09-29"
+ },
+ "https://inkscape.org/": {
+  "added": "2026-09-29"
+ },
+ "https://automeris.io/": {
+  "added": "2026-09-29"
+ },
+ "https://smart.servier.com/": {
+  "added": "2026-09-29"
+ },
+ "https://hiplot.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.bioinformatics.com.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.canva.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.figma.com/": {
+  "added": "2026-09-29"
+ },
+ "https://open-design.ai/zh/": {
+  "added": "2026-09-29"
+ },
+ "https://coolors.co/": {
+  "added": "2026-09-29"
+ },
+ "https://mycolor.space/": {
+  "added": "2026-09-29"
+ },
+ "https://flatuicolors.com/": {
+  "added": "2026-09-29"
+ },
+ "https://color.adobe.com/": {
+  "added": "2026-09-29"
+ },
+ "https://colorbrewer2.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.remove.bg/zh": {
+  "added": "2026-09-29"
+ },
+ "https://tinypng.com/": {
+  "added": "2026-09-29"
+ },
+ "https://ezgif.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.photopea.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.iconfont.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.researchgate.net/": {
+  "added": "2026-09-29"
+ },
+ "https://orcid.org/": {
+  "added": "2026-09-29"
+ },
+ "http://www.globalauthorid.com/": {
+  "added": "2026-09-29"
+ },
+ "https://papers.cnki.net/CAuthor": {
+  "added": "2026-09-29"
+ },
+ "https://xueshu.baidu.com/usercenter/data/authorchannel?cmd=frontpage": {
+  "added": "2026-09-29"
+ },
+ "http://muchong.com/bbs": {
+  "added": "2026-09-29"
+ },
+ "https://portal.dxy.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.sciencenet.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.zhihu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.jianshu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://pubpeer.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.gaoxiaojob.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.icourse163.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.xuetangx.com/": {
+  "added": "2026-09-29"
+ },
+ "https://open.163.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.coursera.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.edx.org/": {
+  "added": "2026-09-29"
+ },
+ "https://ocw.mit.edu/": {
+  "added": "2026-09-29"
+ },
+ "https://www.khanacademy.org/": {
+  "added": "2026-09-29"
+ },
+ "http://coursegraph.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.smartedu.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.icourses.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.deeplearning.ai/": {
+  "added": "2026-09-29"
+ },
+ "https://openstax.org/": {
+  "added": "2026-09-29"
+ },
+ "https://github.com/": {
+  "added": "2026-09-29"
+ },
+ "https://stackoverflow.com/": {
+  "added": "2026-09-29"
+ },
+ "https://colab.research.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.netlify.com/": {
+  "added": "2026-09-29"
+ },
+ "https://vercel.com/": {
+  "added": "2026-09-29"
+ },
+ "https://dash.cloudflare.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.aliyun.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.semanticscholar.org/product/api": {
+  "added": "2026-09-29"
+ },
+ "https://dev.springernature.com/": {
+  "added": "2026-09-29"
+ },
+ "https://dev.elsevier.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.crossref.org/documentation/retrieve-metadata/rest-api/": {
+  "added": "2026-09-29"
+ },
+ "https://infini-cloud.net/en/": {
+  "added": "2026-09-29"
+ },
+ "https://gitee.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.autodl.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mirrors.tuna.tsinghua.edu.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.67tool.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ip138.com/": {
+  "added": "2026-09-29"
+ },
+ "https://2fa.fan/": {
+  "added": "2026-09-29"
+ },
+ "https://2fa.live/": {
+  "added": "2026-09-29"
+ },
+ "https://temp-mail.org/": {
+  "added": "2026-09-29"
+ },
+ "https://tejaswigowda.com/ffmpeg-webCLI/": {
+  "added": "2026-09-29"
+ },
+ "https://appstoreprice.org/zh": {
+  "added": "2026-09-29"
+ },
+ "https://search-sharp.com/": {
+  "added": "2026-09-29"
+ },
+ "https://zh.ifixit.com/": {
+  "added": "2026-09-29"
+ },
+ "http://www.757dy.com/": {
+  "added": "2026-09-29"
+ },
+ "https://fmhy.net/": {
+  "added": "2026-09-29"
+ },
+ "https://www.tgzhidao.com/": {
+  "added": "2026-09-29"
+ },
+ "https://vpn.314500.xyz/": {
+  "added": "2026-09-29"
+ },
+ "https://www.wolframalpha.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.desmos.com/calculator": {
+  "added": "2026-09-29"
+ },
+ "https://www.wenshushu.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://nav.edumails.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://education.github.com/": {
+  "added": "2026-09-29"
+ },
+ "https://huiyuan.edu.gr/zh-CN": {
+  "added": "2026-09-29"
+ },
+ "https://www.umgc.edu/": {
+  "added": "2026-09-29"
+ },
+ "https://www.liberty.edu/": {
+  "added": "2026-09-29"
+ },
+ "https://www.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.baidu.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.bing.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.so.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mail.google.com/": {
+  "added": "2026-09-29"
+ },
+ "https://outlook.live.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mail.qq.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mail.163.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mail.126.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mail.sina.com.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.mail.com/": {
+  "added": "2026-09-29"
+ },
+ "https://unsplash.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.pexels.com/zh-cn/": {
+  "added": "2026-09-29"
+ },
+ "https://pixabay.com/zh/": {
+  "added": "2026-09-29"
+ },
+ "https://www.pinterest.com/": {
+  "added": "2026-09-29"
+ },
+ "https://wallroom.io/": {
+  "added": "2026-09-29"
+ },
+ "https://4kwallpapers.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.2dwallpapers.com/": {
+  "added": "2026-09-29"
+ },
+ "https://cobalt.tools/": {
+  "added": "2026-09-29"
+ },
+ "https://greenvideo.cc/": {
+  "added": "2026-09-29"
+ },
+ "https://www.parsevideo.com/": {
+  "added": "2026-09-29"
+ },
+ "https://dyxhsdownloader.com/": {
+  "added": "2026-09-29"
+ },
+ "https://tiktokio.bio/": {
+  "added": "2026-09-29"
+ },
+ "https://www.gequbao.com/": {
+  "added": "2026-09-29"
+ },
+ "https://quanpan.xyz/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ghxi.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.omoc.top/": {
+  "added": "2026-09-29"
+ },
+ "https://www.gamer520.com/": {
+  "added": "2026-09-29"
+ },
+ "https://mycomic.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.wikipedia.org/": {
+  "added": "2026-09-29"
+ },
+ "https://www.bilibili.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.youtube.com/": {
+  "added": "2026-09-29"
+ },
+ "https://v.qq.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.iqiyi.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.youku.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.jd.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.taobao.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.amazon.cn/": {
+  "added": "2026-09-29"
+ },
+ "https://www.vip.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.58.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.ke.com/": {
+  "added": "2026-09-29"
+ },
+ "https://www.anjuke.com/": {
+  "added": "2026-09-29"
+ },
+ "s:anthropics/skills": {
+  "added": "2026-09-29"
+ },
+ "s:Imbad0202/academic-research-skills": {
+  "added": "2026-09-29"
+ },
+ "s:K-Dense-AI/scientific-agent-skills": {
+  "added": "2026-09-29"
+ },
+ "s:Galaxy-Dawn/claude-scholar": {
+  "added": "2026-09-29"
+ },
+ "s:zLanqing/codex-claude-academic-skills": {
+  "added": "2026-09-29"
+ },
+ "s:google-deepmind/science-skills": {
+  "added": "2026-09-29"
+ },
+ "s:LeonChaoX/qinyan-academic-skills": {
+  "added": "2026-09-29"
+ },
+ "s:Weizhena/Deep-Research-skills": {
+  "added": "2026-09-29"
+ },
+ "s:zsyggg/paper-craft-skills": {
+  "added": "2026-09-29"
+ },
+ "s:917Dhj/DeepPaperNote": {
+  "added": "2026-09-29"
+ },
+ "s:cookjohn/cnki-skills": {
+  "added": "2026-09-29"
+ },
+ "s:cookjohn/gs-skills": {
+  "added": "2026-09-29"
+ },
+ "s:wp-a/nature-academic-search": {
+  "added": "2026-09-29"
+ },
+ "s:Yuan1z0825/nature-skills": {
+  "added": "2026-09-29"
+ },
+ "s:Master-cai/Research-Paper-Writing-Skills": {
+  "added": "2026-09-29"
+ },
+ "s:Norman-bury/research-writing-skill": {
+  "added": "2026-09-29"
+ },
+ "s:Spark-To-Paper-Skills/paperjury": {
+  "added": "2026-09-29"
+ },
+ "s:labarba/sciwrite": {
+  "added": "2026-09-29"
+ },
+ "s:ndpvt-web/latex-document-skill": {
+  "added": "2026-09-29"
+ },
+ "s:Boom5426/Nature-Paper-Skills": {
+  "added": "2026-09-29"
+ },
+ "s:bahayonghang/academic-writing-skills": {
+  "added": "2026-09-29"
+ },
+ "s:ChenLiu-1996/figures4papers": {
+  "added": "2026-09-29"
+ },
+ "s:jihe520/sci-box": {
+  "added": "2026-09-29"
+ },
+ "s:Dsadd4/AgentFigureGallery": {
+  "added": "2026-09-29"
+ },
+ "s:aipoch/medical-research-skills": {
+  "added": "2026-09-29"
+ },
+ "s:NVIDIA-BioNeMo/bionemo-agent-toolkit": {
+  "added": "2026-09-29"
+ },
+ "s:jaechang-hits/SciAgent-Skills": {
+  "added": "2026-09-29"
+ },
+ "s:Aperivue/medsci-skills": {
+  "added": "2026-09-29"
+ },
+ "s:jinzhezenggroup/computational-chemistry-agent-skills": {
+  "added": "2026-09-29"
+ },
+ "s:HeshamFS/materials-simulation-skills": {
+  "added": "2026-09-29"
+ },
+ "s:InternScience/ChemClaw": {
+  "added": "2026-09-29"
+ },
+ "s:Orchestra-Research/AI-Research-SKILLs": {
+  "added": "2026-09-29"
+ },
+ "s:brycewang-stanford/Auto-Empirical-Research-Skills": {
+  "added": "2026-09-29"
+ },
+ "s:54yyyu/zotero-mcp": {
+  "added": "2026-09-29"
+ },
+ "s:K-Dense-AI/claude-skills-mcp": {
+  "added": "2026-09-29"
+ },
+ "s:ComposioHQ/awesome-claude-skills": {
+  "added": "2026-09-29"
+ },
+ "s:InternScience/Awesome-Scientific-Skills": {
+  "added": "2026-09-29"
+ },
+ "s:BioTender-max/awesome-bio-agent-skills": {
+  "added": "2026-09-29"
+ },
+ "s:kael-odin/awesome-academic-research-skills": {
+  "added": "2026-09-29"
+ },
+ "s:GoekeLab/awesome-genomic-skills": {
+  "added": "2026-09-29"
+ },
+ "p:literature-1": {
+  "added": "2026-09-30"
+ },
+ "p:literature-2": {
+  "added": "2026-09-30"
+ },
+ "p:literature-3": {
+  "added": "2026-09-30"
+ },
+ "p:literature-4": {
+  "added": "2026-09-30"
+ },
+ "p:literature-5": {
+  "added": "2026-09-30"
+ },
+ "p:literature-6": {
+  "added": "2026-09-30"
+ },
+ "p:literature-7": {
+  "added": "2026-09-30"
+ },
+ "p:literature-8": {
+  "added": "2026-09-30"
+ },
+ "p:literature-9": {
+  "added": "2026-09-30"
+ },
+ "p:literature-10": {
+  "added": "2026-09-30"
+ },
+ "p:literature-11": {
+  "added": "2026-09-30"
+ },
+ "p:writing-1": {
+  "added": "2026-09-30"
+ },
+ "p:writing-2": {
+  "added": "2026-09-30"
+ },
+ "p:writing-3": {
+  "added": "2026-09-30"
+ },
+ "p:writing-4": {
+  "added": "2026-09-30"
+ },
+ "p:writing-5": {
+  "added": "2026-09-30"
+ },
+ "p:writing-6": {
+  "added": "2026-09-30"
+ },
+ "p:writing-7": {
+  "added": "2026-09-30"
+ },
+ "p:writing-8": {
+  "added": "2026-09-30"
+ },
+ "p:writing-9": {
+  "added": "2026-09-30"
+ },
+ "p:writing-10": {
+  "added": "2026-09-30"
+ },
+ "p:writing-11": {
+  "added": "2026-09-30"
+ },
+ "p:writing-12": {
+  "added": "2026-09-30"
+ },
+ "p:polish-1": {
+  "added": "2026-09-30"
+ },
+ "p:polish-2": {
+  "added": "2026-09-30"
+ },
+ "p:polish-3": {
+  "added": "2026-09-30"
+ },
+ "p:polish-4": {
+  "added": "2026-09-30"
+ },
+ "p:polish-5": {
+  "added": "2026-09-30"
+ },
+ "p:polish-6": {
+  "added": "2026-09-30"
+ },
+ "p:polish-7": {
+  "added": "2026-09-30"
+ },
+ "p:polish-8": {
+  "added": "2026-09-30"
+ },
+ "p:polish-9": {
+  "added": "2026-09-30"
+ },
+ "p:polish-10": {
+  "added": "2026-09-30"
+ },
+ "p:polish-11": {
+  "added": "2026-09-30"
+ },
+ "p:polish-12": {
+  "added": "2026-09-30"
+ },
+ "p:polish-13": {
+  "added": "2026-09-30"
+ },
+ "p:polish-14": {
+  "added": "2026-09-30"
+ },
+ "p:polish-15": {
+  "added": "2026-09-30"
+ },
+ "p:polish-16": {
+  "added": "2026-09-30"
+ },
+ "p:review-1": {
+  "added": "2026-09-30"
+ },
+ "p:review-2": {
+  "added": "2026-09-30"
+ },
+ "p:review-3": {
+  "added": "2026-09-30"
+ },
+ "p:review-4": {
+  "added": "2026-09-30"
+ },
+ "p:review-5": {
+  "added": "2026-09-30"
+ },
+ "p:review-6": {
+  "added": "2026-09-30"
+ },
+ "p:review-7": {
+  "added": "2026-09-30"
+ },
+ "p:review-8": {
+  "added": "2026-09-30"
+ },
+ "p:review-9": {
+  "added": "2026-09-30"
+ },
+ "p:review-10": {
+  "added": "2026-09-30"
+ },
+ "p:review-11": {
+  "added": "2026-09-30"
+ },
+ "p:data-1": {
+  "added": "2026-09-30"
+ },
+ "p:data-2": {
+  "added": "2026-09-30"
+ },
+ "p:data-3": {
+  "added": "2026-09-30"
+ },
+ "p:data-4": {
+  "added": "2026-09-30"
+ },
+ "p:grant-1": {
+  "added": "2026-09-30"
+ },
+ "p:grant-2": {
+  "added": "2026-09-30"
+ },
+ "p:grant-3": {
+  "added": "2026-09-30"
+ },
+ "p:talk-1": {
+  "added": "2026-09-30"
+ },
+ "p:talk-2": {
+  "added": "2026-09-30"
+ },
+ "p:talk-3": {
+  "added": "2026-09-30"
+ },
+ "p:talk-4": {
+  "added": "2026-09-30"
+ },
+ "p:assistant-1": {
+  "added": "2026-09-30"
+ },
+ "p:assistant-2": {
+  "added": "2026-09-30"
+ },
+ "p:assistant-3": {
+  "added": "2026-09-30"
+ },
+ "p:assistant-4": {
+  "added": "2026-09-30"
+ },
+ "p:assistant-5": {
+  "added": "2026-09-30"
+ },
+ "f:origin-1": {
+  "added": "2026-09-30"
+ },
+ "f:origin-2": {
+  "added": "2026-09-30"
+ },
+ "f:origin-3": {
+  "added": "2026-09-30"
+ },
+ "f:origin-4": {
+  "added": "2026-09-30"
+ },
+ "f:origin-5": {
+  "added": "2026-09-30"
+ },
+ "f:origin-6": {
+  "added": "2026-09-30"
+ },
+ "f:origin-7": {
+  "added": "2026-09-30"
+ },
+ "f:origin-8": {
+  "added": "2026-09-30"
+ },
+ "f:origin-9": {
+  "added": "2026-09-30"
+ },
+ "f:origin-10": {
+  "added": "2026-09-30"
+ },
+ "f:origin-11": {
+  "added": "2026-09-30"
+ },
+ "f:origin-12": {
+  "added": "2026-09-30"
+ },
+ "f:origin-13": {
+  "added": "2026-09-30"
+ },
+ "f:origin-14": {
+  "added": "2026-09-30"
+ },
+ "f:origin-15": {
+  "added": "2026-09-30"
+ },
+ "f:origin-16": {
+  "added": "2026-09-30"
+ },
+ "f:origin-17": {
+  "added": "2026-09-30"
+ },
+ "f:origin-18": {
+  "added": "2026-09-30"
+ },
+ "f:origin-19": {
+  "added": "2026-09-30"
+ },
+ "f:origin-20": {
+  "added": "2026-09-30"
+ },
+ "f:origin-21": {
+  "added": "2026-09-30"
+ },
+ "f:origin-22": {
+  "added": "2026-09-30"
+ },
+ "f:origin-23": {
+  "added": "2026-09-30"
+ },
+ "f:origin-24": {
+  "added": "2026-09-30"
+ },
+ "f:python-1": {
+  "added": "2026-09-30"
+ },
+ "f:python-2": {
+  "added": "2026-09-30"
+ },
+ "f:python-3": {
+  "added": "2026-09-30"
+ },
+ "f:python-4": {
+  "added": "2026-09-30"
+ },
+ "f:python-5": {
+  "added": "2026-09-30"
+ },
+ "f:python-6": {
+  "added": "2026-09-30"
+ },
+ "f:python-7": {
+  "added": "2026-09-30"
+ },
+ "f:python-8": {
+  "added": "2026-09-30"
+ },
+ "f:python-9": {
+  "added": "2026-09-30"
+ },
+ "f:python-10": {
+  "added": "2026-09-30"
+ },
+ "f:python-11": {
+  "added": "2026-09-30"
+ },
+ "f:python-12": {
+  "added": "2026-09-30"
+ },
+ "f:python-13": {
+  "added": "2026-09-30"
+ },
+ "f:python-14": {
+  "added": "2026-09-30"
+ },
+ "f:python-15": {
+  "added": "2026-09-30"
+ },
+ "f:python-16": {
+  "added": "2026-09-30"
+ },
+ "f:python-17": {
+  "added": "2026-09-30"
+ },
+ "f:python-18": {
+  "added": "2026-09-30"
+ },
+ "f:python-19": {
+  "added": "2026-09-30"
+ },
+ "f:python-20": {
+  "added": "2026-09-30"
+ },
+ "f:python-21": {
+  "added": "2026-09-30"
+ },
+ "f:python-22": {
+  "added": "2026-09-30"
+ },
+ "f:python-23": {
+  "added": "2026-09-30"
+ },
+ "f:python-24": {
+  "added": "2026-09-30"
+ },
+ "f:python-25": {
+  "added": "2026-09-30"
+ },
+ "f:python-26": {
+  "added": "2026-09-30"
+ },
+ "f:python-27": {
+  "added": "2026-09-30"
+ },
+ "f:python-28": {
+  "added": "2026-09-30"
+ },
+ "f:python-29": {
+  "added": "2026-09-30"
+ },
+ "f:python-30": {
+  "added": "2026-09-30"
+ },
+ "f:python-31": {
+  "added": "2026-09-30"
+ },
+ "f:python-32": {
+  "added": "2026-09-30"
+ },
+ "f:python-33": {
+  "added": "2026-09-30"
+ },
+ "f:python-34": {
+  "added": "2026-09-30"
+ },
+ "f:python-35": {
+  "added": "2026-09-30"
+ },
+ "f:r-1": {
+  "added": "2026-09-30"
+ },
+ "f:r-2": {
+  "added": "2026-09-30"
+ },
+ "f:r-3": {
+  "added": "2026-09-30"
+ },
+ "f:r-4": {
+  "added": "2026-09-30"
+ },
+ "f:r-5": {
+  "added": "2026-09-30"
+ },
+ "f:r-6": {
+  "added": "2026-09-30"
+ },
+ "f:r-7": {
+  "added": "2026-09-30"
+ },
+ "f:r-8": {
+  "added": "2026-09-30"
+ },
+ "f:r-9": {
+  "added": "2026-09-30"
+ },
+ "f:r-10": {
+  "added": "2026-09-30"
+ },
+ "f:r-11": {
+  "added": "2026-09-30"
+ },
+ "f:r-12": {
+  "added": "2026-09-30"
+ },
+ "f:r-13": {
+  "added": "2026-09-30"
+ },
+ "f:r-14": {
+  "added": "2026-09-30"
+ },
+ "f:r-15": {
+  "added": "2026-09-30"
+ },
+ "f:r-16": {
+  "added": "2026-09-30"
+ },
+ "f:r-17": {
+  "added": "2026-09-30"
+ },
+ "f:r-18": {
+  "added": "2026-09-30"
+ },
+ "f:r-19": {
+  "added": "2026-09-30"
+ },
+ "f:r-20": {
+  "added": "2026-09-30"
+ },
+ "f:r-21": {
+  "added": "2026-09-30"
+ },
+ "f:r-22": {
+  "added": "2026-09-30"
+ },
+ "f:r-23": {
+  "added": "2026-09-30"
+ },
+ "f:r-24": {
+  "added": "2026-09-30"
+ },
+ "f:r-25": {
+  "added": "2026-09-30"
+ },
+ "f:r-26": {
+  "added": "2026-09-30"
+ },
+ "f:r-27": {
+  "added": "2026-09-30"
+ },
+ "f:r-28": {
+  "added": "2026-09-30"
+ },
+ "f:r-29": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-1": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-2": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-3": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-4": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-5": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-6": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-7": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-8": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-9": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-10": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-11": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-12": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-13": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-14": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-15": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-16": {
+  "added": "2026-09-30"
+ },
+ "f:diagram-17": {
+  "added": "2026-09-30"
+ },
+ "f:other-1": {
+  "added": "2026-09-30"
+ },
+ "f:other-2": {
+  "added": "2026-09-30"
+ },
+ "f:other-3": {
+  "added": "2026-09-30"
+ },
+ "f:other-4": {
+  "added": "2026-09-30"
+ },
+ "f:other-5": {
+  "added": "2026-09-30"
+ },
+ "f:other-6": {
+  "added": "2026-09-30"
+ },
+ "f:other-7": {
+  "added": "2026-09-30"
+ },
+ "f:other-8": {
+  "added": "2026-09-30"
+ },
+ "f:other-9": {
+  "added": "2026-09-30"
+ },
+ "f:other-10": {
+  "added": "2026-09-30"
+ },
+ "f:other-11": {
+  "added": "2026-09-30"
+ },
+ "f:other-12": {
+  "added": "2026-09-30"
+ },
+ "f:other-13": {
+  "added": "2026-09-30"
+ }
+}

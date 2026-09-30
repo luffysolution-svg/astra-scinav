@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Astra 星图 · 科研与 AI 资源导航</title>
   <meta name="description" content="收录 300+ 文献检索、AI 科研、论文写作、数据库与效率工具的资源导航。">
+  <link rel="canonical" href="https://nav.luffysite.top/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Astra 星图">
+  <meta property="og:title" content="Astra 星图 · 科研与 AI 资源导航">
+  <meta property="og:description" content="收录 300+ 文献检索、AI 科研、论文写作、数据库与效率工具的资源导航。">
+  <meta property="og:url" content="https://nav.luffysite.top/">
+  <meta property="og:image" content="https://nav.luffysite.top/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#040406">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -69,7 +80,7 @@
       <aside class="side" aria-label="分类目录">
         <nav id="sideNav"></nav>
       </aside>
-      <div class="content" id="content"></div>
+      <div class="content" id="content"><noscript><p class="empty">本站的目录与搜索需要启用 JavaScript，请在浏览器设置中开启后刷新。</p></noscript></div>
     </div>
     <p class="empty" id="empty" hidden>没有匹配的资源。按 <kbd>Enter</kbd> 用当前引擎搜索全网。</p>
   </main>
@@ -99,6 +110,35 @@
       </div>
     </form>
   </dialog>
+  <dialog class="dlg" id="itemDlg" aria-labelledby="it-t">
+    <form id="itemForm">
+      <div>
+        <h2 id="it-t"></h2>
+        <p class="it-sub" id="itSub"></p>
+      </div>
+      <div class="it-act">
+        <button type="button" class="btn" data-it="share">分享</button>
+        <button type="button" class="btn" data-it="report">报告失效 / 信息有误</button>
+      </div>
+      <fieldset>
+        <legend class="it-legend">放入分组<small>（同时加入收藏）</small></legend>
+        <div class="it-groups" id="itGroups"></div>
+        <div class="it-new">
+          <input id="itNewGroup" maxlength="20" placeholder="新建分组，如 论文写作" aria-label="新建分组名称">
+          <button type="button" class="btn" data-it="addgroup">新建</button>
+        </div>
+      </fieldset>
+      <label>私人备注<textarea id="itNote" rows="2" maxlength="200" placeholder="只保存在本浏览器，如：组会常用，记得走校园网"></textarea></label>
+      <div class="dlg-act">
+        <button type="button" class="btn" data-it="close">取消</button>
+        <button type="submit" class="btn primary">保存</button>
+      </div>
+    </form>
+  </dialog>
+  <!-- 报告问题表单：页面用脚本提交，这里的静态声明供 Netlify 识别字段 -->
+  <form name="report" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field"><input name="item"><input name="page"><input name="url"><input name="reason"><textarea name="note"></textarea>
+  </form>
   <input type="file" id="importFile" accept="application/json,.json" hidden>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <p class="sr-only" id="live" aria-live="polite"></p>
@@ -109,6 +149,7 @@
   <script src="data/kit.js"></script>
   <script src="data/icons.js"></script>
   <script src="data/pinyin.js"></script>
+  <script src="data/status.js"></script>
   <script src="galaxy.js"></script>
   <script src="common.js"></script>
   <script src="app.js"></script>

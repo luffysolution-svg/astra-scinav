@@ -1,6 +1,6 @@
 /* 科研 SKILL / 科研 Prompt 页面：按分类渲染卡片、搜索筛选、复制与展开、收藏、填空、分享与推荐 */
 (() => {
-  const { $, esc, store, toast, copy } = Astra;
+  const { $, esc, store, toast, copy, share: shareLink, status, badges, hay: HAY, terms: parse, match } = Astra;
   const page = document.body.dataset.page;
   const DATA = page === 'skills' ? window.SKILLS : window.PROMPTS;
   // 收藏与首页「我的星座」共用：astra:favSkills 存仓库名，astra:favPrompts 存 Prompt id
@@ -16,9 +16,9 @@
   const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
 
   /* ---------- SKILL 仓库卡片 ---------- */
-  function repoCard(r, hue, i) {
+  function repoCard(r, hue, i, c) {
     const skills = r.skills || [];
-    const hay = [r.repo, r.name, r.desc, ...skills.flatMap(s => [s.name, s.desc])].join(' ').toLowerCase();
+    const hay = HAY.skill(r, c);
     const cmds = (r.install || []).map(c => `
       <div class="cmd"><span class="cmd-l">${esc(c.label)}</span><code>${esc(c.cmd)}</code>
         <button type="button" class="icon-btn" data-copy="${keep(c.cmd)}" aria-label="复制命令：${esc(c.label)}">${COPY}</button></div>`).join('');
@@ -27,14 +27,15 @@
       <header class="item-head">
         <span class="ava" style="--h:${hue}" aria-hidden="true">${esc([...r.name][0].toUpperCase())}</span>
         <div class="item-title">
-          <h4><a href="${gh(r.repo)}" target="_blank" rel="noopener noreferrer">${esc(r.name)}</a></h4>
+          <h4><a href="${gh(r.repo)}" target="_blank" rel="noopener noreferrer">${esc(r.name)}</a>${badges('s:' + r.repo)}</h4>
           <span class="item-sub">${esc(r.repo)}</span>
         </div>
         <span class="stars" title="GitHub 星标">${STAR}${fmt(r.stars || 0)}</span>
         ${favBtn(r.repo, r.name)}
       </header>
       <p class="item-desc">${esc(r.desc)}</p>
-      <p class="item-meta">${r.license ? `<span>${esc(r.license)}</span>` : ''}${r.updated ? `<span>更新于 ${esc(r.updated)}</span>` : ''}${r.doc === false ? '<span title="仓库未写安装说明，给出的是通用手动安装方式">通用安装方式</span>' : ''}</p>
+      <p class="item-meta"><span${r.license ? '' : ' title="仓库未声明开源协议，本站只收录简介与链接"'}>${esc(r.license || '未声明协议')}</span>${r.updated ? `<span>更新于 ${esc(r.updated)}</span>` : ''}${r.doc === false ? '<span title="仓库未写安装说明，给出的是通用手动安装方式">通用安装方式</span>' : ''}${checked('s:' + r.repo)}
+        ${tools(r.repo, r.name, gh(r.repo), 's:' + r.repo, 'push')}</p>
       ${cmds ? `<div class="cmds">${cmds}</div>` : `<a class="btn" href="${gh(r.repo)}#readme" target="_blank" rel="noopener noreferrer">查看清单</a>`}
       ${skills.length ? (id => `<div class="more" id="${id}">
         <ul class="skill-list">${list}</ul></div>
@@ -51,15 +52,15 @@
   const vals = art => Object.fromEntries([...art.querySelectorAll('[data-ph]')].filter(x => x.value.trim()).map(x => [x.dataset.ph, x.value.trim()]));
   const EDIT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
   const LINK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>';
-  function promptCard(p, hue, i) {
+  function promptCard(p, hue, i, c) {
     const src = REPOS.get(p.src);
     const href = p.path ? `${gh(p.src)}/blob/${encodeURIComponent(src?.branch || 'HEAD')}/${p.path.split('/').map(encodeURIComponent).join('/')}` : gh(p.src);
     const id = `more-${uid++}`, k = keep(p.p);
     // 可填空的占位符：去重，并跳过 [ ]、[...] 这类不含文字的
     const phs = [...new Set(p.p.match(PH) || [])].filter(m => /[\p{L}\p{N}]/u.test(m));
-    return `<article class="item prompt" id="${esc(p.id)}" style="--h:${hue};--i:${Math.min(i, 14)}" data-k="${k}" data-q="${esc(`${p.t} ${p.p} ${p.src}`.toLowerCase())}" data-lang="${p.lang}">
+    return `<article class="item prompt" id="${esc(p.id)}" style="--h:${hue};--i:${Math.min(i, 14)}" data-k="${k}" data-q="${esc(HAY.prompt(p, c, src))}" data-lang="${p.lang}">
       <header class="item-head">
-        <div class="item-title"><h4>${esc(p.t)}</h4></div>
+        <div class="item-title"><h4>${esc(p.t)}${badges('p:' + p.id)}</h4></div>
         <span class="lang">${p.lang === 'en' ? 'EN' : '中文'}</span>
         ${favBtn(p.id, p.t)}
       </header>
@@ -72,12 +73,17 @@
         <button type="button" class="btn primary" data-copy="${k}">${COPY}复制</button>
         ${phs.length ? `<button type="button" class="btn" data-fill aria-expanded="false" aria-controls="${id}-f">${EDIT}填空 · ${phs.length}</button>` : ''}
         <button type="button" class="toggle" aria-expanded="false" aria-controls="${id}">展开全文</button>
-        <button type="button" class="icon-btn" data-share="${esc(p.id)}" aria-label="复制分享链接：${esc(p.t)}" title="复制分享链接">${LINK}</button>
-        <a class="src" href="${href}" target="_blank" rel="noopener noreferrer" title="${esc(p.src)}">来源 · ${esc(src?.name || p.src)}</a>
+        ${tools(p.id, p.t, href, 'p:' + p.id)}
+        <a class="src" href="${href}" target="_blank" rel="noopener noreferrer" title="${esc(p.src)}">来源 · ${esc(src?.name || p.src)} · ${esc(src?.licenseNote || src?.license || '协议待核实')}</a>
       </footer>
     </article>`;
   }
   let uid = 0;
+  // 分享与报告问题按钮；url 为报告时预填的原始链接
+  const FLAG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>';
+  const tools = (id, name, url, key, cls = '') => `<button type="button" class="icon-btn ${cls}" data-share="${esc(id)}" aria-label="分享：${esc(name)}" title="分享">${LINK}</button>
+        <button type="button" class="icon-btn" data-report="${esc(key)}" data-name="${esc(name)}" data-url="${esc(url)}" aria-label="报告问题：${esc(name)}" title="报告失效或信息有误">${FLAG}</button>`;
+  const checked = key => { const st = status(key); return st?.checked ? `<span title="自动核验链接可访问的日期">核验 ${esc(st.checked)}</span>` : ''; };
 
   /* ---------- 渲染 ---------- */
   const cats = DATA.categories.map((c, k) => ({ ...c, hue: c.hue ?? HUES[k % HUES.length], items: c.repos || c.prompts || [] }));
@@ -90,7 +96,7 @@
         <span class="en">${esc(c.en || '')}</span>
         <span class="count">${c.items.length}</span>
       </header>
-      <div class="items">${c.items.map((x, i) => render(x, c.hue, i)).join('')}</div>
+      <div class="items">${c.items.map((x, i) => render(x, c.hue, i, c)).join('')}</div>
     </section>`).join('');
   $('#sideNav').innerHTML = `<div class="side-group">${cats.map(c =>
     `<a href="#${esc(c.id)}" data-cat="${esc(c.id)}" style="--h:${c.hue}"><i></i>${esc(c.t)}<b>${c.items.length}</b></a>`).join('')}</div>`;
@@ -104,7 +110,7 @@
           <div class="cell" style="--h:210;--i:${Math.min(i, 14)}"><a class="card" href="${gh(r.repo)}" target="_blank" rel="noopener noreferrer">
             <span class="ava" style="--h:210" aria-hidden="true">${esc([...r.name][0].toUpperCase())}</span>
             <span class="meta"><span class="name"><span>${esc(r.name)}</span></span><span class="desc">${esc(r.desc)}</span>
-            <span class="src-meta">★ ${fmt(r.stars || 0)} · ${esc(r.licenseNote || r.license || '未声明协议')}${used.has(r.repo) ? '' : ' · 仅列出'}</span></span>
+            <span class="src-meta">★ ${fmt(r.stars || 0)} · ${esc(r.licenseNote || r.license || '未声明协议')}${used.has(r.repo) ? ' · 已摘录' : ' · 仅列出链接'}</span></span>
           </a></div>`).join('')}</div>
       </section>`);
     $('#sideNav .side-group').insertAdjacentHTML('beforeend', `<a href="#sources" data-cat="sources" style="--h:210"><i></i>来源仓库<b>${DATA.repos.length}</b></a>`);
@@ -122,12 +128,12 @@
     const c = e.target.closest('[data-copy]');
     if (c) {
       const art = c.closest('.prompt');
-      return void copy(art ? fill(texts[+c.dataset.copy], vals(art)) : texts[+c.dataset.copy]);
+      return void copy(art ? fill(texts[+c.dataset.copy], vals(art)) : texts[+c.dataset.copy], { btn: c });
     }
     const f = e.target.closest('[data-fav]');
     if (f) return void toggleFav(f);
     const s = e.target.closest('[data-share]');
-    if (s) return void share(s.dataset.share);
+    if (s) return void share(s.dataset.share, s);
     const fb = e.target.closest('[data-fill]');
     if (fb) {
       const open = fb.getAttribute('aria-expanded') !== 'true', box = document.getElementById(fb.getAttribute('aria-controls'));
@@ -171,10 +177,10 @@
   });
 
   /* ---------- 分享链接：prompts.html#review-3 ---------- */
-  function share(id) {
+  function share(id, btn) {
     const url = new URL(location.href);
     url.search = ''; url.hash = encodeURIComponent(id);
-    copy(url.href);
+    shareLink({ title: btn.closest('.item')?.querySelector('h4')?.textContent, url: url.href, btn });
   }
   /* ---------- 搜索与筛选 ---------- */
   const q = $('#q');
@@ -182,22 +188,22 @@
   const sources = $('#sources');
   let lang = 'all';
   const langs = $('#langs');
+  const setLang = k => { lang = k; langs?.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.dataset.k === k)); };
   if (langs) {
     langs.innerHTML = [['all', '全部'], ['zh', '中文'], ['en', 'English']].map(([k, t]) => `<button type="button" data-k="${k}" aria-pressed="${k === 'all'}">${t}</button>`).join('');
     langs.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
-      lang = b.dataset.k;
-      langs.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      setLang(b.dataset.k);
       apply();
     });
   }
   let liveT;
   function apply() {
-    const terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const terms = parse(q.value);
     const filtering = terms.length > 0 || lang !== 'all';
     document.body.classList.toggle('searching', filtering);
     if (sources) sources.hidden = filtering;
-    for (const it of items) it.hidden = !((lang === 'all' || it.dataset.lang === lang) && terms.every(t => it.dataset.q.includes(t)));
+    for (const it of items) it.hidden = !((lang === 'all' || it.dataset.lang === lang) && match(it.dataset.q, terms));
     for (const s of secs) {
       const n = s.querySelectorAll('.item:not([hidden])').length;
       s.hidden = !n;
@@ -209,6 +215,7 @@
     if (filtering) liveT = setTimeout(() => { $('#live').textContent = shown ? `找到 ${shown} 项` : '没有匹配的结果'; }, 500);
     const url = new URL(location.href);
     if (terms.length) url.searchParams.set('q', q.value.trim()); else url.searchParams.delete('q');
+    if (lang !== 'all') url.searchParams.set('lang', lang); else url.searchParams.delete('lang');
     history.replaceState(null, '', url);
   }
   q.addEventListener('input', apply);
@@ -218,8 +225,10 @@
     if ((e.key === '/' && !typing) || (e.key === 'k' && (e.metaKey || e.ctrlKey))) { e.preventDefault(); q.focus(); q.select(); }
     else if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; apply(); q.blur(); }
   });
-  const q0 = new URLSearchParams(location.search).get('q');
-  if (q0) { q.value = q0; apply(); }
+  const p0 = new URLSearchParams(location.search);
+  if (p0.get('q')) q.value = p0.get('q');
+  if (langs && ['zh', 'en'].includes(p0.get('lang'))) setLang(p0.get('lang'));
+  if (q.value || lang !== 'all') apply();
 
   /* ---------- 进场动画与侧栏高亮 ---------- */
   const reveal = new IntersectionObserver(es => es.forEach(e => {
@@ -240,7 +249,7 @@
     let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
     const it = id && items.find(x => x.id === id);
     if (!it) return;
-    if (it.hidden) { q.value = ''; lang = 'all'; langs?.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.dataset.k === 'all')); apply(); }
+    if (it.hidden) { q.value = ''; setLang('all'); apply(); }
     it.closest('.cat').classList.add('in');
     const t = it.querySelector('.toggle');
     if (t) setOpen(t, true);

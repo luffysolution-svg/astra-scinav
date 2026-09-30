@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>科研 Prompt 合集 · Astra 星图</title>
   <meta name="description" content="从开源仓库精选的科研提示词：选题综述、论文写作、润色翻译、审稿回复、数据分析与基金申请，一键复制。">
+  <link rel="canonical" href="https://nav.luffysite.top/prompts.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Astra 星图">
+  <meta property="og:title" content="科研 Prompt 合集 · Astra 星图">
+  <meta property="og:description" content="从开源仓库精选的科研提示词：选题综述、论文写作、润色翻译、审稿回复、数据分析与基金申请，一键复制。">
+  <meta property="og:url" content="https://nav.luffysite.top/prompts.html">
+  <meta property="og:image" content="https://nav.luffysite.top/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#040406">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -55,14 +66,14 @@
 
     <div class="layout">
       <aside class="side" aria-label="分类目录"><nav id="sideNav"></nav></aside>
-      <div class="content" id="content"></div>
+      <div class="content" id="content"><noscript><p class="empty">本站的目录与搜索需要启用 JavaScript，请在浏览器设置中开启后刷新。</p></noscript></div>
     </div>
     <p class="empty" id="empty" hidden>没有匹配的提示词，换个关键词试试。</p>
   </main>
 
   <footer class="foot">
     <p>Astra 星图 · 科研 Prompt · <span id="gen"></span> · <a class="link" href="https://luffysite.top/">回到博客</a></p>
-    <p class="muted">提示词版权归原仓库作者，按各自开源协议使用，点卡片「来源」查看原文 · <button type="button" class="link" data-act="suggest">推荐提示词</button></p>
+    <p class="muted">提示词版权归原仓库作者，协议以卡片与来源列表标注为准；只摘录已声明允许再分发协议的内容，未声明协议的仓库仅列出链接 · <button type="button" class="link" data-act="suggest">推荐提示词</button></p>
   </footer>
 
   <dialog class="dlg" id="dlg" aria-labelledby="dlg-t">
@@ -84,6 +95,7 @@
   <p class="sr-only" id="live" aria-live="polite"></p>
 
   <script src="data/prompts.js"></script>
+  <script src="data/status.js"></script>
   <script src="galaxy.js"></script>
   <script src="common.js"></script>
   <script src="collection.js"></script>

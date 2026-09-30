@@ -1,12 +1,8 @@
 /* 科研绘图页面：模板卡片、类型筛选、大图预览、代码复制、收藏与分享，以及期刊尺寸与配色速查 */
 (() => {
-  const { $, esc, store, toast, copy } = Astra;
+  const { $, esc, store, toast, copy, share, status, badges, hay, terms: parse, match } = Astra;
   const D = window.FIGURES;
-  const TYPES = {
-    line: '折线曲线', scatter: '散点气泡', bar: '柱状条形', dist: '分布', heatmap: '热图矩阵', contour: '等高线场图', '3d': '三维',
-    polar: '极坐标雷达', stat: '统计', multi: '多面板', omics: '组学', map: '地图', flow: '网络流程', diagram: '示意图素材', style: '风格配色',
-  };
-  const LANG = { python: 'Python', r: 'R', matlab: 'MATLAB', tikz: 'TikZ', latex: 'LaTeX', mermaid: 'Mermaid', dot: 'Graphviz', gnuplot: 'gnuplot', julia: 'Julia', json: 'Vega-Lite' };
+  const TYPES = Astra.FIG_TYPES, LANG = Astra.FIG_LANG;
   const lang = x => LANG[x.lang] || x.lang || '';
   const SRC = new Map((D.sources || []).map(s => [s.id, s]));
   const FAV_KEY = 'favFigures';   // 与首页「我的星座」共用
@@ -17,6 +13,7 @@
   const COPY = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
   const LINK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>';
   const OUT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+  const FLAG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>';
   const DOWN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
   const favBtn = (x, cls = '') => `<button type="button" class="icon-btn star${cls}" data-fav="${esc(x.id)}" aria-pressed="${favs.includes(x.id)}" aria-label="收藏 ${esc(x.t)}">${STAR}</button>`;
 
@@ -24,14 +21,12 @@
   const cats = D.categories.filter(c => c.items.length);
   const byId = new Map(cats.flatMap(c => c.items.map(x => [x.id, { x, c }])));
   function card(x, c, i) {
-    const src = SRC.get(x.src);
-    const hay = [x.t, x.en, x.tool, x.desc, TYPES[x.type], x.type, src?.name, c.t, x.code ? `代码 code ${lang(x)}` : ''].join(' ').toLowerCase();
-    return `<article class="item fig" id="${esc(x.id)}" style="--h:${c.hue};--i:${Math.min(i, 14)}" data-q="${esc(hay)}" data-type="${esc(x.type)}"${x.code ? ' data-code' : ''}>
+    return `<article class="item fig" id="${esc(x.id)}" style="--h:${c.hue};--i:${Math.min(i, 14)}" data-q="${esc(hay.figure(x, c, SRC.get(x.src)))}" data-type="${esc(x.type)}"${x.code ? ' data-code' : ''}>
       <button type="button" class="fig-shot" data-view="${esc(x.id)}" aria-label="查看大图：${esc(x.t)}">
         <img src="${esc(x.thumb)}" alt="" width="${x.w}" height="${x.h}" loading="lazy" decoding="async">
       </button>
       <header class="item-head">
-        <div class="item-title"><h4>${esc(x.t)}</h4><span class="item-sub">${esc(x.en || '')}</span></div>
+        <div class="item-title"><h4>${esc(x.t)}${badges('f:' + x.id)}</h4><span class="item-sub">${esc(x.en || '')}</span></div>
         ${favBtn(x)}
       </header>
       <p class="item-desc">${esc(x.desc)}</p>
@@ -69,6 +64,8 @@
     const journals = (D.journals || []).map(j => `<article class="jr">
       <h5><a href="${esc(j.url)}" target="_blank" rel="noopener noreferrer">${esc(j.j)}${OUT}</a></h5>
       <dl>${ROWS.filter(([k]) => j[k]).map(([k, l]) => `<dt>${l}</dt><dd>${esc(j[k])}</dd>`).join('')}</dl>
+      ${j.note || j.refs?.length ? `<p class="jr-note">${esc(j.note || '')}${(j.refs || []).map(r =>
+        ` <a class="src" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.t)}</a>`).join('')}</p>` : ''}
     </article>`).join('');
     const palettes = (D.palettes || []).map(p => {
       const py = `[${p.c.map(c => `"${c}"`).join(', ')}]`, r = `c(${p.c.map(c => `"${c}"`).join(', ')})`;
@@ -109,7 +106,7 @@
   function view(id) {
     const hit = byId.get(id);
     if (!hit) return;
-    const { x, c } = hit, src = SRC.get(x.src);
+    const { x, c } = hit, src = SRC.get(x.src), st = status('f:' + id);
     cur = id;
     viewer.style.setProperty('--h', c.hue);
     $('#vw-t').textContent = x.t;
@@ -118,11 +115,12 @@
     $('#vwBody').innerHTML = `
       <p class="item-desc">${esc(x.desc)}</p>
       <p class="item-meta">${c.t !== x.tool ? `<span>${esc(c.t)}</span>` : ''}<span>${esc(x.tool)}</span><span>${TYPES[x.type] || esc(x.type)}</span></p>
-      <p class="vw-src">来源：<a class="link" href="${esc(src?.url || x.url)}" target="_blank" rel="noopener noreferrer">${esc(src?.name || x.src)}</a> · ${esc(src?.license || '未声明协议')}</p>
+      <p class="vw-src">来源：<a class="link" href="${esc(src?.url || x.url)}" target="_blank" rel="noopener noreferrer">${esc(src?.name || x.src)}</a> · ${esc(src?.license || '未声明协议')}${st?.dead ? ' · <b class="warn">原页面疑似失效</b>' : st?.checked ? ` · 核验于 ${esc(st.checked)}` : ''}</p>
       <div class="vw-act">
         <a class="btn primary" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${OUT}查看原页面</a>
         ${x.dl ? `<a class="btn" href="${esc(x.dl)}" target="_blank" rel="noopener noreferrer">${DOWN}下载模板</a>` : ''}
         <button type="button" class="btn" data-share="${esc(x.id)}">${LINK}分享</button>
+        <button type="button" class="btn" data-report="f:${esc(x.id)}" data-name="${esc(x.t)}" data-url="${esc(x.url)}">${FLAG}报告问题</button>
         ${favBtn(x)}
       </div>
       ${x.code ? `<div class="snip">
@@ -169,12 +167,12 @@
     const t = e.target.closest('[data-view], [data-copy], [data-fav], [data-share], [data-act]');
     if (!t) return;
     if (t.dataset.view) view(t.dataset.view);
-    else if (t.dataset.copy) copy(texts[+t.dataset.copy]);
+    else if (t.dataset.copy) copy(texts[+t.dataset.copy], { btn: t, msg: t.closest('.swatches') ? `已复制 ${texts[+t.dataset.copy]}` : '已复制到剪贴板' });
     else if (t.dataset.fav) toggleFav(t.dataset.fav);
     else if (t.dataset.share) {
       const url = new URL(location.href);
       url.search = ''; url.hash = encodeURIComponent(t.dataset.share);
-      copy(url.href);
+      share({ title: byId.get(t.dataset.share)?.x.t, url: url.href, btn: t });
     } else {
       const a = t.dataset.act;
       if (a === 'vw-close') viewer.close();
@@ -210,27 +208,24 @@
   chips.innerHTML = [['all', '全部', all.length], ...Object.entries(TYPES).filter(([k]) => counts.has(k)).map(([k, t]) => [k, t, counts.get(k)])]
     .map(([k, t, n]) => `<button type="button" data-type="${k}" aria-pressed="${k === 'all'}">${t}<small>${n}</small></button>`).join('')
     + '<span class="chip-sep" aria-hidden="true"></span><button type="button" data-flag="code" aria-pressed="false">含代码</button><button type="button" data-flag="fav" aria-pressed="false">只看收藏</button>';
+  const setType = k => { type = k; chips.querySelectorAll('[data-type]').forEach(x => x.setAttribute('aria-pressed', x.dataset.type === k)); };
+  const setCode = on => { onlyCode = on; chips.querySelector('[data-flag="code"]').setAttribute('aria-pressed', on); };
   chips.addEventListener('click', e => {
     const b = e.target.closest('button');
     if (!b) return;
-    if (b.dataset.type) {
-      type = b.dataset.type;
-      chips.querySelectorAll('[data-type]').forEach(x => x.setAttribute('aria-pressed', x === b));
-    } else {
-      const on = b.getAttribute('aria-pressed') !== 'true';
-      b.setAttribute('aria-pressed', on);
-      if (b.dataset.flag === 'code') onlyCode = on; else onlyFav = on;
-    }
+    if (b.dataset.type) setType(b.dataset.type);
+    else if (b.dataset.flag === 'code') setCode(!onlyCode);
+    else { onlyFav = !onlyFav; b.setAttribute('aria-pressed', onlyFav); }
     apply();
   });
   let liveT;
   function apply() {
-    const terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const terms = parse(q.value);
     const filtering = terms.length > 0 || type !== 'all' || onlyCode || onlyFav;
     document.body.classList.toggle('searching', filtering);
     extras.forEach(s => { s.hidden = filtering; });
     for (const it of items) it.hidden = !((type === 'all' || it.dataset.type === type) && (!onlyCode || it.hasAttribute('data-code'))
-      && (!onlyFav || favs.includes(it.id)) && terms.every(t => it.dataset.q.includes(t)));
+      && (!onlyFav || favs.includes(it.id)) && match(it.dataset.q, terms));
     for (const s of secs) {
       const n = s.querySelectorAll('.item:not([hidden])').length;
       s.hidden = !n;
@@ -241,8 +236,11 @@
     $('#empty').textContent = onlyFav && !favs.length ? '还没有收藏的模板，点卡片右上角的星标即可收藏。' : '没有匹配的模板，换个关键词或类型试试。';
     clearTimeout(liveT);
     if (filtering) liveT = setTimeout(() => { $('#live').textContent = shown ? `找到 ${shown} 个模板` : '没有匹配的结果'; }, 500);
-    const url = new URL(location.href);
-    if (terms.length) url.searchParams.set('q', q.value.trim()); else url.searchParams.delete('q');
+    // 关键词、类型与"含代码"写进地址栏，刷新不丢，也可直接分享筛选结果；收藏只在本机，不写入
+    const url = new URL(location.href), sp = url.searchParams;
+    if (terms.length) sp.set('q', q.value.trim()); else sp.delete('q');
+    if (type !== 'all') sp.set('type', type); else sp.delete('type');
+    if (onlyCode) sp.set('code', '1'); else sp.delete('code');
     history.replaceState(null, '', url);
   }
   q.addEventListener('input', apply);
@@ -253,8 +251,11 @@
     if ((e.key === '/' && !typing) || (e.key === 'k' && (e.metaKey || e.ctrlKey))) { e.preventDefault(); q.focus(); q.select(); }
     else if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; apply(); q.blur(); }
   });
-  const q0 = new URLSearchParams(location.search).get('q');
-  if (q0) { q.value = q0; apply(); }
+  const p0 = new URLSearchParams(location.search);
+  if (p0.get('q')) q.value = p0.get('q');
+  if (counts.has(p0.get('type'))) setType(p0.get('type'));
+  if (p0.get('code') === '1') setCode(true);
+  if (q.value || type !== 'all' || onlyCode) apply();
 
   /* ---------- 进场动画与侧栏高亮 ---------- */
   const reveal = new IntersectionObserver(es => es.forEach(e => {

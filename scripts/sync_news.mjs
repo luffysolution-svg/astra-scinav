@@ -1,7 +1,7 @@
 // 学术前沿：聚合期刊官方 RSS/Atom、Crossref 与预印本官方 API 的最新论文元数据
 //   node scripts/sync_news.mjs            联网同步，更新 content/news.json 并生成 site/data/news.js
-//   node scripts/sync_news.mjs --offline  不联网，只由 content/news.json 重建 site/data/news.js 与 news-abstracts.json
-//   node scripts/sync_news.mjs --backfill 联网同步，并为所有缺摘要/封面的文章补抓（默认只补本次新增的）
+//   node scripts/sync_news.mjs --offline  不联网，只由 content/news.json 重建 site/data/news.js 与 news-abstracts/*.json
+//   node scripts/sync_news.mjs --backfill 联网同步，并为所有文章重试摘要/封面（默认补新文章，并每天重试旧文章缺失的摘要）
 // 来源配置在 content/news-sources.json（人工维护）；每条保存标题、日期、期刊、DOI、原文链接、摘要与封面。
 // 数据源优先级：官方 RSS/Atom → Crossref（按 ISSN，或按 DOI 前缀）→ 预印本官方 API。
 // 配置了 feed 又有 issn 的来源，Feed 请求失败时自动改用 Crossref。
@@ -27,7 +27,7 @@ const GAP = { 'export.arxiv.org': 3100, 'api.crossref.org': 1100, 'api.biorxiv.o
 // 可以抓落地页 meta 补摘要/封面的主机（未被 Cloudflare 拦截，robots.txt 允许 /articles/）
 const LANDING = /^www\.nature\.com$/;
 
-const SRC_FILE = 'content/news-sources.json', FILE = 'content/news.json', OUT = 'site/data/news.js', ABS_OUT = 'site/data/news-abstracts.json', IMG_DIR = 'site/news';
+const SRC_FILE = 'content/news-sources.json', FILE = 'content/news.json', OUT = 'site/data/news.js', ABS_DIR = 'site/data/news-abstracts', IMG_DIR = 'site/news';
 export const CATEGORY_IDS = ['nature', 'science', 'cell', 'medical', 'multidisciplinary', 'ecology', 'chem-materials', 'physics', 'preprints'];
 export const FIELDS = ['id', 'title', 'date', 'journal', 'doi', 'image', 'abstract', 'url', 'category', 'source'];
 export const SOURCE_TYPES = ['rss', 'atom', 'crossref', 'arxiv', 'biorxiv', 'medrxiv'];
@@ -379,17 +379,21 @@ async function covers(list) {
 // content/news.json 每篇一行，便于看 diff
 export const stringify = data => `{\n  "generated": ${JSON.stringify(data.generated)},\n  "articles": [${data.articles.length ? '\n' + data.articles.map(a => '    ' + JSON.stringify(a)).join(',\n') + '\n  ' : ''}]\n}\n`;
 // 页面数据：来源配置（不含抓取参数）+ 文章快照
-// 摘要体积大，单独放 data/news-abstracts.json，页面打开阅读面板或搜索摘要时才加载；列表里只留 abstract: true/false
+// 摘要体积大，按九个大分类拆到 data/news-abstracts/*.json；打开阅读面板只加载当前分类，搜索摘要才加载全部；列表只留 abstract: true/false
 export const render = (cfg, data) => `// 自动生成：scripts/sync_news.mjs，请编辑 content/news-sources.json\nwindow.NEWS = ${JSON.stringify({
   generated: data.generated,
   categories: cfg.categories,
   sources: cfg.sources.map(({ id, name, category, site, api, enabled, note }) => ({ id, name, category, site, api, enabled: enabled !== false, ...(note ? { note } : {}) })),
   articles: data.articles.map(a => ({ ...a, abstract: !!a.abstract })),
 })};\n`;
-export const renderAbstracts = data => JSON.stringify(Object.fromEntries(data.articles.filter(a => a.abstract).map(a => [a.id, a.abstract]))) + '\n';
+export const renderAbstracts = (data, category) => JSON.stringify(Object.fromEntries(data.articles.filter(a => a.category === category && a.abstract).map(a => [a.id, a.abstract]))) + '\n';
 function write(cfg, data) {
   fs.writeFileSync(OUT, render(cfg, data));
-  fs.writeFileSync(ABS_OUT, renderAbstracts(data));
+  fs.mkdirSync(ABS_DIR, { recursive: true });
+  for (const category of CATEGORY_IDS) fs.writeFileSync(`${ABS_DIR}/${category}.json`, renderAbstracts(data, category));
+  for (const f of fs.readdirSync(ABS_DIR)) if (!CATEGORY_IDS.some(c => f === `${c}.json`)) fs.rmSync(`${ABS_DIR}/${f}`);
+  // 旧版单文件由分类文件取代
+  fs.rmSync('site/data/news-abstracts.json', { force: true });
   // 删掉已不在数据里的封面
   const keep = new Set(data.articles.map(a => a.image).filter(Boolean).map(p => path.basename(p)));
   if (fs.existsSync(IMG_DIR)) for (const f of fs.readdirSync(IMG_DIR)) if (!keep.has(f)) fs.rmSync(`${IMG_DIR}/${f}`);
@@ -427,7 +431,8 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const kept = new Set(build(cfg.sources, merged).map(a => a.id));
   const live = merged.filter(a => kept.has(a.id));
   const known = new Set(old.articles.map(a => a.id)), backfill = process.argv.includes('--backfill');
-  const todo = a => backfill || !known.has(a.id);
+  // 新文章补全部元数据；旧文章若仍缺摘要则每天重试（Europe PMC / Crossref 常在论文上线几天后才补摘要）
+  const todo = a => backfill || !known.has(a.id) || !a.abstract;
   await enrich(live, todo);
   await covers(live);
   const articles = build(cfg.sources, live);

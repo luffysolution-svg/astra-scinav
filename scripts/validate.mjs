@@ -185,7 +185,7 @@ else {
     if (a.abstract !== null && (typeof a.abstract !== 'string' || a.abstract.length < 60 || a.abstract.length > 4001 || /<[a-z/][^>]*>/i.test(a.abstract))) err(`${w}：摘要必须是 60–4000 字的纯文本`);
   }
   same('site/data/news.js', news.render(nCfg, nData));
-  same('site/data/news-abstracts.json', news.renderAbstracts(nData));
+  for (const category of news.CATEGORY_IDS) same(`site/data/news-abstracts/${category}.json`, news.renderAbstracts(nData, category));
   const covers = new Set(nData.articles.map(a => a.image).filter(Boolean));
   if (fs.existsSync('site/news')) for (const f of fs.readdirSync('site/news')) if (!covers.has(`news/${f}`)) warn(`多余的封面文件 site/news/${f}（运行 sync_news.mjs --offline 清理）`);
 }

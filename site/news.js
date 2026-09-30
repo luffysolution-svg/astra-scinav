@@ -1,10 +1,11 @@
 /* 学术前沿：像 RSS 阅读器一样浏览近 30 天论文——分类 → 期刊二级分组，时间/摘要/封面/未读/收藏筛选，阅读面板看摘要与封面。
-   列表数据来自本地 data/news.js，摘要单独在 data/news-abstracts.json（打开阅读面板或搜索摘要时才加载）；页面不请求外部接口。
+   列表数据来自本地 data/news.js，摘要按分类拆在 data/news-abstracts/*.json（打开阅读面板只取当前分类，搜索摘要时才加载全部）；页面不请求外部接口。
    已读与收藏只存在本浏览器。 */
 (() => {
-  const { $, esc, store, toast, copy, share, terms: parse, match } = Astra;
+  const { $, esc, store, toast, copy, share, hay, terms: parse, match } = Astra;
   const D = window.NEWS;
-  const PER_J = 4;     // 按期刊分组时每刊先显示 4 篇
+  const PER_J = 2;     // 按期刊分组时每刊先显示 2 篇
+  const JOURNALS = 6;  // 每个大分类先渲染最近更新的 6 本期刊，避免首屏生成数百张卡
   const PAGE = 24;     // 按时间排列时每个分类先显示 24 篇
   const API = { rss: '官方 RSS', crossref: 'Crossref', arxiv: 'arXiv API', biorxiv: 'bioRxiv API', medrxiv: 'medRxiv API', chemrxiv: 'ChemRxiv' };
   const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
@@ -15,7 +16,7 @@
   const on = D.sources.filter(s => s.enabled);
   const today = D.generated ? D.generated.slice(0, 10) : new Date().toISOString().slice(0, 10);
   const daysAgo = d => Math.round((Date.parse(today) - Date.parse(d)) / 864e5);
-  const prep = a => ({ ...a, q: [a.title, a.journal, a.doi].filter(Boolean).join(' ').toLowerCase() });
+  const prep = a => { a.q = hay.news(a); return a; };
 
   /* ---------- 本机状态：已读（只记仍在数据里的）、收藏（存整条元数据，文章过了 30 天窗口仍可在收藏里看到） ---------- */
   const live = D.articles.map(prep), liveIds = new Set(live.map(a => a.id));
@@ -26,9 +27,23 @@
   const A = [...live, ...favs.filter(f => !liveIds.has(f.id) && catById.has(f.category)).map(f => prep({ ...f, gone: true }))];
   const byId = new Map(A.map(a => [a.id, a]));
 
-  /* ---------- 摘要：按需加载一次 ---------- */
-  let abs = null, absP = null;
-  const loadAbs = () => absP ||= fetch('data/news-abstracts.json').then(r => r.ok ? r.json() : {}).catch(() => ({})).then(j => (abs = j));
+  /* ---------- 摘要：按大分类按需加载；打开一篇只取当前分类，搜索摘要才加载全部九类 ---------- */
+  const abs = {}, absP = new Map(), absLoaded = new Set(), absFailed = new Set();
+  async function loadAbs(category) {
+    const ids = category ? [category] : cats.map(c => c.id);
+    await Promise.all(ids.map(id => {
+      if (absP.has(id)) return absP.get(id);
+      const p = fetch(`data/news-abstracts/${id}.json`).then(r => {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      }).then(j => {
+        Object.assign(abs, j); absLoaded.add(id); absFailed.delete(id); return j;
+      }).catch(() => { absP.delete(id); absFailed.add(id); return null; });
+      absP.set(id, p);
+      return p;
+    }));
+    return abs;
+  }
 
   /* ---------- 卡片 ---------- */
   const hue = s => [...s].reduce((h, c) => (h * 31 + c.codePointAt(0)) % 360, 7);
@@ -56,8 +71,8 @@
   /* ---------- 骨架：动态列表 + 固定的来源说明 ---------- */
   $('#content').innerHTML = '<div id="list"></div>' + sources();
   const list = $('#list');
-  function sources() {
-    const groups = cats.map(c => {
+  function sourceGroups() {
+    return cats.map(c => {
       const ss = D.sources.filter(s => s.category === c.id);
       return ss.length ? `<h4 class="kit-t">${esc(c.t)}</h4><div class="grid">${ss.map(s => `
         <div class="cell${s.enabled ? '' : ' off'}"><a class="card" href="${esc(s.site)}" target="_blank" rel="noopener noreferrer" style="--h:${c.hue}">
@@ -66,12 +81,21 @@
           <span class="src-meta">${s.enabled ? esc(API[s.api] || s.api) : `未启用 · ${esc(s.note || '')}`}</span></span>
         </a></div>`).join('')}</div>` : '';
     }).join('');
+  }
+  function sources() {
     return `<section class="cat sources in" id="sources" style="--h:210" aria-labelledby="sources-t">
       <header class="cat-head"><span class="orb" aria-hidden="true"></span><h3 id="sources-t">来源</h3><span class="en">Sources</span><span class="count">${on.length}</span></header>
       <p class="kit-note">优先使用期刊官方 RSS/Atom；官方 Feed 被拦截、缺少 DOI 或不存在时，按 ISSN 查询 Crossref；预印本使用 arXiv、bioRxiv、medRxiv 官方 API。摘要取自 Feed、Crossref、Europe PMC 或文章页公开的 meta，封面取自 Feed 或文章页，转成本地小图。每个来源保留近 30 天最多 50 篇。</p>
-      ${groups}
+      <div id="sourceGroups"><p class="kit-note">滚动到这里时加载来源列表…</p></div>
     </section>`;
   }
+  // 来源列表在页面最底部，接近视口时才创建一百多张来源卡片
+  const sourceBox = $('#sourceGroups');
+  const fillSources = () => { if (!sourceBox.dataset.ready) { sourceBox.innerHTML = sourceGroups(); sourceBox.dataset.ready = '1'; } };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { fillSources(); io.disconnect(); } }, { rootMargin: '600px 0px' });
+    io.observe(sourceBox);
+  } else fillSources();
   $('#sideNav').innerHTML = `<div class="side-group">${cats.map(c =>
     `<a href="#${esc(c.id)}" data-cat="${esc(c.id)}" style="--h:${c.hue}"><i></i>${esc(c.t)}<b></b></a>`).join('')}
     <a href="#sources" data-cat="sources" style="--h:210"><i></i>来源<b>${on.length}</b></a></div>`;
@@ -125,14 +149,15 @@
     }
     const k = b.dataset.flag;
     setFlag(k, !flag.has(k));
-    if (k === 'inabs' && flag.has(k) && !abs) { toast('正在加载摘要…'); await loadAbs(); }
+    if (k === 'inabs' && flag.has(k) && absLoaded.size < cats.length) { toast('正在加载摘要…'); await loadAbs(); }
     render();
   });
   sel.addEventListener('change', () => { journal = sel.value; render(); });
   since.addEventListener('change', render);
   view.addEventListener('change', render);
-  q.addEventListener('input', render);
-  $('#search').addEventListener('submit', e => e.preventDefault());
+  let inputT;
+  q.addEventListener('input', () => { clearTimeout(inputT); inputT = setTimeout(render, 120); });
+  $('#search').addEventListener('submit', e => { e.preventDefault(); clearTimeout(inputT); render(); });
 
   /* ---------- 列表：按期刊分组（期刊按最新一篇排序，每刊先显示 PER_J 篇）或按时间排列 ---------- */
   let hits = new Map(), liveT;
@@ -150,16 +175,19 @@
       return `${head}<div class="items nws">${h.slice(0, n).map(card).join('')}</div>${more(c.id, h.length - n)}`;
     }
     const js = [...h.reduce((m, a) => m.set(a.journal, [...(m.get(a.journal) || []), a]), new Map())];
-    // 期刊二级目录：点一下只看这本刊
+    // 期刊二级目录：点一下只看这本刊；正文先渲染最近更新的几本，其他按需展开
     const nav = js.length > 1 ? `<div class="nw-js" role="group" aria-label="${esc(c.t)}的期刊">${js.map(([j, xs]) =>
       `<button type="button" data-journal="${esc(j)}">${esc(j)}<small>${xs.length}</small></button>`).join('')}</div>` : '';
-    return head + nav + js.map(([j, xs]) => {
+    const jkey = `${c.id}--journals`, jn = shown.get(jkey) || JOURNALS;
+    const groups = js.slice(0, jn).map(([j, xs]) => {
       const key = jid(c.id, j), n = shown.get(key) || PER_J;
       return `<div class="nw-group" id="${esc(key)}">
-        <h4 class="nw-gt"><span class="nw-ph sm" style="--h:${hue(j)}" aria-hidden="true">${esc(initial(j))}</span>${esc(j)}<small>${xs.length} 篇 · ${xs.filter(a => !read.has(a.id)).length} 未读</small></h4>
+        <h4 class="nw-gt" tabindex="-1"><span class="nw-ph sm" style="--h:${hue(j)}" aria-hidden="true">${esc(initial(j))}</span>${esc(j)}<small>${xs.length} 篇 · ${xs.filter(a => !read.has(a.id)).length} 未读</small></h4>
         <div class="items nws">${xs.slice(0, n).map(card).join('')}</div>${more(key, xs.length - n)}
       </div>`;
     }).join('');
+    const left = js.length - jn;
+    return head + nav + groups + (left > 0 ? `<button type="button" class="btn nw-more" data-more-journals="${esc(c.id)}">显示更多期刊（还有 ${left} 本）</button>` : '');
   }
   // keep：只是已读/收藏状态变了，保留各组已展开的篇数
   function render(keep) {
@@ -198,6 +226,15 @@
   list.addEventListener('click', e => {
     const j = e.target.closest('[data-journal]');
     if (j) { journal = j.dataset.journal; sel.value = journal; render(); $('#list .cat')?.scrollIntoView({ block: 'start' }); return; }
+    const mj = e.target.closest('[data-more-journals]');
+    if (mj) {
+      const c = mj.dataset.moreJournals, js = [...hits.get(c).reduce((m, a) => m.set(a.journal, [...(m.get(a.journal) || []), a]), new Map())];
+      const from = shown.get(`${c}--journals`) || JOURNALS, first = js[from]?.[0];
+      shown.set(`${c}--journals`, js.length);
+      render(true);
+      if (first) requestAnimationFrame(() => document.querySelector(`#${jid(c, first)} .nw-gt`)?.focus());
+      return;
+    }
     const b = e.target.closest('[data-more]');
     if (!b) return;
     const key = b.dataset.more, box = b.previousElementSibling;
@@ -215,7 +252,8 @@
   /* ---------- 阅读面板：封面、摘要、DOI、原文；←/→ 或 j/k 在当前结果里切换 ---------- */
   const rd = $('#reader');
   let cur = null, back = null;
-  const order = () => [...list.querySelectorAll('.nw')].map(el => el.dataset.id);
+  // 阅读器在当前筛选结果中切换，不受“首屏只渲染部分期刊/文章”影响；直链到未渲染文章也有正确序号
+  const order = () => cats.flatMap(c => hits.get(c.id) || []).map(a => a.id);
   function mark(id, v) {
     if (v === read.has(id)) return;
     v ? read.add(id) : read.delete(id);
@@ -230,7 +268,7 @@
   function body(a, abstract) {
     return `
       <div class="snip"><div class="snip-head"><b>摘要</b>${abstract ? `<button type="button" class="btn" data-copyabs>${COPY}复制摘要</button>` : ''}</div>
-        <p class="prompt-text rd-abs">${abstract ? esc(abstract) : a.abstract && !abs ? '正在加载摘要…' : '这篇暂无公开摘要，点“阅读原文”查看。'}</p></div>
+        <p class="prompt-text rd-abs">${abstract ? esc(abstract) : a.abstract && absFailed.has(a.category) ? '摘要加载失败，重新打开可重试。' : a.abstract && !absLoaded.has(a.category) ? '正在加载摘要…' : '这篇暂无公开摘要，点“阅读原文”查看。'}</p></div>
       <div class="vw-act">
         <a class="btn primary" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${OUT}阅读原文</a>
         ${a.doi ? `<a class="btn" href="https://doi.org/${esc(a.doi)}" target="_blank" rel="noopener noreferrer">DOI</a>` : ''}
@@ -259,7 +297,7 @@
     if (!rd.open) { back = document.activeElement; rd.showModal(); }
     mark(id, true);
     if (decodeURIComponent(location.hash.slice(1)) !== id) history.replaceState(null, '', '#' + id);
-    if (a.abstract && !abs) { await loadAbs(); if (cur === id) $('#rdBody').innerHTML = body(a, abs[id]); }
+    if (a.abstract && !absLoaded.has(a.category)) { await loadAbs(a.category); if (cur === id) $('#rdBody').innerHTML = body(a, abs[id]); }
   }
   function step(d) {
     const ids = order();
@@ -286,6 +324,7 @@
     favs = on ? [{ id, title: a.title, date: a.date, journal: a.journal, doi: a.doi, image: null, abstract: a.abstract, url: a.url, category: a.category, source: a.source }, ...favs] : favs.filter(f => f.id !== id);
     store.set('newsFavs', favs);
     document.querySelectorAll(`[data-fav="${id}"]`).forEach(b => b.setAttribute('aria-pressed', on));
+    if (flag.has('fav')) render(true);   // “只看收藏”中取消收藏后立即移出结果
     toast(on ? '已收藏（保存在本浏览器）' : '已取消收藏');
   }
   document.addEventListener('click', e => {
@@ -324,6 +363,7 @@
   }
   side.addEventListener('click', e => {
     const a = e.target.closest('a[data-cat]');
+    if (a?.dataset.cat === 'sources') fillSources();
     if (a && !document.getElementById(a.dataset.cat)?.offsetParent) {
       q.value = ''; journal = ''; since.value = ''; [...flag].forEach(k => setFlag(k, false)); setCat('all'); render();
     }

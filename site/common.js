@@ -94,6 +94,7 @@ window.Astra = (() => {
   const hay = {
     skill: (r, c) => low([r.name, r.repo, r.desc, c?.t, 'skill', ...(r.skills || []).flatMap(s => [s.name, s.desc])]),
     prompt: (p, c, src) => low([p.t, p.p, p.src, src?.name, c?.t, 'prompt 提示词']),
+    news: a => low([a.title, a.journal, a.doi, '论文 paper article']),
     figure: (x, c, src) => low([x.t, x.en, x.tool, x.desc, FIG_TYPES[x.type], x.type, src?.name, c?.t, '绘图 作图 figure plot',
       x.code ? `代码 code ${FIG_LANG[x.lang] || x.lang || ''}` : '',
       x.prompt ? `提示词 prompt 生图 ${x.prompt} ${x.model || ''} ${(x.tags || []).join(' ')} ${x.aspect || ''}` : '']),

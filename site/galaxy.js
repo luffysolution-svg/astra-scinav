@@ -377,7 +377,7 @@
   /* ---------- 交互状态 ---------- */
   const mouse = { x: -9999, y: -9999, sx: -9999, sy: -9999 };
   const par = { x: 0, y: 0, tx: 0, ty: 0 };
-  let scroll = 0, sScroll = 0, lastY = scrollY, boost = 0, travel = 0;
+  let scroll = 0, sScroll = 0, lastY = scrollY, boost = 0, travel = 0, scrollUntil = 0;
 
   function resize(){
     canvas.width = Math.round(innerWidth*DPR); canvas.height = Math.round(innerHeight*DPR);
@@ -398,6 +398,7 @@
   document.addEventListener('pointerleave', () => { mouse.x = mouse.y = mouse.sx = mouse.sy = -9999; });
   addEventListener('scroll', () => {
     scroll = Math.min(scrollY/innerHeight, 2.5);
+    scrollUntil = performance.now() + 180;   // 滚动期间背景降到约 30fps，把 GPU/合成时间让给页面
     if (!reduced) boost = Math.min(2, boost + Math.abs(scrollY - lastY)/innerHeight*1.2);
     lastY = scrollY;
   }, { passive: true });
@@ -415,16 +416,17 @@
 
   function frame(now){
     raf = requestAnimationFrame(frame);
-    // 高刷屏限到约 60–72 帧，省下的 GPU 留给页面滚动
-    if (last && now - last < 10) return;
-    draw(now);
+    // 高刷屏平时限到约 60fps；滚动后 180ms 内降到约 30fps，并减少光线步进/尘埃，优先保证页面合成流畅
+    const busy = now < scrollUntil;
+    if (last && now - last < (busy ? 31 : 15)) return;
+    draw(now, busy);
   }
-  function draw(now){
+  function draw(now, busy = false){
     const dt = last ? Math.min((now - last)/1000, .1) : 1/60;
     last = now;
 
     // 自适应画质：持续低于约 45 帧就降低黑洞层分辨率（只降不升，避免来回抖动）
-    if ((now - t0) > 2500){
+    if ((now - t0) > 2500 && !busy){
       acc += dt; frames++;
       if (frames === 60){
         if (acc/frames > 1/45 && scale > .26){ scale *= .8; alloc(); }
@@ -453,7 +455,7 @@
     gl.uniformMatrix3fv(bh.u.uRot, false, rot);
     gl.uniform2fv(bh.u.uShift, shift);
     gl.uniform1f(bh.u.uFocal, focal);
-    gl.uniform1i(bh.u.uSteps, mobile ? 90 : 130);
+    gl.uniform1i(bh.u.uSteps, mobile ? (busy ? 60 : 90) : (busy ? 80 : 130));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     // 2. 合成到屏幕
@@ -482,7 +484,7 @@
     gl.uniform1f(pt.u.uScroll, sScroll);
     gl.uniform2fv(pt.u.uHole, hole);
     gl.uniform1f(pt.u.uMaxPt, MAX_PT);
-    gl.drawArrays(gl.POINTS, 0, N);
+    gl.drawArrays(gl.POINTS, 0, busy ? N - Math.floor(N_DUST/2) : N);
   }
   resize();
   if (!paused) sync();

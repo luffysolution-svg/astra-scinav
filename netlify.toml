@@ -1,5 +1,8 @@
 [build]
   publish = "site"
+  # 导航迁移至 Vercel：跳过 Git 自动构建，保留当前 Netlify 发布。
+  # 独立画布由 canvas.yml 的 netlify deploy --no-build 发布，不受此设置影响。
+  ignore = "exit 0"
 
 [[headers]]
   for = "/*"

@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { configure, TARGET, SETTINGS } from '../scripts/configure_vercel.mjs';
 
-function fixture({ stores = [], token = false, secrets = ['VERCEL_TOKEN'], accountId = TARGET.teamId } = {}) {
+function fixture({ stores = [], token = false, targets = ['production', 'preview'], secrets = ['VERCEL_TOKEN'], accountId = TARGET.teamId } = {}) {
   const calls = [], logs = [], secretNames = new Set(secrets);
   const project = { id: 'prj_fixture', name: TARGET.project, accountId };
-  let connected = stores, production = token;
+  let connected = stores.map((s, i) => ({ id: `store_fixture${i}`, ...s })), hasToken = token;
   const run = async (command, args, options = {}) => {
     calls.push({ command, args, input: options.input });
     if (command === 'gh') {
@@ -14,11 +14,13 @@ function fixture({ stores = [], token = false, secrets = ['VERCEL_TOKEN'], accou
     }
     if (args[0] === 'link') return '';
     if (args[0] === 'blob') {
-      if (args[1] === 'list-stores') return JSON.stringify({ stores: connected });
-      if (args[1] === 'create-store') { connected = [{ access: 'private' }]; production = true; return ''; }
+      // 真实 CLI 列表不返回 access，详情 API 才返回。
+      if (args[1] === 'list-stores') return JSON.stringify({ stores: connected.map(({ access, ...s }) => s) });
+      if (args[1] === 'create-store') { connected = [{ id: 'store_fixture0', access: 'private' }]; hasToken = true; return ''; }
     }
     if (args[0] === 'api') {
-      if (args[1].endsWith('/env')) return JSON.stringify({ envs: production ? [{ key: 'BLOB_READ_WRITE_TOKEN', target: ['production', 'preview'] }] : [] });
+      if (args[1].startsWith('/v1/storage/stores/')) return JSON.stringify({ store: connected.find(s => args[1].endsWith(`/${s.id}`)) });
+      if (args[1].endsWith('/env')) return JSON.stringify({ envs: hasToken ? [{ key: 'BLOB_READ_WRITE_TOKEN', target: targets }] : [] });
       if (options.input) return JSON.stringify({ ...project, ...JSON.parse(options.input) });
       return JSON.stringify(project);
     }
@@ -37,7 +39,7 @@ test('new project setup creates a private store and writes both project IDs with
   assert.deepEqual(f.calls.filter(c => c.command === 'gh' && c.args[1] === 'set').map(c => [c.args[2], c.input]), [['VERCEL_ORG_ID', TARGET.teamId], ['VERCEL_PROJECT_ID', 'prj_fixture']]);
   assert.ok(f.calls.every(c => !c.args.includes('deploy') && !c.args.includes('dns') && !c.args.includes('workflow')));
 });
-test('repeated setup reuses one existing private production store and preserves the deployment token', async () => {
+test('real CLI summary shape reuses the private store from API details and preserves the deployment token', async () => {
   const f = fixture({ stores: [{ access: 'private' }], token: true }); await configure(f.options);
   assert.ok(!f.calls.some(c => c.args[1] === 'create-store'));
   assert.ok(!f.calls.some(c => c.args[1] === 'set' && c.args[2] === 'VERCEL_TOKEN'));
@@ -47,6 +49,8 @@ test('ambiguous, public or unconnected stores stop before creating resources or 
     { stores: [{ access: 'public' }], token: true },
     { stores: [{ access: 'private' }], token: false },
     { stores: [{ access: 'private' }, { access: 'public' }], token: true },
+    { stores: [{ access: 'private' }], token: true, targets: ['production'] },
+    { stores: [], token: true, targets: ['preview'] },
   ]) {
     const f = fixture(options); await assert.rejects(configure(f.options), /已有存储/);
     assert.ok(!f.calls.some(c => c.args[1] === 'create-store' || c.input));

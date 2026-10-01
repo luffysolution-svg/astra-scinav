@@ -25,20 +25,26 @@ export async function configure({ run, readLink, env = process.env, interactive 
     const response = JSON.parse(await vc(['blob', 'list-stores', '--json']));
     const stores = Array.isArray(response) ? response : response.stores;
     if (!Array.isArray(stores)) throw new Error('无法识别 Blob 存储列表，未创建新存储。');
-    return stores;
+    // CLI 列表只含概要；访问等级需要从 store 详情核对。
+    return Promise.all(stores.map(async s => {
+      const { store } = JSON.parse(await api(`/v1/storage/stores/${s.id}`));
+      return { ...s, access: store?.access };
+    }));
   };
-  const hasProductionToken = async () => {
+  const tokenTargets = async () => {
     const { envs } = JSON.parse(await api(`/v10/projects/${project.id}/env`));
     if (!Array.isArray(envs)) throw new Error('无法读取项目环境变量，已停止配置。');
-    return envs.some(e => e.key === 'BLOB_READ_WRITE_TOKEN' && Array.isArray(e.target) && e.target.includes('production'));
+    return envs.filter(e => e.key === 'BLOB_READ_WRITE_TOKEN' && Array.isArray(e.target)).flatMap(e => e.target);
   };
-  const stores = await listStores(), tokenPresent = await hasProductionToken();
+  const stores = await listStores(), targets = await tokenTargets();
+  const tokenPresent = ['production', 'preview'].every(target => targets.includes(target));
   if (!(tokenPresent && stores.length === 1 && stores[0].access === 'private')) {
-    if (stores.length || tokenPresent) throw new Error('已有存储或令牌尚不满足 Private + Production 配置；请在项目 Storage 中核对连接，再重试。未创建重复存储。');
+    if (stores.length || targets.length) throw new Error('已有存储或令牌尚不满足 Private + Production / Preview 配置；请在项目 Storage 中核对连接，再重试。未创建重复存储。');
     await vc(['blob', 'create-store', 'astra-feedback', '--access', 'private', '--yes', '--environment', 'production', '--environment', 'preview']);
-    if (!await hasProductionToken() || !(await listStores()).some(s => s.access === 'private')) throw new Error('存储已创建，但生产环境连接未确认；请在 Storage 核对后重试。');
+    const createdTargets = await tokenTargets();
+    if (!['production', 'preview'].every(target => createdTargets.includes(target)) || !(await listStores()).some(s => s.access === 'private')) throw new Error('存储已创建，但 Production / Preview 连接未确认；请在 Storage 核对后重试。');
     log('已创建私有反馈存储，并连接 Production / Preview。');
-  } else log('已复用现有私有反馈存储，生产环境令牌已配置。');
+  } else log('已复用现有私有反馈存储，Production / Preview 令牌已配置。');
 
   const updated = JSON.parse(await api(`/v9/projects/${project.id}`, { input: JSON.stringify(SETTINGS) }));
   if (!Object.entries(SETTINGS).every(([k, v]) => updated[k] === v)) throw new Error('Vercel 项目配置未完全生效，请核对控制台设置。');
@@ -72,6 +78,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         return execFileSync(executable, argv, {
           cwd: root, encoding: 'utf8', input: options.input,
           env: { ...process.env, VERCEL_TELEMETRY_DISABLED: '1' },
+          // Windows 的 .cmd 启动器需要 shell；参数来自本脚本，凭据只经 stdin。
+          shell: command === 'vercel' && process.platform === 'win32', windowsHide: true,
           stdio: options.interactive ? 'inherit' : ['pipe', 'pipe', 'pipe'],
           timeout: options.interactive ? undefined : 180000,
         }) || '';

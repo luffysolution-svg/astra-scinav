@@ -34,12 +34,15 @@ netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发
 - 链接字段（`url` 等）只能放单个地址；备注写 `note`，补充链接写 `refs: [{ t, url }]`。
 - 只摘录已声明允许再分发协议的 Prompt；未声明协议或 NC/ND 的来源只列出链接（`validate.mjs` 会拦截）。
 - 首页与子页面的搜索字段、同义词表统一在 `site/common.js`（`Astra.hay` / `SYN`），改检索逻辑只改这里。
+- 首页外部搜索入口在 `site/app.js` 的 `ENGINES`：站内、Google、谷歌学术、百度、必应、知网、PubMed、X-MOL、Sci-Hub、Semantic Scholar。外部搜索直接打开目标网站，无需 API Key 或后端；X-MOL 使用 `/q?option=`，Sci-Hub 输入 DOI 或论文链接并保留路径分隔符。按钮在宽屏为五列两行，屏幕宽度不超过 800px 时为两列五行。
 - 条目状态在 `content/status.json`（键名：导航为链接，其余为 `s:仓库` / `p:id` / `f:id`，与收藏一致）：`added` 由 `status.mjs` 记录，`checked` / `fails` 只由 GitHub Actions 每周的 `linkcheck --write` 更新；本地网络噪声大，不要在本地用 `--write`。
 - 首页收藏分组 `astra:groups`、私人备注 `astra:notes` 只存浏览器，随导出备份（v4）。
 - 绘图工作台 `site/workbench.html` 用 iframe 嵌入独立站点 `https://canvas.luffysite.top`（Netlify 站点 `astra-canvas`，构建自 fork `luffysolution-svg/infinite-canvas` 的 `main`，该分支只跟随上游）。画布站响应头与 SPA 回退在 `deploy/canvas/`，由 `.github/workflows/canvas.yml` 每小时同步上游、构建并部署；不要把画布源码搬进 `site/`。
 
 ## 约束
 
+- 已按用户决定撤回独立“科研工具”模块（MinerU 解析、Materials Project / 点石 / Semantic Scholar API、Zotero 联动、本地桥及其依赖）；不要重新引入。原有导航站点链接与首页外部搜索入口保留。
+- 用户反馈 Netlify credits 不足，后续发布倾向 Vercel，Cloudflare 调整按需处理。现有 Netlify 配置保留；仓库根目录 `vercel.json` 已配置静态输出 `site/`、跳过安装和构建，并沿用站点响应头，尚未实际发布 Vercel。用户已授权先推送 GitHub；最终手机布局尚未完成浏览器实测，不要把配置准备或推送写成实测、部署完成。
 - `raw/` 是用户的私人书签来源，只在本地使用，绝不能提交。
 - 不要恢复 `!s` 一类搜索前缀。
 - 分类保持通用，不按用户私人书签或个人工作流组织。

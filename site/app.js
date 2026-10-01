@@ -14,6 +14,9 @@
     { id: 'bing', t: '必应', u: 'https://www.bing.com/search?q=' },
     { id: 'cnki', t: '知网', u: 'https://kns.cnki.net/kns8s/defaultresult/index?kw=' },
     { id: 'pubmed', t: 'PubMed', u: 'https://pubmed.ncbi.nlm.nih.gov/?term=' },
+    { id: 'xmol', t: 'X-MOL', u: 'https://www.x-mol.com/q?option=' },
+    { id: 'scihub', t: 'Sci-Hub', u: 'https://sci-hub.st/', placeholder: '输入 DOI 或论文链接，在 Sci-Hub 打开…' },
+    { id: 'semantic', t: 'Semantic Scholar', u: 'https://www.semanticscholar.org/search?q=' },
   ];
   const TAGS = { vpn: { t: '代理', k: '代理 vpn' }, campus: { t: '机构', k: '机构 校园网 campus' } };
   // 三项互斥：公开直达 = 既不需代理也不需机构权限
@@ -490,13 +493,14 @@
   function moveThumb() {
     const b = engBox.querySelector('[aria-selected="true"]');
     thumb.style.width = b.offsetWidth + 'px';
-    thumb.style.transform = `translateX(${b.offsetLeft}px)`;
+    thumb.style.height = b.offsetHeight + 'px';
+    thumb.style.transform = `translate(${b.offsetLeft}px, ${b.offsetTop - 4}px)`;
   }
   function setEngine(e) {
     engine = e;
     // 标签页只有选中项可 Tab 聚焦，其余用方向键切换
     engBox.querySelectorAll('button').forEach(x => { x.setAttribute('aria-selected', x.dataset.e === e.id); x.tabIndex = x.dataset.e === e.id ? 0 : -1; });
-    q.placeholder = e.u ? `在 ${e.t} 中搜索…` : '搜索站内资源，支持拼音与首字母…';
+    q.placeholder = e.placeholder || (e.u ? `在 ${e.t} 中搜索…` : '搜索站内资源，支持拼音与首字母…');
     moveThumb();
   }
   engBox.addEventListener('click', e => {
@@ -543,7 +547,7 @@
     const r = q.getBoundingClientRect();
     window.astraPulse(r.right - 30, r.top + r.height / 2, 1.4);
     if (!v && access === 'all') return;
-    if (engine.u) return void open(engine.u + encodeURIComponent(v));
+    if (engine.u) return void open(engine.u + (engine.id === 'scihub' ? encodeURI(v) : encodeURIComponent(v)));
     const list = visibleCells(), c = list[Math.max(active, 0)];
     if (c) {
       const a = c.querySelector('.card');

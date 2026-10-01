@@ -8,6 +8,9 @@
 name: 同步画布站
 
 on:
+  push:
+    branches: [main]
+    paths: [deploy/canvas/**, .github/workflows/canvas.yml]
   schedule:
     - cron: '17 * * * *'   # 每小时一次；GitHub 定时任务常延迟数分钟到更久，不保证准点
   workflow_dispatch:
@@ -40,6 +43,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: deploy/canvas
+          path: astra
       - name: 同步 fork main 与上游
         if: ${{ !inputs.ref }}
         env:
@@ -60,12 +67,13 @@ jobs:
           sha=$(gh api "repos/$FORK/commits/${REF:-main}" --jq .sha)
           up=$(gh api "repos/$UPSTREAM/commits/main" --jq .sha)
           live=$(curl -fsS -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID" | jq -r '.published_deploy.title // ""')
-          if [ -n "$REF" ]; then title="fork $sha · 手动指定"; else title="fork $sha · upstream $up"; fi
+          adapter=$(cat astra/deploy/canvas/_headers astra/deploy/canvas/_redirects | sha256sum | cut -c1-16)
+          if [ -n "$REF" ]; then title="fork $sha · adapter $adapter · 手动指定"; else title="fork $sha · adapter $adapter · upstream $up"; fi
           echo "线上版本：${live:-（无）}"
           echo "目标版本：$title"
-          { echo "sha=$sha"; echo "title=$title"; echo "live=$live"; } >> "$GITHUB_OUTPUT"
+          { echo "sha=$sha"; echo "adapter=$adapter"; echo "title=$title"; echo "live=$live"; } >> "$GITHUB_OUTPUT"
           skip=false
-          [ "$FORCE" != true ] && [[ "$live" == "fork $sha "* ]] && skip=true
+          [ "$FORCE" != true ] && [[ "$live" == "fork $sha · adapter $adapter "* ]] && skip=true
           echo "skip=$skip" >> "$GITHUB_OUTPUT"
           if [ "$skip" = true ]; then echo "### 画布站无更新，跳过构建部署" >> "$GITHUB_STEP_SUMMARY"; echo "$live" >> "$GITHUB_STEP_SUMMARY"; fi
 
@@ -76,7 +84,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canvas-failed
-          key: canvas-failed-${{ steps.target.outputs.sha }}
+          key: canvas-failed-${{ steps.target.outputs.sha }}-${{ steps.target.outputs.adapter }}
           lookup-only: true
 
       - name: 是否继续
@@ -85,12 +93,6 @@ jobs:
           go=${{ steps.target.outputs.skip == 'false' && steps.failed.outputs.cache-hit != 'true' }}
           echo "go=$go" >> "$GITHUB_OUTPUT"
           [ "${{ steps.failed.outputs.cache-hit }}" = true ] && echo "::warning::该版本此前已失败过，定时运行跳过；修复后请手动运行" || true
-
-      - uses: actions/checkout@v4
-        if: steps.go.outputs.go == 'true'
-        with:
-          sparse-checkout: deploy/canvas
-          path: astra
 
       - uses: actions/checkout@v4
         if: steps.go.outputs.go == 'true'
@@ -134,4 +136,4 @@ jobs:
         if: failure() && steps.go.outputs.go == 'true'
         with:
           path: .canvas-failed
-          key: canvas-failed-${{ steps.target.outputs.sha }}
+          key: canvas-failed-${{ steps.target.outputs.sha }}-${{ steps.target.outputs.adapter }}

@@ -1,0 +1,63 @@
+# 同步任务用 GITHUB_TOKEN 提交，不会触发 push 工作流；通过 workflow_run 接续发布。
+name: 发布导航到 Vercel
+
+on:
+  workflow_run:
+    workflows: [数据校验, 同步学术前沿, 同步 Skill 与 Prompt 数据]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astra-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event != 'pull_request')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: 检查发布凭据
+        run: |
+          for key in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [ -z "${!key}" ]; then
+              echo "::error::请在仓库 Actions secrets 中配置 $key，文献已提交但尚不能自动发布。"
+              exit 1
+            fi
+          done
+      - uses: actions/checkout@v4
+        with:
+          # 同步任务的 head_sha 是抓取前的提交；必须取推送新数据后的 main。
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 校验待发布数据
+        run: node scripts/validate.mjs
+      - name: 安装 Vercel CLI
+        run: npm install --global vercel@62.1.0
+      - name: 读取生产配置
+        run: vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+      - name: 构建页面与反馈函数
+        run: vercel build --prod --token "$VERCEL_TOKEN"
+      - name: 检查发布产物
+        run: |
+          test -f .vercel/output/static/index.html
+          test -f .vercel/output/functions/api/feedback.func/.vc-config.json
+      - name: 发布生产站
+        run: |
+          vercel deploy --prebuilt --prod --yes --token "$VERCEL_TOKEN" > "$RUNNER_TEMP/deploy-url.txt"
+          url=$(tail -n 1 "$RUNNER_TEMP/deploy-url.txt")
+          echo "已发布：$url" >> "$GITHUB_STEP_SUMMARY"
+          echo "提交：$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"

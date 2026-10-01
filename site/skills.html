@@ -85,7 +85,7 @@
   </footer>
 
   <dialog class="dlg" id="dlg" aria-labelledby="dlg-t">
-    <form name="suggest-skill" method="post" data-netlify="true" netlify-honeypot="bot-field" id="dlgForm">
+    <form name="suggest-skill" method="post" action="/api/feedback" id="dlgForm">
       <h2 id="dlg-t">推荐 Skill 仓库</h2>
       <input type="hidden" name="form-name" value="suggest-skill">
       <p class="hp" aria-hidden="true"><label>勿填 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -103,7 +103,7 @@
 
   <script src="data/skills.js"></script>
   <script src="data/status.js"></script>
-  <script src="galaxy.js"></script>
+  <script src="galaxy.js" defer></script>
   <script src="common.js"></script>
   <script src="collection.js"></script>
 </body>

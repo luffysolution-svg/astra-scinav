@@ -29,16 +29,26 @@
 
   /* ---------- 摘要：按大分类按需加载；打开一篇只取当前分类，搜索摘要才加载全部九类 ---------- */
   const abs = {}, absP = new Map(), absLoaded = new Set(), absFailed = new Set();
+  const expectedAbs = new Map(cats.map(c => [c.id, live.filter(a => a.category === c.id && a.abstract).map(a => a.id)]));
   async function loadAbs(category) {
     const ids = category ? [category] : cats.map(c => c.id);
     await Promise.all(ids.map(id => {
       if (absP.has(id)) return absP.get(id);
-      const p = fetch(`data/news-abstracts/${id}.json`).then(r => {
+      const version = D.abstractVersions?.[id] || D.generated || '';
+      const url = `data/news-abstracts/${id}.json?v=${encodeURIComponent(version)}`;
+      const complete = j => j && typeof j === 'object' && expectedAbs.get(id).every(k => typeof j[k] === 'string' && j[k].trim());
+      const read = async cache => {
+        const r = await fetch(url, { cache, signal: AbortSignal.timeout(15000) });
         if (!r.ok) throw new Error(r.status);
         return r.json();
-      }).then(j => {
+      };
+      const p = (async () => {
+        let j = await read(absFailed.has(id) ? 'reload' : 'default');
+        // 声明存在的摘要缺失时，缓存不是当前快照；绕过旧缓存重取一次。
+        if (!complete(j)) j = await read('reload');
+        if (!complete(j)) throw new Error('摘要数据尚未同步');
         Object.assign(abs, j); absLoaded.add(id); absFailed.delete(id); return j;
-      }).catch(() => { absP.delete(id); absFailed.add(id); return null; });
+      })().catch(() => { absP.delete(id); absFailed.add(id); return null; });
       absP.set(id, p);
       return p;
     }));
@@ -105,8 +115,9 @@
   const stats = () => $('#stats').innerHTML = [[live.length, '近 30 天论文'], [live.filter(a => !read.has(a.id)).length, '未读'], [journals.size, '种期刊'], [D.generated ? fmt(D.generated) : '—', '数据更新']]
     .map(([n, l]) => `<div><dt>${l}</dt><dd>${esc(n)}</dd></div>`).join('');
   stats();
-  const stale = D.generated && Date.now() - Date.parse(D.generated) > 3 * 864e5;
-  $('#gen').textContent = D.generated ? `数据更新于 ${new Date(D.generated).toLocaleString('zh-CN', { hour12: false })}${stale ? '（已超过 3 天未更新）' : ''}` : '尚未同步数据';
+  const lastFetch = D.fetchedAt || D.generated;
+  const stale = lastFetch && Date.now() - Date.parse(lastFetch) > 3 * 864e5;
+  $('#gen').textContent = D.generated ? `数据更新于 ${new Date(D.generated).toLocaleString('zh-CN', { hour12: false })}${D.fetchedAt ? ` · 最近抓取成功于 ${new Date(D.fetchedAt).toLocaleString('zh-CN', { hour12: false })}` : ''}${stale ? '（已超过 3 天未同步）' : ''}` : '尚未同步数据';
 
   /* ---------- 筛选：关键词 + 分类 + 期刊 + 时间 + 排列方式 + 未读/收藏/有摘要/有封面 ---------- */
   const q = $('#q'), chips = $('#cats'), sel = $('#journal'), since = $('#since'), view = $('#view'), flags = $('#flags');

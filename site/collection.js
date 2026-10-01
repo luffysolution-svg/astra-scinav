@@ -278,10 +278,8 @@
     try { const u = new URL(url); ok = /^https?:$/.test(u.protocol) && (page !== 'skills' || u.hostname === 'github.com'); } catch { /* 非法链接 */ }
     if (!ok) return void (msg.textContent = page === 'skills' ? '请输入 GitHub 仓库链接，如 https://github.com/作者/仓库' : '来源链接需以 http:// 或 https:// 开头');
     msg.textContent = '提交中…';
-    let sent = false;
-    try { sent = (await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)) })).ok; }
-    catch { /* 网络错误 */ }
-    if (!sent) return void (msg.textContent = '提交失败，请稍后重试');
+    try { await Astra.feedback(new URLSearchParams(new FormData(form)), form); }
+    catch (error) { msg.textContent = error.message; return; }
     dlg.close();
     toast('感谢推荐，审核后会收录');
   });

@@ -34,7 +34,7 @@
   let custom = store.get('custom', []).filter(x => x && safeUrl(x.url) === x.url && typeof x.name === 'string');
   const customSite = x => [x.name, x.url, x.desc || ''];
   const lookup = u => SITES.get(u) || (x => x && { s: customSite(x), hue: 30 })(custom.find(x => x.url === u));
-  let favs = store.get('favs', []).filter(u => SITES.has(u));
+  let favs = store.get('favs', []).filter(lookup);
   let recent = store.get('recent', []).filter(lookup);
   let recentDirty = false;
   // 子页面收藏的 SKILL 仓库名、Prompt id 与绘图模板 id，按前缀 s / p / f 区分；数据按需加载，未加载前保留原样
@@ -221,26 +221,40 @@
   });
 
   /* ---------- 过滤：关键词 + 访问条件 ---------- */
-  let cells = [], cats = [], secs = [];
-  let terms = [], access = 'all', active = -1;
+  let cells = [], cats = [], secs = [], shownCells = [];
+  let catCells = new Map(), secCats = new Map(), searchData = new Map();
+  let terms = [], access = 'all', active = -1, activeCell = null;
   function collect() {
     cells = [...document.querySelectorAll('.cell[data-q]')];
     cats = [...document.querySelectorAll('.cat')];
     secs = [...document.querySelectorAll('.sec')];
+    catCells = new Map(cats.map(c => [c, [...c.querySelectorAll('.cell[data-q]')]]));
+    secCats = new Map(secs.map(s => [s, [...s.querySelectorAll('.cat')]]));
+    searchData = new Map(cells.map(c => [c, { q: c.dataset.q, tag: c.dataset.tag }]));
   }
   const passAccess = t => access === 'all' || (access === 'direct' ? !t : t === access);
   function apply() {
     const filtering = terms.length > 0 || access !== 'all';
     document.body.classList.toggle('searching', filtering);
-    for (const c of cells) c.hidden = !(passAccess(c.dataset.tag) && match(c.dataset.q, terms));
+    for (const c of cells) {
+      const d = searchData.get(c), hidden = !(passAccess(d.tag) && match(d.q, terms));
+      if (c.hidden !== hidden) c.hidden = hidden;
+    }
+    shownCells = [];
     for (const c of cats) {
-      const n = c.querySelectorAll('.cell[data-q]:not([hidden])').length;
+      const shown = catCells.get(c).filter(x => !x.hidden), n = shown.length;
       // 收藏/最近是其他分类的副本，过滤时隐藏以免结果重复；自定义分类过滤时无结果也隐藏
       // SKILL / Prompt 延伸结果只在输入关键词时出现
-      c.hidden = c.hasAttribute('data-only') ? !terms.length || !n : filtering && (c.hasAttribute('data-dup') || !n);
-      c.querySelector('.count').textContent = n;
+      const hidden = c.hasAttribute('data-only') ? !terms.length || !n : filtering && (c.hasAttribute('data-dup') || !n);
+      if (c.hidden !== hidden) c.hidden = hidden;
+      if (!hidden) shownCells.push(...shown);
+      const count = c.querySelector('.count');
+      if (count.textContent !== String(n)) count.textContent = n;
     }
-    for (const s of secs) s.hidden = !s.querySelector('.cat:not([hidden])');
+    for (const s of secs) {
+      const hidden = !secCats.get(s).some(c => !c.hidden);
+      if (s.hidden !== hidden) s.hidden = hidden;
+    }
     const shown = visibleCells();
     $('#empty').hidden = !filtering || shown.length > 0;
     setActive(-1);
@@ -248,13 +262,14 @@
   }
   let liveT;
   const announce = msg => { clearTimeout(liveT); liveT = setTimeout(() => { $('#live').textContent = msg; }, 500); };
-  const visibleCells = () => cells.filter(c => !c.hidden && c.offsetParent);
+  const visibleCells = () => shownCells;
   function setActive(i, scroll) {
-    cells.forEach(c => c.classList.remove('kb'));
+    activeCell?.classList.remove('kb');
+    activeCell = null;
     const list = visibleCells();
     if (i < 0 || !list.length) { active = -1; return; }
     active = i % list.length;
-    const c = list[active];
+    const c = activeCell = list[active];
     c.classList.add('kb');
     if (scroll) c.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     $('#live').textContent = `${c.querySelector('.name > span').textContent}，第 ${active + 1} 项，共 ${list.length} 项`;
@@ -286,7 +301,7 @@
     document.querySelectorAll('[data-fav]').forEach(b => b.setAttribute('aria-pressed', favs.includes(b.dataset.fav)));
     // 在「我的」区域内操作时重绘会丢失焦点，移到同一站点的按钮上（若已移除则落到区块标题）
     if (inMine) ([...mineBox.querySelectorAll('[data-fav]')].find(b => b.dataset.fav === u) || $('#sec-mine-t')).focus?.();
-    toast(on ? `已收藏 ${SITES.get(u).s[0]}` : '已取消收藏');
+    toast(on ? `已收藏 ${lookup(u).s[0]}` : '已取消收藏');
   }
   // k 形如 's:作者/仓库'、'p:review-3' 或 'f:python-2'
   function toggleXFav(k) {
@@ -312,6 +327,11 @@
     const x = custom.find(c => c.url === u);
     custom = custom.filter(c => c.url !== u);
     recent = recent.filter(r => r !== u);
+    if (!SITES.has(u)) {
+      favs = favs.filter(x => x !== u);
+      store.set('favs', favs);
+      ungroup(u);
+    }
     store.set('custom', custom); store.set('recent', recent);
     renderMine();
     toast(`已删除 ${x?.name || ''}`);
@@ -432,15 +452,13 @@
       store.set('custom', custom);
       renderMine();
     }
-    let sent = !suggest;
     if (suggest) {
       msg.textContent = '提交中…';
       try {
         const body = new URLSearchParams({ 'form-name': 'suggest', 'bot-field': '', name, url, desc });
-        sent = (await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body })).ok;
-      } catch { sent = false; }
+        await Astra.feedback(body, form);
+      } catch (error) { msg.textContent = (save ? '已保存到本地，但推荐未提交：' : '') + error.message; return; }
     }
-    if (!sent) return void (msg.textContent = save ? '已保存到本地，但推荐提交失败，请稍后重试' : '提交失败，请稍后重试');
     dlg.close();
     toast(suggest ? '感谢推荐，审核后会收录' : `已添加 ${name}`);
   });
@@ -460,12 +478,12 @@
       const d = JSON.parse(await f.text());
       if (d?.app !== 'astra') throw 0;
       const n0 = favs.length + xn(), c0 = custom.length;
-      favs = [...new Set([...favs, ...(Array.isArray(d.favs) ? d.favs : []).filter(u => SITES.has(u))])];
       for (const x of Array.isArray(d.custom) ? d.custom : []) {
         const url = x && safeUrl(x.url);
         if (!url || typeof x.name !== 'string' || custom.some(c => c.url === url)) continue;
         custom.push({ name: x.name.trim().slice(0, 40) || new URL(url).hostname, url, desc: typeof x.desc === 'string' ? x.desc.slice(0, 80) : '' });
       }
+      favs = [...new Set([...favs, ...(Array.isArray(d.favs) ? d.favs : []).filter(lookup)])];
       // 旧版备份没有这几项；条目是否仍存在留到渲染时判断
       for (const [p, key] of Object.entries(XKEY)) { xf[p] = [...new Set([...xf[p], ...strs(d[key])])]; store.set(key, xf[p]); }
       // 分组按名称合并；备注只补本机没有的
@@ -522,30 +540,50 @@
   addEventListener('resize', moveThumb);
   requestAnimationFrame(() => setEngine(engine));
 
-  const open = u => window.open(u, '_blank', 'noopener');
+  // 触屏设备在当前标签页跳转，避免手机浏览器或内嵌页面拦截新窗口。
+  const open = u => {
+    if (matchMedia('(pointer: coarse)').matches) location.assign(u);
+    else window.open(u, '_blank', 'noopener');
+  };
   let jumped = false;
   function onInput() {
     const v = q.value;
     terms = engine.u ? [] : parse(v);
     if (terms.length) loadExtra();
-    apply();
     // 同步到地址栏，便于分享或设为浏览器自定义搜索引擎
     const url = new URL(location.href);
     if (terms.length) url.searchParams.set('q', v.trim()); else url.searchParams.delete('q');
     if (access !== 'all') url.searchParams.set('access', access); else url.searchParams.delete('access');
-    history.replaceState(null, '', url);
+    // 浏览器记录历史滚动位置时可能读取布局；必须先更新历史，再批量改卡片显示。
+    if (url.href !== location.href) history.replaceState(null, '', url);
+    apply();
+  }
+  let inputFrame = 0;
+  function flushInput() {
+    cancelAnimationFrame(inputFrame); inputFrame = 0;
+    onInput();
   }
   q.addEventListener('input', () => {
-    onInput();
-    // 首次输入时把结果带到视野内
-    if (!jumped && terms.length) { jumped = true; $('#search').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    if (!q.value) jumped = false;
+    if (inputFrame) return;
+    inputFrame = requestAnimationFrame(() => {
+      flushInput();
+      // 首次输入时把结果带到视野内
+      if (!jumped && terms.length) {
+        jumped = true;
+        // 下一帧再滚动，让这一帧的显示状态先完成布局。
+        requestAnimationFrame(() => {
+          if (jumped && terms.length) $('#search').scrollIntoView({ behavior: document.documentElement.classList.contains('calm') ? 'auto' : 'smooth', block: 'start' });
+        });
+      }
+      if (!q.value) jumped = false;
+    });
   });
   $('#search').addEventListener('submit', e => {
     e.preventDefault();
+    if (inputFrame) flushInput();
     const v = q.value.trim();
     const r = q.getBoundingClientRect();
-    window.astraPulse(r.right - 30, r.top + r.height / 2, 1.4);
+    window.astraPulse?.(r.right - 30, r.top + r.height / 2, 1.4);
     if (!v && access === 'all') return;
     if (engine.u) return void open(engine.u + (engine.id === 'scihub' ? encodeURI(v) : encodeURIComponent(v)));
     const list = visibleCells(), c = list[Math.max(active, 0)];
@@ -559,6 +597,7 @@
   addEventListener('keydown', e => {
     const typing = /INPUT|TEXTAREA/.test(document.activeElement.tagName);
     if (dlg.open) return;
+    if (document.activeElement === q && inputFrame && ['ArrowDown', 'ArrowUp', 'Escape'].includes(e.key)) flushInput();
     if ((e.key === '/' && !typing) || (e.key === 'k' && (e.metaKey || e.ctrlKey))) { e.preventDefault(); q.focus(); q.select(); }
     else if (document.activeElement === q && (e.key === 'ArrowDown' || e.key === 'ArrowUp') && document.body.classList.contains('searching')) {
       e.preventDefault();
@@ -599,7 +638,7 @@
     const c = e.target.closest?.('.card');
     if (c && !c.contains(e.relatedTarget)) {
       const r = c.getBoundingClientRect();
-      window.astraPulse(r.left + 26, r.top + r.height / 2, .35);
+      window.astraPulse?.(r.left + 26, r.top + r.height / 2, .35);
     }
   });
 

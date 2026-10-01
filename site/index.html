@@ -64,7 +64,7 @@
         <div class="engines" id="engines" role="tablist" aria-label="搜索引擎"></div>
         <div class="field">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" type="search" name="q" placeholder="搜索站内资源…" aria-label="搜索" aria-describedby="hint">
+          <input id="q" type="search" name="q" enterkeyhint="search" placeholder="搜索站内资源…" aria-label="搜索" aria-describedby="hint">
           <button type="submit" class="go" aria-label="执行搜索">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
@@ -93,7 +93,7 @@
   </footer>
 
   <dialog class="dlg" id="dlg" aria-labelledby="dlg-t">
-    <form name="suggest" method="post" data-netlify="true" netlify-honeypot="bot-field" id="dlgForm">
+    <form name="suggest" method="post" action="/api/feedback" id="dlgForm">
       <h2 id="dlg-t">添加站点</h2>
       <input type="hidden" name="form-name" value="suggest">
       <p class="hp" aria-hidden="true"><label>勿填 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -138,9 +138,7 @@
     </form>
   </dialog>
   <!-- 报告问题表单：页面用脚本提交，这里的静态声明供 Netlify 识别字段 -->
-  <form name="report" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input name="bot-field"><input name="item"><input name="page"><input name="url"><input name="reason"><textarea name="note"></textarea>
-  </form>
+
   <input type="file" id="importFile" accept="application/json,.json" hidden>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <p class="sr-only" id="live" aria-live="polite"></p>
@@ -152,7 +150,7 @@
   <script src="data/icons.js"></script>
   <script src="data/pinyin.js"></script>
   <script src="data/status.js"></script>
-  <script src="galaxy.js"></script>
+  <script src="galaxy.js" defer></script>
   <script src="common.js"></script>
   <script src="app.js"></script>
 </body>

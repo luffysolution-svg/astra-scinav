@@ -144,7 +144,24 @@ window.Astra = (() => {
     copy(url, { btn, msg: '已复制分享链接', label: '链接已复制' });
   }
 
-  /* 报告失效 / 信息有误：Netlify Forms（表单 report 的静态声明在 index.html） */
+  /* 反馈只在服务端确认保存后显示成功；静态页面的 200 响应不能当作提交成功。 */
+  async function feedback(body, form) {
+    const button = form?.querySelector('[type="submit"]');
+    if (button?.disabled) throw new Error('正在提交，请稍候');
+    if (button) button.disabled = true;
+    try {
+      const r = await fetch('/api/feedback', {
+        method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body, signal: AbortSignal.timeout(20000),
+      });
+      const data = await r.json().catch(() => null);
+      if (!r.ok || data?.ok !== true) throw new Error(data?.error || '提交失败，请稍后重试');
+    } catch (e) {
+      throw new Error(e.name === 'TimeoutError' || e.name === 'TypeError' ? '网络未响应，请稍后重试' : e.message);
+    } finally { if (button) button.disabled = false; }
+  }
+
+  /* 报告失效 / 信息有误 */
   const REASONS = ['链接失效', '跳转到其他网站', '信息有误', '协议或版权问题', '其他'];
   function report({ key = '', name = '', url = '' } = {}) {
     let d = $('#reportDlg');
@@ -170,9 +187,8 @@ window.Astra = (() => {
         if (f['bot-field'].value) return void d.close();
         msg.textContent = '提交中…';
         const body = new URLSearchParams({ 'form-name': 'report', item: d.dataset.key, page: location.pathname, url: f.url.value.trim(), reason: f.reason.value, note: f.note.value.trim() });
-        let sent = false;
-        try { sent = (await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body })).ok; } catch { /* 网络错误 */ }
-        if (!sent) return void (msg.textContent = '提交失败，请稍后重试');
+        try { await feedback(body, f); }
+        catch (error) { msg.textContent = error.message; return; }
         d.close();
         toast('感谢反馈，核实后会尽快修正');
       });
@@ -222,5 +238,5 @@ window.Astra = (() => {
     });
   });
   addEventListener('appinstalled', () => toast('已安装，可从桌面或开始菜单打开 Astra'));
-  return { $, esc, store, toast, copy, share, report, status, badges, fresh, hay, terms, match, FIG_TYPES, FIG_LANG };
+  return { $, esc, store, toast, copy, share, report, feedback, status, badges, fresh, hay, terms, match, FIG_TYPES, FIG_LANG };
 })();

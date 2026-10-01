@@ -2,7 +2,7 @@
 
 ## 项目
 
-Astra（星图）是无构建步骤的静态科研与 AI 资源导航站。可发布文件都在 `site/`。现有 Netlify 配置从 GitHub `main` 部署，原域名 `https://nav.luffysite.top` 暂未切换到 Vercel。Vercel 项目 `astra-scinav` 已通过 CLI 发布到 `https://astra-scinav.vercel.app`，暂未连接 Git 自动部署。
+Astra（星图）是原生静态科研与 AI 资源导航站。页面文件在 `site/`，Vercel 反馈函数在 `api/` 与 `lib/`。原域名 `https://nav.luffysite.top` 暂未迁移；Vercel 项目 `astra-scinav` 此前已通过 CLI 发布到 `https://astra-scinav.vercel.app`，此前未连接 Git 自动部署，本次修复尚未上线。
 
 ## 常用命令
 
@@ -18,9 +18,10 @@ node scripts/sync_figures.mjs --offline  # 仅从现有 JSON 重建绘图页面�
 node scripts/sync_news.mjs           # 同步学术前沿（官方 RSS/Atom → Crossref → arXiv/bioRxiv/medRxiv API），补摘要与封面（需 ffmpeg），CI 每日 06:00 运行
 node scripts/sync_news.mjs --backfill  # 同上，并为全部文章重试摘要/封面（默认补新文章，并每天重试旧文章缺失的摘要）
 node scripts/sync_news.mjs --offline # 仅由 content/news.json 重建 site/data/news.js 与 news-abstracts/*.json
+npm run migrate:check               # 只检查本地 Vercel 迁移配置
+npm run migrate:configure           # 在已登录 Vercel/GitHub 的终端配置私有存储、项目设置及 Actions secrets，不部署或修改 DNS
 node scripts/import_ai_figure_prompts.mjs raw/<来源id>.json  # 导入生图提示词图库（来源须有 licenseUrl/licenseNote 且非 listOnly），再运行 sync_figures
 netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发布
-npx --yes vercel@62.1.0 deploy --prod --scope luffysolution-4375s-projects  # 已登录并关联 Vercel 项目后发布
 ```
 
 ## 内容与生成文件
@@ -43,10 +44,14 @@ npx --yes vercel@62.1.0 deploy --prod --scope luffysolution-4375s-projects  # �
 ## 约束
 
 - 已按用户决定撤回独立“科研工具”模块（MinerU 解析、Materials Project / 点石 / Semantic Scholar API、Zotero 联动、本地桥及其依赖）；不要重新引入。原有导航站点链接与首页外部搜索入口保留。
-- 用户反馈 Netlify credits 不足，已在 2026-10-02 通过 Vercel CLI 发布 `astra-scinav`，服务端状态为 `Ready`、目标为 `production`。`vercel.json` 配置静态输出 `site/`、跳过安装和构建，并沿用站点响应头；`.vercelignore` 只允许上传 `site/` 和 `vercel.json`。线上主页、六个子页面、脚本、样式、缓存规则及自定义错误页通过 HTTP 检查；最终手机布局尚未完成浏览器实测，不要把 HTTP 检查写成手机实测。现有 Netlify 配置保留，Cloudflare 与原域名迁移尚未完成。
+- 用户决定迁移到 Vercel，并使用服务端存储保存反馈。`vercel.json` 使用 `npm ci` 安装反馈函数依赖，页面输出仍为 `site/`，不引入前端构建；五类表单调用 `/api/feedback` 并保存为私有 Blob JSON，首次部署须连接 Private Blob store，配置 `BLOB_READ_WRITE_TOKEN`。详见 `docs/vercel-migration.md`。旧 Netlify 反馈需另行导出，不会自动搬入 Blob。
+- 本地修复及浏览器模拟验证不等于线上发布完成或真实 Edge 手机实测。用户已授权先停用 Netlify 导航站 Git 自动构建、再合并 main，并确认已关联 Vercel；`netlify.toml` 的 ignore 恒返回 0，独立画布不受影响。私有存储、发布凭据和线上发布结果仍需核验；不要修改 Cloudflare DNS。
 - `raw/` 是用户的私人书签来源，只在本地使用，绝不能提交。
 - 不要恢复 `!s` 一类搜索前缀。
 - 分类保持通用，不按用户私人书签或个人工作流组织。
 - 第三方 Prompt、代码和图片必须确认许可；预览图统一转存为本地 WebP。
 - 修改离线 shell 文件列表时同步更新 `site/sw.js`，并递增缓存版本。
+- Vercel 自动发布配置在 `.github/workflows/deploy.yml`，由数据校验、文献同步或 Skill/Prompt 同步成功后的 `workflow_run` 接续执行，兼容 `GITHUB_TOKEN` 提交不触发 push 工作流的限制。首次启用须在仓库 Actions secrets 配置 `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID`；配置文件准备不等同线上发布完成。`.vercelignore` 只允许上传页面、函数源码和运行所需配置，禁止上传 `raw/`、凭据或私有笔记。
+- 画布仍由独立 Netlify 站点提供，迁移导航并不会迁移画布。嵌入允许 `nav.luffysite.top` 与 `astra-scinav.vercel.app`；画布适配文件的哈希纳入发布版本，响应头改动会触发部署，不会仅因 fork 源码未改变而跳过。
+- 学术前沿 `generated` 是内容快照更新时间，`fetchedAt` 是最近成功抓取时间；无内容变化的抓取仍更新后者。摘要 URL 使用每分类内容哈希版本，缺失已声明摘要时绕过缓存重试，不把旧缓存当作成功加载。
 - 只做请求所需的改动，沿用现有原生 HTML/CSS/JavaScript 风格，不引入前端框架或构建链。

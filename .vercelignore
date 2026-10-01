@@ -1,3 +1,10 @@
-/*
+*
 !site
+!site/**
+!api
+!api/**
+!lib
+!lib/**
+!package.json
+!package-lock.json
 !vercel.json

@@ -7,9 +7,14 @@
     "check": "node scripts/check.mjs",
     "validate": "node scripts/validate.mjs",
     "linkcheck": "node scripts/linkcheck.mjs",
-    "sync": "node scripts/sync_collections.mjs"
+    "sync": "node scripts/sync_collections.mjs",
+    "migrate:check": "node scripts/configure_vercel.mjs --check",
+    "migrate:configure": "node scripts/configure_vercel.mjs"
   },
   "devDependencies": {
     "pinyin-pro": "3.29.4"
+  },
+  "dependencies": {
+    "@vercel/blob": "2.8.0"
   }
 }

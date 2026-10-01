@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import * as status from './status.mjs';
 import * as news from './sync_news.mjs';
 
@@ -164,6 +165,7 @@ unique(nCfg.sources.filter(s => s.enabled !== false && !s.prefix).map(s => s.nam
 if (!nData) err('缺少 content/news.json，请运行 node scripts/sync_news.mjs');
 else {
   if (nData.generated !== null && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/.test(nData.generated)) err(`news.json generated 格式不对：${nData.generated}`);
+  if (nData.fetchedAt !== undefined && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/.test(nData.fetchedAt)) err(`news.json fetchedAt 格式不对：${nData.fetchedAt}`);
   unique(nData.articles.map(a => a.id), '学术前沿文章 id');
   const fields = JSON.stringify(news.FIELDS);
   for (const a of nData.articles) {
@@ -212,6 +214,15 @@ else {
 /* ---------- 离线缓存清单里的文件都存在 ---------- */
 const shell = read('site/sw.js').match(/const SHELL = \[([^\]]+)\]/)[1].match(/'([^']+)'/g).map(s => s.slice(1, -1));
 for (const f of shell) if (f !== './' && !fs.existsSync(`site/${f}`)) err(`sw.js 离线清单中的文件不存在：${f}`);
+
+// 验证自动同步的静态提交路径，防止抓取成功却因遗留文件名无法提交。
+for (const file of fs.readdirSync('.github/workflows').filter(f => f.endsWith('.yml'))) {
+  const text = read(`.github/workflows/${file}`);
+  for (const m of text.matchAll(/^\s*git add -A -- (.+)$/gm)) {
+    try { execFileSync('git', ['add', '--dry-run', '-A', '--', ...m[1].trim().split(/\s+/)], { stdio: 'pipe' }); }
+    catch { err(`工作流 ${file} 的 git add 路径不可用：${m[1]}`); }
+  }
+}
 
 /* ---------- 输出 ---------- */
 if (warns.length) console.log(`\n警告 ${warns.length}：\n  ${warns.join('\n  ')}`);

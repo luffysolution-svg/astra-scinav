@@ -1,5 +1,5 @@
 # 每日同步学术前沿：期刊官方 RSS/Atom、Crossref 与 arXiv / bioRxiv / medRxiv 官方 API，补摘要与封面，有变化就提交到 main
-# Netlify 关联本仓库后，推送会自动触发部署。
+# 推送后由 deploy.yml 的 workflow_run 接续发布到 Vercel（需配置发布凭据）。
 # 用 GITHUB_TOKEN 推送的提交不会再触发其他工作流（含本工作流与 check.yml），不会循环执行。
 name: 同步学术前沿
 
@@ -35,7 +35,7 @@ jobs:
         run: node scripts/validate.mjs
       - name: 有变化则提交
         run: |
-          git add -A -- content/news.json site/data/news.js site/data/news-abstracts.json site/data/news-abstracts content/status.json site/data/status.js
+          git add -A -- content/news.json site/data/news.js site/data/news-abstracts content/status.json site/data/status.js
           # 封面目录：新增与过期删除都要记录；目录被清空时只记录删除
           if [ -d site/news ]; then git add -- site/news; else git rm -r -q --cached --ignore-unmatch site/news; fi
           if git diff --cached --quiet; then echo "无变化"; exit 0; fi

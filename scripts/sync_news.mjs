@@ -377,11 +377,13 @@ async function covers(list) {
 
 /* ---------- 输出 ---------- */
 // content/news.json 每篇一行，便于看 diff
-export const stringify = data => `{\n  "generated": ${JSON.stringify(data.generated)},\n  "articles": [${data.articles.length ? '\n' + data.articles.map(a => '    ' + JSON.stringify(a)).join(',\n') + '\n  ' : ''}]\n}\n`;
+export const stringify = data => `{\n  "generated": ${JSON.stringify(data.generated)},\n${data.fetchedAt ? `  "fetchedAt": ${JSON.stringify(data.fetchedAt)},\n` : ''}  "articles": [${data.articles.length ? '\n' + data.articles.map(a => '    ' + JSON.stringify(a)).join(',\n') + '\n  ' : ''}]\n}\n`;
 // 页面数据：来源配置（不含抓取参数）+ 文章快照
 // 摘要体积大，按九个大分类拆到 data/news-abstracts/*.json；打开阅读面板只加载当前分类，搜索摘要才加载全部；列表只留 abstract: true/false
 export const render = (cfg, data) => `// 自动生成：scripts/sync_news.mjs，请编辑 content/news-sources.json\nwindow.NEWS = ${JSON.stringify({
   generated: data.generated,
+  fetchedAt: data.fetchedAt || null,
+  abstractVersions: Object.fromEntries(cfg.categories.map(c => [c.id, crypto.createHash('sha256').update(renderAbstracts(data, c.id)).digest('hex').slice(0, 16)])),
   categories: cfg.categories,
   sources: cfg.sources.map(({ id, name, category, site, api, enabled, note }) => ({ id, name, category, site, api, enabled: enabled !== false, ...(note ? { note } : {}) })),
   articles: data.articles.map(a => ({ ...a, abstract: !!a.abstract })),
@@ -437,7 +439,8 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   await covers(live);
   const articles = build(cfg.sources, live);
   const changed = JSON.stringify(articles) !== JSON.stringify(old.articles);
-  const data = { generated: changed || !old.generated ? new Date().toISOString().slice(0, 16) + 'Z' : old.generated, articles };
+  const fetchedAt = new Date().toISOString().slice(0, 16) + 'Z';
+  const data = { generated: changed || !old.generated ? fetchedAt : old.generated, fetchedAt, articles };
   fs.writeFileSync(FILE, stringify(data));
   write(cfg, data);
   const cats = CATEGORY_IDS.map(c => `${c} ${articles.filter(a => a.category === c).length}`).join(' · ');

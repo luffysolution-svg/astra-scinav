@@ -3,3 +3,5 @@ raw/
 .netlify/
 site.bak-*/
 .firecrawl/
+.vercel
+.env*

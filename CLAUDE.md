@@ -2,7 +2,7 @@
 
 ## 项目
 
-Astra（星图）是无构建步骤的静态科研与 AI 资源导航站。可发布文件都在 `site/`，Netlify 由 GitHub `main` 自动部署，线上域名为 `https://nav.luffysite.top`。
+Astra（星图）是无构建步骤的静态科研与 AI 资源导航站。可发布文件都在 `site/`。现有 Netlify 配置从 GitHub `main` 部署，原域名 `https://nav.luffysite.top` 暂未切换到 Vercel。Vercel 项目 `astra-scinav` 已通过 CLI 发布到 `https://astra-scinav.vercel.app`，暂未连接 Git 自动部署。
 
 ## 常用命令
 
@@ -20,6 +20,7 @@ node scripts/sync_news.mjs --backfill  # 同上，并为全部文章重试摘要
 node scripts/sync_news.mjs --offline # 仅由 content/news.json 重建 site/data/news.js 与 news-abstracts/*.json
 node scripts/import_ai_figure_prompts.mjs raw/<来源id>.json  # 导入生图提示词图库（来源须有 licenseUrl/licenseNote 且非 listOnly），再运行 sync_figures
 netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发布
+npx --yes vercel@62.1.0 deploy --prod --scope luffysolution-4375s-projects  # 已登录并关联 Vercel 项目后发布
 ```
 
 ## 内容与生成文件
@@ -42,7 +43,7 @@ netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发
 ## 约束
 
 - 已按用户决定撤回独立“科研工具”模块（MinerU 解析、Materials Project / 点石 / Semantic Scholar API、Zotero 联动、本地桥及其依赖）；不要重新引入。原有导航站点链接与首页外部搜索入口保留。
-- 用户反馈 Netlify credits 不足，后续发布倾向 Vercel，Cloudflare 调整按需处理。现有 Netlify 配置保留；仓库根目录 `vercel.json` 已配置静态输出 `site/`、跳过安装和构建，并沿用站点响应头，尚未实际发布 Vercel。用户已授权先推送 GitHub；最终手机布局尚未完成浏览器实测，不要把配置准备或推送写成实测、部署完成。
+- 用户反馈 Netlify credits 不足，已在 2026-10-02 通过 Vercel CLI 发布 `astra-scinav`，服务端状态为 `Ready`、目标为 `production`。`vercel.json` 配置静态输出 `site/`、跳过安装和构建，并沿用站点响应头；`.vercelignore` 只允许上传 `site/` 和 `vercel.json`。线上主页、六个子页面、脚本、样式、缓存规则及自定义错误页通过 HTTP 检查；最终手机布局尚未完成浏览器实测，不要把 HTTP 检查写成手机实测。现有 Netlify 配置保留，Cloudflare 与原域名迁移尚未完成。
 - `raw/` 是用户的私人书签来源，只在本地使用，绝不能提交。
 - 不要恢复 `!s` 一类搜索前缀。
 - 分类保持通用，不按用户私人书签或个人工作流组织。

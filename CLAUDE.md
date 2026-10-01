@@ -51,7 +51,7 @@ netlify deploy --prod --no-build --dir site  # 自动部署不可用时手动发
 - 分类保持通用，不按用户私人书签或个人工作流组织。
 - 第三方 Prompt、代码和图片必须确认许可；预览图统一转存为本地 WebP。
 - 修改离线 shell 文件列表时同步更新 `site/sw.js`，并递增缓存版本。
-- Vercel 自动发布配置在 `.github/workflows/deploy.yml`，由数据校验、文献同步或 Skill/Prompt 同步成功后的 `workflow_run` 接续执行，兼容 `GITHUB_TOKEN` 提交不触发 push 工作流的限制。首次启用须在仓库 Actions secrets 配置 `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID`；配置文件准备不等同线上发布完成。`.vercelignore` 只允许上传页面、函数源码和运行所需配置，禁止上传 `raw/`、凭据或私有笔记。
+- Vercel 已关联 GitHub 仓库，普通 push 由 Git 集成发布。`.github/workflows/deploy.yml` 只接续文献/Skill/Prompt 同步，以及定时/手动外链核验，不接续普通 push/PR 校验，以免重复部署。此 CLI 发布路径须配置 Actions secrets `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID`；本次实际运行已确认 VERCEL_TOKEN 缺失。`.vercelignore` 只允许上传页面、函数源码和运行所需配置，禁止上传 `raw/`、凭据或私有笔记。
 - 画布仍由独立 Netlify 站点提供，迁移导航并不会迁移画布。嵌入允许 `nav.luffysite.top` 与 `astra-scinav.vercel.app`；画布适配文件的哈希纳入发布版本，响应头改动会触发部署，不会仅因 fork 源码未改变而跳过。
 - 学术前沿 `generated` 是内容快照更新时间，`fetchedAt` 是最近成功抓取时间；无内容变化的抓取仍更新后者。摘要 URL 使用每分类内容哈希版本，缺失已声明摘要时绕过缓存重试，不把旧缓存当作成功加载。
 - 只做请求所需的改动，沿用现有原生 HTML/CSS/JavaScript 风格，不引入前端框架或构建链。

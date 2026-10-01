@@ -1,4 +1,4 @@
-# 同步任务用 GITHUB_TOKEN 提交，不会触发 push 工作流；通过 workflow_run 接续发布。
+# 普通推送由 Vercel Git 集成发布；同步任务通过 workflow_run 接续发布。
 name: 发布导航到 Vercel
 
 on:
@@ -20,7 +20,10 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.event != 'pull_request')
+       github.event.workflow_run.event != 'pull_request' &&
+       (github.event.workflow_run.name != '数据校验' ||
+        github.event.workflow_run.event == 'schedule' ||
+        github.event.workflow_run.event == 'workflow_dispatch'))
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:

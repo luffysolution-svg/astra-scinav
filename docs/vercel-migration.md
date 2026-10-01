@@ -1,6 +1,6 @@
 # Astra：Netlify → Vercel 迁移清单
 
-本次已准备迁移配置并完成本地验证。用户授权先停用 Netlify 导航站自动构建、再合并 main，并确认已关联 Vercel。账号侧私有反馈存储、Actions 凭据和 Cloudflare DNS 尚未通过本次环境核验；不能将代码合并等同于这些资源已配置。
+本次迁移配置已通过 PR #1 合并 main，合并前 GitHub 校验与 Vercel 预览部署成功，合并后的生产提交 Vercel 状态成功，首页可读取。用户确认 Vercel 已关联 GitHub 仓库；私有反馈存储尚未验证，Actions 额外发布路径缺少 VERCEL_TOKEN，Cloudflare DNS 未改动。Git 部署成功不能等同于存储和定时发布凭据已经配置。
 
 ## 发布配置与功能对应
 
@@ -60,7 +60,7 @@ npm run migrate:configure
 
 三项来自 Vercel 项目/账号配置；可通过已登录的 CLI `vercel link` 后读取 `.vercel/project.json` 中的 ID，token 单独创建，不提交该目录。
 
-`.github/workflows/deploy.yml` 在数据校验、文献同步、Skill/Prompt 同步成功后执行：取最新 main → validate → pull 生产配置 → build → 检查首页和函数产物 → deploy。同步任务用 `GITHUB_TOKEN` 提交不会触发普通 push/Git 部署，`workflow_run` 接续能覆盖这一情况。若同时开启 Vercel Git 集成，普通 push 可能重复部署；只保留一个普通 push 发布入口即可，但要保留定时同步后的发布机制。
+普通 push 由已关联的 Vercel Git 集成发布。`.github/workflows/deploy.yml` 只接续文献同步、Skill/Prompt 同步，以及定时/手动外链核验；跳过普通 push 和 PR 的数据校验，避免重复发布。执行步骤：取最新 main → validate → pull 生产配置 → build → 检查首页和函数产物 → deploy。同步任务用 `GITHUB_TOKEN` 提交不会再触发普通 push 工作流，`workflow_run` 能保证额外的 CLI 发布路径；是否存在 Git 集成对同步提交的部署，不替代该路径凭据的检查。
 
 首次配置后手动运行“同步学术前沿”，再确认“发布导航到 Vercel”成功，并核对线上最近抓取时间。只有代码配置完成不代表自动发布已启用。
 

@@ -207,7 +207,7 @@ window.Astra = (() => {
     if (b) report({ key: b.dataset.report, name: b.dataset.name, url: b.dataset.url });
   });
   $('.foot .muted')?.insertAdjacentHTML('beforeend', ' · <button type="button" class="link" data-report="">报告失效链接</button>');
-  $('.foot p')?.insertAdjacentHTML('beforeend', ' · <a class="link" href="https://luffysolution-svg.github.io/" target="_blank" rel="noopener noreferrer">个人主页</a> · <a class="link" href="https://github.com/luffysolution-svg/astra-scinav" target="_blank" rel="noopener noreferrer">GitHub 源码（非商用）</a>');
+  $('.foot p')?.insertAdjacentHTML('beforeend', ' · <a class="link" href="https://github.com/luffysolution-svg/astra-scinav" target="_blank" rel="noopener noreferrer">GitHub 项目（非商用）</a>');
 
   /* 脚本或数据加载失败时内容区会是空白，给出提示而不是留一片空 */
   addEventListener('error', () => {

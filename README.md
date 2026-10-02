@@ -2,7 +2,7 @@
 
 原生 HTML、CSS、JavaScript 构建的科研资源导航，提供文献检索、AI 科研、论文写作、科研绘图与学术前沿浏览。页面无需前端框架或打包器。
 
-[访问主站](https://nav.luffysite.top/) · [作者个人站](https://luffysolution-svg.github.io/) · [安全问题披露](SECURITY.md)
+[访问主站](https://nav.luffysite.top/) · [GitHub 项目](https://github.com/luffysolution-svg/astra-scinav) · [安全问题披露](SECURITY.md)
 
 ## 功能
 

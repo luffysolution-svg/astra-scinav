@@ -68,7 +68,7 @@ body.scrolled .veil { background: rgba(4, 4, 6, .5); }
 body.scrolled .topbar {
   background: rgba(5, 5, 8, .86); border-color: var(--line);
 }
-.brand { display: flex; align-items: center; gap: 11px; font-weight: 650; letter-spacing: -.01em; }
+.brand { display: flex; flex: none; align-items: center; gap: 11px; font-weight: 650; letter-spacing: -.01em; white-space: nowrap; }
 .brand-mark {
   position: relative; width: 26px; height: 26px; border-radius: 50%;
   /* 迷你黑洞：暗核 + 金色光子环 */
@@ -93,7 +93,7 @@ body.scrolled .topbar {
 .brand-name em { font-style: normal; font-weight: 500; color: var(--ink-3); margin-left: 7px; font-size: 14px; }
 .sec-nav { display: flex; gap: 4px; margin-left: auto; }
 .sec-nav a {
-  position: relative; padding: 7px 14px; border-radius: 999px; font-size: 14px; color: var(--ink-3);
+  position: relative; padding: 7px 14px; border-radius: 999px; font-size: 14px; color: var(--ink-3); white-space: nowrap;
   transition: color .25s, background .25s;
 }
 .sec-nav a:hover { color: var(--ink); background: rgba(255, 255, 255, .05); }
@@ -759,6 +759,14 @@ body[data-page="workbench"] { height: 100dvh; min-height: 0; overflow: hidden; d
 }
 
 /* ---------- 响应式 ---------- */
+/* 首页顶栏在中等宽度放不下全部入口：先收起搜索快捷键提示（按 / 仍可聚焦），再收起与侧栏重复的分区跳转，避免文字被挤成竖排 */
+@media (max-width: 1360px) {
+  .kbd-hint { display: none; }
+}
+@media (max-width: 1200px) {
+  .sec-nav { display: none; }
+  .page-nav:has(+ .sec-nav) { margin-left: auto; }
+}
 @media (max-width: 1080px) {
   .layout { grid-template-columns: 1fr; }
   /* 窄屏下分区跳转交给吸顶分类条，顶栏只留页面切换 */

@@ -51,6 +51,8 @@ npx --yes vercel@62.1.0 --prod --yes --scope luffysolution-4375s-projects  # 必
 - 分类保持通用，不按用户私人书签或个人工作流组织。
 - 第三方 Prompt、代码和图片必须确认许可；预览图统一转存为本地 WebP。
 - 修改离线 shell 文件列表时同步更新 `site/sw.js`，并递增缓存版本。
+- 站内页面切换靠 `site/speculation-rules.json`（由 `vercel.json` 的 `Speculation-Rules` 响应头下发，CSP 不允许内联规则）在悬停时预渲染；新增站内页面需同步加入该响应头的 `source`。工作台不预渲染。Playwright/CDP 自动化会禁用预渲染，验证需用无调试连接的浏览器。
+- 背景动画滚动时不降帧、不突减粒子（会显得卡顿），靠尘埃按速度平滑淡出与黑洞上下半幅轮流重绘控制 GPU 开销。
 - Vercel 已关联 GitHub 仓库，普通 push 由 Git 集成发布。`.github/workflows/deploy.yml` 只接续文献/Skill/Prompt 同步，以及定时/手动外链核验，不接续普通 push/PR 校验，以免重复部署。Actions secrets `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID` 已配置。`.vercelignore` 只允许上传页面、函数源码和运行所需配置，禁止上传 `raw/`、凭据或私有笔记。
 - 画布 Vercel 项目级 Routing Rule 允许 `nav.luffysite.top` 与 `astra-scinav.vercel.app` 嵌入，随机预览域名未放行；项目规则与 SPA 回退无需修改上游 fork 源码。Netlify 配置、适配文件及仓库专用 Secret / Variable 已移除，不要重新引入。
 - 学术前沿 `generated` 是内容快照更新时间，`fetchedAt` 是最近成功抓取时间；无内容变化的抓取仍更新后者。摘要 URL 使用每分类内容哈希版本，缺失已声明摘要时绕过缓存重试，不把旧缓存当作成功加载。

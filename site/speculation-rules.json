@@ -1,0 +1,14 @@
+{
+  "prerender": [
+    {
+      "where": {
+        "and": [
+          { "href_matches": "/*" },
+          { "not": { "href_matches": ["/api/*", "/workbench.html", "/*.(js|json|css|xml|svg|png|webp|webmanifest)"] } },
+          { "not": { "selector_matches": "[target=_blank], [download]" } }
+        ]
+      },
+      "eagerness": "moderate"
+    }
+  ]
+}

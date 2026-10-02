@@ -193,6 +193,11 @@
         vRad = w/size;
         alpha = smoothstep(1.6, 1.15, z) * smoothstep(.07, .17, z) * (.3 + .7*seed) * min(w/1.2, 1.);
         alpha *= w/(w + L*.35);
+        // 加速（滚动、点击）时拖尾变长、点精灵变大，按种子由暗到亮平滑淡出约一半尘埃抵消填充开销；
+        // 看不见的点移出裁剪区，不再光栅化
+        float thin = smoothstep(.15, 1.2, uSpeed)*.55;
+        alpha *= smoothstep(thin, thin + .12, seed);
+        if (alpha < .004){ s = vec2(-1e5); size = 1.; }
         vCol = mix(vec3(.74, .82, 1.), vec3(1., .76, .5), step(.8, seed));
       } else if (kind < 2.5){
         // 远景星点 / 亮星：缓慢视差漂移与闪烁
@@ -410,7 +415,7 @@
     /* ---------- 交互状态 ---------- */
     const mouse = { x: -9999, y: -9999, sx: -9999, sy: -9999 };
     const par = { x: 0, y: 0, tx: 0, ty: 0 };
-    let scroll = 0, sScroll = 0, lastY = scrollY, boost = 0, travel = 0, scrollUntil = 0;
+    let scroll = 0, sScroll = 0, lastY = scrollY, boost = 0, travel = 0;
 
     function resize(){
       canvas.width = Math.round(innerWidth*DPR); canvas.height = Math.round(innerHeight*DPR);
@@ -436,13 +441,12 @@
     document.addEventListener('pointerleave', () => { mouse.x = mouse.y = mouse.sx = mouse.sy = -9999; });
     addEventListener('scroll', () => {
       scroll = Math.min(scrollY/innerHeight, 2.5);
-      scrollUntil = performance.now() + 180;   // 滚动期间背景降到约 30fps，把 GPU/合成时间让给页面
       if (!reduced) boost = Math.min(2, boost + Math.abs(scrollY - lastY)/innerHeight*1.2);
       lastY = scrollY;
     }, { passive: true });
     /* ---------- 渲染循环 ---------- */
     // 页面不可见或用户暂停（UI 调用 astraMotion(false)）时停止循环；暂停时保留最后一帧
-    let paused = !motion, raf = 0, last = 0, lastHole = 0, acc = 0, frames = 0, sim = 0;
+    let paused = !motion, raf = 0, last = 0, lastHole = 0, half = 0, acc = 0, frames = 0, sim = 0;
     const t0 = performance.now();
     function sync(){
       const run = !paused && !document.hidden;
@@ -454,17 +458,16 @@
 
     function frame(now){
       raf = requestAnimationFrame(frame);
-      // 高刷屏平时限到约 60fps；滚动后 180ms 内降到约 30fps，并减少光线步进/尘埃，优先保证页面合成流畅
-      const busy = now < scrollUntil;
-      if (last && now - last < (busy ? 31 : 15)) return;
-      draw(now, busy);
+      // 高刷屏限到约 60fps；滚动时保持同样的帧率与粒子数，突然降帧反而会让背景看起来一顿一顿
+      if (last && now - last < 12) return;
+      draw(now);
     }
-    function draw(now, busy = false){
+    function draw(now){
       const dt = last ? Math.min((now - last)/1000, .1) : 1/60;
       last = now;
 
       // 自适应画质：持续低于约 45 帧就降低黑洞层分辨率（只降不升，避免来回抖动）
-      if ((now - t0) > 2500 && !busy){
+      if ((now - t0) > 2500){
         acc += dt; frames++;
         if (frames === 60){
           if (acc/frames > 1/45 && scale > .26){ scale *= .8; alloc(); lastHole = 0; }
@@ -476,15 +479,21 @@
       sim += dt*speed;
       boost *= Math.exp(-dt*1.6);
       travel += dt*speed*(.028 + boost*.16);
-      mouse.sx += (mouse.x - mouse.sx)*.12; mouse.sy += (mouse.y - mouse.sy)*.12;
+      // 平滑系数按实际帧间隔换算（60fps 时分别约为 .12 / .035 / .06），掉帧时运动速度不变
+      const ease = k => 1 - Math.exp(-dt*k);
+      mouse.sx += (mouse.x - mouse.sx)*ease(7.7); mouse.sy += (mouse.y - mouse.sy)*ease(7.7);
       if (mouse.x < -999) mouse.sx = mouse.sy = -9999;
-      par.x += (par.tx - par.x)*.035; par.y += (par.ty - par.y)*.035;
-      sScroll += (scroll - sScroll)*.06;
+      par.x += (par.tx - par.x)*ease(2.1); par.y += (par.ty - par.y)*ease(2.1);
+      sScroll += (scroll - sScroll)*ease(3.7);
       const { cam, rot, hole } = camera(sim);
 
-      // 1. 黑洞缓慢变化，约 30fps 更新即可；粒子保持约 60fps，滚动时再降低黑洞更新频率。
+      // 1. 黑洞缓慢变化，每帧轮流重绘上/下半幅（各约 30fps），把光线步进开销均摊到每帧，
+      //    避免隔帧整幅重绘造成一帧重一帧轻；改尺寸或降档后先整幅重绘一次
       gl.bindTexture(gl.TEXTURE_2D, tex);
-      if (!lastHole || now - lastHole >= (busy ? 60 : 30)) {
+      {
+        const mid = fh >> 1;
+        half ^= 1;
+        if (lastHole){ gl.enable(gl.SCISSOR_TEST); gl.scissor(0, half ? mid : 0, fw, half ? fh - mid : mid); }
         lastHole = now;
         gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
         gl.viewport(0, 0, fw, fh);
@@ -496,8 +505,9 @@
         gl.uniformMatrix3fv(bh.u.uRot, false, rot);
         gl.uniform2fv(bh.u.uShift, shift);
         gl.uniform1f(bh.u.uFocal, focal);
-        gl.uniform1i(bh.u.uSteps, mobile ? (busy ? 60 : 90) : (busy ? 80 : 130));
+        gl.uniform1i(bh.u.uSteps, mobile ? 90 : 130);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
+        gl.disable(gl.SCISSOR_TEST);
         gl.generateMipmap(gl.TEXTURE_2D);
       }
 
@@ -526,7 +536,7 @@
       gl.uniform1f(pt.u.uScroll, sScroll);
       gl.uniform2fv(pt.u.uHole, hole);
       gl.uniform1f(pt.u.uMaxPt, MAX_PT);
-      gl.drawArrays(gl.POINTS, 0, busy ? N - Math.floor(N_DUST/2) : N);
+      gl.drawArrays(gl.POINTS, 0, N);
     }
     resize();
     document.documentElement.classList.remove('no-webgl');

@@ -1,5 +1,5 @@
 # 每周同步科研 SKILL / Prompt 的 GitHub 星标、更新时间与协议，有变化就提交到 main
-# Netlify 关联本仓库后，推送会自动触发部署
+# 同步结束后由 deploy.yml 接续发布到 Vercel。
 name: 同步 Skill 与 Prompt 数据
 
 on:

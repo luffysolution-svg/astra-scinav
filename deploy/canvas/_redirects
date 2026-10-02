@@ -1,2 +1,0 @@
-# SPA 路由回退：已存在的静态文件优先，其余路径（/canvas、/canvas/:id、/config 等）交给前端路由
-/*  /index.html  200

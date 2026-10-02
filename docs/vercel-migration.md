@@ -1,19 +1,19 @@
 # Astra：Netlify → Vercel 迁移清单
 
-迁移配置已通过 PR #1 合并 main。后续已连接真实 Private Blob 的 Production / Preview、配置三项 Actions Secrets，并成功执行文献同步和 Actions 生产发布。导航与独立画布的正式域名已切到各自 Vercel 项目，Netlify 画布项目保留备用。具体证据与未验收范围见 [线上配置与验证记录](vercel-verification.md)；部署成功不能等同于全部功能已验收。
+迁移配置已通过 PR #1 合并 main。后续已连接真实 Private Blob 的 Production / Preview、配置三项 Actions Secrets，并成功执行文献同步和 Actions 生产发布。导航与独立画布的正式域名已切到各自 Vercel 项目，Netlify 画布项目保留备用。历史 Forms 的五类正常记录和垃圾箱均为 0，查询结果已私有归档；正式域名的真实桌面 Edge 验收已完成。具体证据与实体手机、大陆网络等限制见 [线上配置与验证记录](vercel-verification.md)。
 
 ## 发布配置与功能对应
 
 | 功能 | Vercel 迁移方式 | 当前验证状态 |
 | --- | --- | --- |
-| 首页、SKILL、Prompt、绘图、学术前沿、404、静态数据和图片 | Framework 选择 Other，输出 `site`，页面无需构建 | 本地浏览器及 Vercel CLI 构建通过 |
-| 手机平台搜索 | 触屏设备当前标签导航；桌面保留新标签 | 本地替身测试通过；Chrome 触屏模拟实际验证 8 个平台的 Enter 跳转，限制见验证记录 |
+| 首页、SKILL、Prompt、绘图、学术前沿、404、静态数据和图片 | Framework 选择 Other，输出 `site`，页面无需构建 | 正式域名真实 Edge 页面、列表检索、三页复制/收藏、大图预览和 404 通过；本地构建通过 |
+| 手机平台搜索 | 触屏设备当前标签导航；桌面保留新标签 | 真实桌面 Edge 触屏模拟通过 8 平台 × Enter / 点击，共 16 次入口跳转；实体手机和目标可用性限制见验证记录 |
 | 收藏、分组、自定义站点、导入导出 | 浏览器本地存储，与托管商无关 | 自定义收藏持久化、删除及备份恢复通过 |
 | 推荐站点 / Skill / Prompt / 绘图、报告问题 | `/api/feedback` Node 函数 + Private Vercel Blob | 五类真实 Edge 表单保存成功，私有读回匹配；未认证下载返回 403 |
-| CSP、安全响应头、图标缓存、Service Worker | `vercel.json` 沿用原策略 | 构建产物路由含相关响应头 |
+| CSP、安全响应头、图标缓存、Service Worker | `vercel.json` 沿用原策略 | 两个正式域名的 CSP / 缓存头实际核对，画布嵌入与 Service Worker 生效 |
 | PWA、离线页面和摘要 | 同源 Service Worker，缓存版本 `astra-v16`；API 不缓存 | 实际 Service Worker 摘要回退/重试及五个页面离线打开通过 |
-| 每日文献、每周 Skill/Prompt、外链核验 | 继续使用 GitHub Actions，不需要 Vercel Cron | 文献手动同步成功，后续 Actions 生产发布成功 |
-| 绘图工作台 | 嵌入独立 `canvas.luffysite.top` | 真实 Edge 在 Vercel 导航工作台中加载画布并新建文本节点 |
+| 每日文献、每周 Skill/Prompt、外链核验 | 继续使用 GitHub Actions，不需要 Vercel Cron | 文献手动同步及接续发布成功，98/102 来源；正式页面 fetchedAt / 摘要无需清缓存更新，来源与封面失败见验证记录 |
+| 绘图工作台 | 嵌入独立 `canvas.luffysite.top` | 真实 Edge 在正式导航工作台创建、编辑文本节点，重载同一画布后仍保留 |
 | 画布上游同步和部署 | `canvas.yml` 同步 fork；Vercel Git 集成跟随 fork main；保留 Netlify 备用 | Vercel 项目已关联同一 fork 并部署成功；Netlify 生产额度限制仍存在 |
 
 `.vercelignore` 仅允许页面、函数源码、package 配置和 `vercel.json`，私人 `raw/` 不上传。Vercel CLI 的排除文件语义需要 `!site` 放行目录本身，不能只写 `!site/`；本次构建已实际确认包含页面和反馈函数。
@@ -42,7 +42,7 @@ npm run migrate:configure
 2. 在项目 Storage 中创建/连接 **Private Blob store**，选择 Production；也需要预览环境测试时，再连接 Preview。确认环境变量 `BLOB_READ_WRITE_TOKEN` 已注入。若是 Public store，`access: private` 写入会失败，不能改为公开存储反馈内容。不要把凭据写进源码、浏览器脚本或聊天。
 3. 发布后分别提交四类推荐和一条报告，确认收到成功提示，并在对应 Blob store 中核对 `feedback/YYYY-MM-DD/<UUID>.json`，内含表单类型、时间、字段；没有自动收录，仍需人工审核。
 4. 未配置存储或写入失败，API 返回 503，页面保留输入并显示失败；不会把静态页面 HTTP 200 当作反馈成功。API 默认不提供公开查询或下载入口，也不发送邮件；Netlify 的表单后台、通知及历史记录不会自动迁移。
-5. 在关闭旧 Netlify 导航站前，从 Forms 后台导出历史反馈。保留画布站及其 Netlify 凭据：当前画布正式流量使用 Vercel，原 Netlify 项目保留备用。
+5. 本次已核对旧 Netlify 导航站五类 Forms 的正常记录与垃圾箱，全部为 0；完整查询结果已保存到 Private Blob 并私有读回，匿名下载返回 403。原站点未删除；若未来收到新增提交，关闭前重新导出。保留画布站及其 Netlify 凭据：当前画布正式流量使用 Vercel，原 Netlify 项目保留备用。
 
 反馈包含服务端字段/长度/URL 校验、同源检查、honeypot 和单实例突发节流；节流不保证跨实例全局一致。如遇垃圾提交，可在 Vercel Firewall 对 `/api/feedback` 配置全局限流。存储和请求消耗按账户套餐计费。
 
@@ -84,7 +84,7 @@ npm run migrate:configure
 
 有利于本站首屏的是：字体、脚本、样式、目录、论文列表、摘要和预览图均同源提供，学术数据由 GitHub Actions 拉取，用户打开列表无需访问文献源 API。但画布仍是独立网络请求，Google/谷歌学术等搜索目标的国内可访问性也独立于导航首页。
 
-正式切换前，用大陆移动、联通、电信至少覆盖手机蜂窝网络和宽带、Microsoft Edge，分别检查：
+正式域名已切换；后续大陆实测应使用移动、联通、电信，至少覆盖手机蜂窝网络和宽带、Microsoft Edge，分别检查：
 
 - 首页首次访问、刷新后脚本/数据是否完整，首次有网访问后离线缓存是否能打开。
 - SKILL、Prompt、绘图和文献页面的检索、收藏、复制、摘要与本地图像。

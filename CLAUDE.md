@@ -44,14 +44,14 @@ npx --yes vercel@62.1.0 --prod --yes --scope luffysolution-4375s-projects  # 必
 ## 约束
 
 - 已按用户决定撤回独立“科研工具”模块（MinerU 解析、Materials Project / 点石 / Semantic Scholar API、Zotero 联动、本地桥及其依赖）；不要重新引入。原有导航站点链接与首页外部搜索入口保留。
-- 用户决定迁移到 Vercel，并使用服务端存储保存反馈。`vercel.json` 使用 `npm ci` 安装反馈函数依赖，页面输出仍为 `site/`，不引入前端构建；五类表单调用 `/api/feedback`。Private Blob `astra-feedback` 已连接 Production / Preview，`BLOB_READ_WRITE_TOKEN` 已注入；五类 API 和真实桌面 Edge 表单已提交并私有读回核对，未认证下载返回 403。反馈和凭据不得公开。详见 `docs/vercel-migration.md`。旧 Netlify 反馈需另行导出，不会自动搬入 Blob。
-- 用户已授权并完成迁移配置、停用 Netlify 导航站 Git 自动构建和合并 main；`netlify.toml` 的 ignore 恒返回 0，独立画布不受影响。Cloudflare 仅修改 nav / canvas 两条 CNAME 到各自 Vercel 项目要求的目标，均为 DNS only、TTL Auto，其他记录保留；不要重复迁移或改动无关 DNS。用户在收尾时要求停止继续验收；正式 nav 域名切换后的完整功能、真实手机 Edge 和中国大陆网络未继续验证，部署成功不能等同这些范围已通过。
+- 用户决定迁移到 Vercel，并使用服务端存储保存反馈。`vercel.json` 使用 `npm ci` 安装反馈函数依赖，页面输出仍为 `site/`，不引入前端构建；五类表单调用 `/api/feedback`。Private Blob `astra-feedback` 已连接 Production / Preview，`BLOB_READ_WRITE_TOKEN` 已注入；正式 nav 域名的五类真实桌面 Edge 表单收到 201，并按 UUID 私有读回核对，未认证下载返回 403。旧 Netlify Forms 已按五类正常记录、垃圾箱和站点总表核对，现存 0 条，完整查询结果已私有归档；原站点和表单未删除。反馈、私有下载地址和凭据不得公开。详见 `docs/vercel-migration.md` 与 `docs/vercel-verification.md`。
+- 用户已授权并完成迁移配置、停用 Netlify 导航站 Git 自动构建和合并 main；`netlify.toml` 的 ignore 恒返回 0，独立画布不受影响。Cloudflare 仅修改 nav / canvas 两条 CNAME 到各自 Vercel 项目要求的目标，均为 DNS only、TTL Auto，其他记录保留；不要重复迁移或改动无关 DNS。用户随后要求历史 Forms 迁移和后续验收，正式域名的真实桌面 Edge 主要流程已验证，包括收藏备份恢复、五类反馈、画布编辑持久化和文献缓存更新。触屏模拟的 16 次入口跳转通过，但不等于实体手机 Edge；中国大陆网络、外部目标的完整可用性和付费 AI / 本地 Agent 未验证，部署成功不能等同这些范围已通过。
 - `raw/` 是用户的私人书签来源，只在本地使用，绝不能提交。
 - 不要恢复 `!s` 一类搜索前缀。
 - 分类保持通用，不按用户私人书签或个人工作流组织。
 - 第三方 Prompt、代码和图片必须确认许可；预览图统一转存为本地 WebP。
 - 修改离线 shell 文件列表时同步更新 `site/sw.js`，并递增缓存版本。
-- Vercel 已关联 GitHub 仓库，普通 push 由 Git 集成发布。`.github/workflows/deploy.yml` 只接续文献/Skill/Prompt 同步，以及定时/手动外链核验，不接续普通 push/PR 校验，以免重复部署。Actions secrets `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID` 已配置；手动文献同步 run 36918832817 和重跑的生产发布 run 36920010828 均成功。线上最近抓取时间已确认显示 2026-10-02 04:13（UTC+08:00），3160 篇文章，普通刷新无需清缓存即可更新摘要。该时间是实测快照，后续应查看最新运行。`.vercelignore` 只允许上传页面、函数源码和运行所需配置，禁止上传 `raw/`、凭据或私有笔记。
+- Vercel 已关联 GitHub 仓库，普通 push 由 Git 集成发布。`.github/workflows/deploy.yml` 只接续文献/Skill/Prompt 同步，以及定时/手动外链核验，不接续普通 push/PR 校验，以免重复部署。Actions secrets `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID` 已配置；本轮手动文献同步 run 36962759193 和接续生产发布 run 36963220514 均成功，数据提交 5cce84d 已推送 main。正式页面最近抓取时间实测为 2026-10-02 12:08（UTC+08:00），3177 篇；保留 astra-v16 和原 Service Worker，普通刷新四类摘要哈希更新，摘要加载/复制与五页离线打开通过。该时间是实测快照，后续应查看最新运行。`.vercelignore` 只允许上传页面、函数源码和运行所需配置，禁止上传 `raw/`、凭据或私有笔记。
 - 画布 Vercel 项目级 Routing Rule 已发布，嵌入允许 `nav.luffysite.top` 与 `astra-scinav.vercel.app`，随机预览域名未放行；项目规则无需修改上游 fork 源码。备用 Netlify 的响应头与 SPA 回退在 `deploy/canvas/`，适配文件的哈希纳入发布版本；其 403 已确认是账号 credit usage exceeded，不要误判成 fork 构建失败或盲目轮换 token。
 - 学术前沿 `generated` 是内容快照更新时间，`fetchedAt` 是最近成功抓取时间；无内容变化的抓取仍更新后者。摘要 URL 使用每分类内容哈希版本，缺失已声明摘要时绕过缓存重试，不把旧缓存当作成功加载。
 - 只做请求所需的改动，沿用现有原生 HTML/CSS/JavaScript 风格，不引入前端框架或构建链。

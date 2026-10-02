@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-30",
+  "generated": "2026-10-02",
   "categories": [
     {
       "id": "collections",
@@ -506,6 +506,33 @@
           ]
         },
         {
+          "repo": "Rimagination/scansci-pdf",
+          "name": "ScanSci PDF",
+          "desc": "论文检索、全文获取与引文导出，支持开放获取和已有机构访问权限",
+          "stars": 1052,
+          "updated": "2026-10-01",
+          "license": "Apache-2.0",
+          "install": [
+            {
+              "label": "安装 CLI / MCP",
+              "cmd": "pip install scansci-pdf"
+            }
+          ],
+          "doc": true,
+          "skills": [
+            {
+              "name": "scansci-pdf",
+              "path": "skills/scansci-pdf",
+              "desc": "论文检索、全文获取与引文导出"
+            },
+            {
+              "name": "scansci-sort",
+              "path": "skills/scansci-sort",
+              "desc": "文献清单去重与下载队列分流"
+            }
+          ]
+        },
+        {
           "repo": "cookjohn/cnki-skills",
           "name": "CNKI Skills",
           "desc": "中国知网检索、期刊浏览、下载 PDF 与导出 Zotero",
@@ -594,6 +621,28 @@
               "name": "gs-export",
               "path": "skills/gs-export",
               "desc": "导出到 Zotero"
+            }
+          ]
+        },
+        {
+          "repo": "Rimagination/instsci",
+          "name": "InstSci",
+          "desc": "开放获取优先，复用用户机构访问权限，支持批量论文下载与 MCP",
+          "stars": 368,
+          "updated": "2026-09-29",
+          "license": "MIT",
+          "install": [
+            {
+              "label": "uv 安装 CLI / MCP",
+              "cmd": "uv tool install git+https://github.com/Rimagination/instsci.git"
+            }
+          ],
+          "doc": true,
+          "skills": [
+            {
+              "name": "instsci",
+              "path": "skills/instsci",
+              "desc": "开放获取与机构授权论文全文获取"
             }
           ]
         },
@@ -974,6 +1023,28 @@
           ],
           "doc": true,
           "skills": []
+        },
+        {
+          "repo": "Rimagination/easyplot",
+          "name": "EasyPlot",
+          "desc": "R / Python 科研数据分析与出版级绘图，含统计检验、多面板布局与投稿检查",
+          "stars": 67,
+          "updated": "2026-09-29",
+          "license": "MIT",
+          "install": [
+            {
+              "label": "下载技能仓库",
+              "cmd": "git clone https://github.com/Rimagination/easyplot.git"
+            }
+          ],
+          "doc": true,
+          "skills": [
+            {
+              "name": "easyplot",
+              "path": ".",
+              "desc": "科研数据分析与 R / Python 绘图"
+            }
+          ]
         }
       ]
     },

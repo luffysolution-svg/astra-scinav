@@ -13,6 +13,9 @@
   const COPY = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
   const LINK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>';
   const cats = D.categories, catById = new Map(cats.map(c => [c.id, c]));
+  const journalCovers = window.NEWS_JOURNAL_COVERS || {};
+  const imageFor = a => a.image || journalCovers[a.journal]?.image;
+  const coverLabel = j => journalCovers[j]?.kind === 'art' ? '期刊封面选图' : '期刊封面';
   const on = D.sources.filter(s => s.enabled);
   const today = D.generated ? D.generated.slice(0, 10) : new Date().toISOString().slice(0, 10);
   const daysAgo = d => Math.round((Date.parse(today) - Date.parse(d)) / 864e5);
@@ -61,8 +64,8 @@
     const w = j.replace(/^the\s+/i, '').split(/[\s&:]+/).filter(x => /^[a-z]/i.test(x) && !/^(of|and|in|for|the)$/i.test(x));
     return (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || j)[0]).toUpperCase();
   };
-  const shot = (a, big) => a.image
-    ? `<img class="nw-img" src="${esc(a.image)}" alt="" ${big ? '' : 'width="72" height="72" loading="lazy" '}decoding="async">`
+  const shot = (a, big) => imageFor(a)
+    ? `<img class="nw-img${a.image ? '' : ' nw-journal-shot'}" src="${esc(imageFor(a))}" alt="${a.image ? '' : esc(a.journal + coverLabel(a.journal))}" ${big ? '' : 'width="72" height="72" loading="lazy" '}decoding="async">`
     : `<span class="nw-ph" style="--h:${hue(a.journal)}" aria-hidden="true">${esc(initial(a.journal))}</span>`;
   const favBtn = a => `<button type="button" class="icon-btn star" data-fav="${esc(a.id)}" aria-pressed="${isFav(a.id)}" aria-label="收藏 ${esc(a.title)}">${STAR}</button>`;
   const ago = d => { const n = daysAgo(d); return n <= 0 ? '今天' : n === 1 ? '昨天' : `${n} 天前`; };
@@ -71,7 +74,7 @@
       ${shot(a)}
       <div class="nw-body">
         <h4><a href="${esc(a.url)}" data-open="${esc(a.id)}">${read.has(a.id) ? '' : '<i class="nw-dot" aria-hidden="true"></i><span class="sr-only">未读：</span>'}${esc(a.title)}</a></h4>
-        <p class="nw-meta"><span class="nw-j">${esc(a.journal)}</span><time datetime="${esc(a.date)}" title="${esc(a.date)}">${ago(a.date)}</time>${a.abstract ? '<span class="nw-tag">摘要</span>' : ''}${a.gone ? '<span class="nw-tag">已超出 30 天</span>' : ''}${a.doi
+        <p class="nw-meta"><span class="nw-j">${esc(a.journal)}</span><time datetime="${esc(a.date)}" title="${esc(a.date)}">${ago(a.date)}</time>${a.abstract ? '<span class="nw-tag">摘要</span>' : ''}${!a.image && journalCovers[a.journal] ? `<span class="nw-tag">${coverLabel(a.journal)}</span>` : ''}${a.gone ? '<span class="nw-tag">已超出 30 天</span>' : ''}${a.doi
           ? `<a class="nw-doi" href="https://doi.org/${esc(a.doi)}" target="_blank" rel="noopener noreferrer"><span class="sr-only">DOI </span>${esc(a.doi)}</a>` : ''}</p>
       </div>
       ${favBtn(a)}
@@ -177,6 +180,12 @@
   // 期刊分组的锚点 id：分类 + 期刊在全部期刊中的序号（稳定、不含特殊字符）
   const JIX = new Map([...new Set(A.map(a => a.journal))].sort().map((j, i) => [j, i]));
   const jid = (c, j) => `${c}--j${JIX.get(j)}`;
+  const journalImage = j => {
+    const cover = journalCovers[j];
+    const label = cover?.kind === 'art' ? '封面选图' : '期刊封面';
+    return cover ? `<a class="nw-cover" href="${esc(cover.source)}" target="_blank" rel="noopener noreferrer" title="${esc(j)} · ${label} · ${esc(cover.label)}（官网）"><img src="${esc(cover.image)}" alt="${esc(j)}${label}" width="36" height="48" loading="lazy" decoding="async"></a>`
+      : `<span class="nw-ph sm" style="--h:${hue(j)}" aria-hidden="true">${esc(initial(j))}</span>`;
+  };
   function section(c, h, grouped) {
     const head = `<header class="cat-head"><span class="orb" aria-hidden="true"></span><h3 id="${esc(c.id)}-t">${esc(c.t)}</h3>
       <span class="en">${esc(c.en)}</span><span class="count">${h.length}</span></header>`;
@@ -193,7 +202,7 @@
     const groups = js.slice(0, jn).map(([j, xs]) => {
       const key = jid(c.id, j), n = shown.get(key) || PER_J;
       return `<div class="nw-group" id="${esc(key)}">
-        <h4 class="nw-gt" tabindex="-1"><span class="nw-ph sm" style="--h:${hue(j)}" aria-hidden="true">${esc(initial(j))}</span>${esc(j)}<small>${xs.length} 篇 · ${xs.filter(a => !read.has(a.id)).length} 未读</small></h4>
+        <h4 class="nw-gt" tabindex="-1">${journalImage(j)}<span class="nw-gt-text">${esc(j)}<small>${xs.length} 篇 · ${xs.filter(a => !read.has(a.id)).length} 未读${journalCovers[j] ? ` · ${journalCovers[j].kind === 'art' ? '封面选图' : '期刊封面'}` : ''}</small></span></h4>
         <div class="items nws">${xs.slice(0, n).map(card).join('')}</div>${more(key, xs.length - n)}
       </div>`;
     }).join('');
@@ -212,7 +221,7 @@
       if (a.gone && !flag.has('fav')) continue;
       if ((cat === 'all' || a.category === cat) && (!journal || a.journal === journal) && (!days || daysAgo(a.date) < days)
         && (!flag.has('unread') || !read.has(a.id)) && (!flag.has('fav') || isFav(a.id)) && (!flag.has('abs') || a.abstract)
-        && (!flag.has('img') || a.image) && match(hay(a), ts)) hits.get(a.category).push(a);
+        && (!flag.has('img') || imageFor(a)) && match(hay(a), ts)) hits.get(a.category).push(a);
     }
     for (const h of hits.values()) h.sort((x, y) => y.date.localeCompare(x.date));
     // 不筛选时九个分类都显示（没有文章的给出说明）；筛选时只显示有结果的分类
@@ -289,6 +298,7 @@
         ${favBtn(a)}
       </div>
       ${a.doi ? `<p class="vw-src">DOI：<span class="nw-doi">${esc(a.doi)}</span></p>` : ''}
+      ${!a.image && journalCovers[a.journal] ? `<p class="kit-note">配图使用${coverLabel(a.journal)} · ${esc(journalCovers[a.journal].label)} · <a class="link" href="${esc(journalCovers[a.journal].source)}" target="_blank" rel="noopener noreferrer">查看期刊官网</a></p>` : ''}
       <p class="kit-note">摘要与封面来自出版方公开的元数据，版权归出版方与作者。</p>`;
   }
   async function open(id) {
@@ -297,8 +307,8 @@
     cur = id;
     const c = catById.get(a.category);
     rd.style.setProperty('--h', c.hue);
-    rd.classList.toggle('no-img', !a.image);
-    $('#rdStage').innerHTML = a.image ? shot(a, true) : '';
+    rd.classList.toggle('no-img', !imageFor(a));
+    $('#rdStage').innerHTML = imageFor(a) ? shot(a, true) : '';
     $('#rd-t').textContent = a.title;
     $('#rdMeta').innerHTML = `<span class="nw-j">${esc(a.journal)}</span><span>${esc(c.t)}</span><time datetime="${esc(a.date)}">${esc(a.date)}（${ago(a.date)}）</time>`;
     $('#rdBody').innerHTML = body(a, abs?.[id]);
@@ -307,7 +317,7 @@
     $('#rdBody').scrollTop = 0;
     if (!rd.open) { back = document.activeElement; rd.showModal(); }
     mark(id, true);
-    if (decodeURIComponent(location.hash.slice(1)) !== id) history.replaceState(null, '', '#' + id);
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
     if (a.abstract && !absLoaded.has(a.category)) { await loadAbs(a.category); if (cur === id) $('#rdBody').innerHTML = body(a, abs[id]); }
   }
   function step(d) {
@@ -396,7 +406,7 @@
   setCat(catById.has(p0.get('cat')) ? p0.get('cat') : 'all');
   render();
   if (flag.has('inabs')) loadAbs().then(() => render());
-  const h0 = decodeURIComponent(location.hash.slice(1));
+  let h0 = ''; try { h0 = decodeURIComponent(location.hash.slice(1)); } catch { /* 忽略不完整的分享锚点 */ }
   if (byId.has(h0)) open(h0);
   else if (h0) document.getElementById(h0)?.scrollIntoView();
 })();

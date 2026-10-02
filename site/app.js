@@ -101,10 +101,10 @@
   // items：[[站点数组或条目, 色相, 是否子页面条目], ...]；extra 追加在网格末尾（如"添加站点"），tools 放在分类标题右侧
   // mode 'x' 表示全部为 SKILL/Prompt/绘图条目；only 表示只在关键词搜索时显示
   function category(c, items, { dup, only, mode, extra = '', tools = '' } = {}) {
-    return `<section class="cat" id="${c.id}" style="--h:${c.hue}" aria-labelledby="${c.id}-t"${dup ? ' data-dup' : ''}${only ? ' data-only' : ''}>
+    return `<section class="cat" id="${esc(c.id)}" style="--h:${c.hue}" aria-labelledby="${esc(c.id)}-t"${dup ? ' data-dup' : ''}${only ? ' data-only' : ''}>
       <header class="cat-head">
         <span class="orb" aria-hidden="true"></span>
-        <h3 id="${c.id}-t">${esc(c.t)}</h3>
+        <h3 id="${esc(c.id)}-t">${esc(c.t)}</h3>
         <span class="en">${esc(c.en)}</span>
         <span class="count">${items.length}</span>${tools}
       </header>
@@ -503,51 +503,89 @@
   });
 
   /* ---------- 搜索 ---------- */
-  const q = $('#q'), engBox = $('#engines');
+  const q = $('#q'), engBox = $('#engines'), multiBtn = $('#multiSearch'), searchPages = $('#searchPages');
+  const desktop = matchMedia('(pointer: fine)');
   let engine = ENGINES.find(x => x.id === store.get('engine')) || ENGINES[0];
+  const savedEngines = store.get('engines', []);
+  let selected = ENGINES.filter(x => x.u && Array.isArray(savedEngines) && savedEngines.includes(x.id));
+  let multi = desktop.matches && selected.length > 0;
   engBox.innerHTML = ENGINES.map(e =>
-    `<button type="button" role="tab" data-e="${e.id}" aria-selected="${e === engine}">${e.t}</button>`).join('') + '<span class="thumb" aria-hidden="true"></span>';
-  const thumb = engBox.querySelector('.thumb');
-  function moveThumb() {
-    const b = engBox.querySelector('[aria-selected="true"]');
-    thumb.style.width = b.offsetWidth + 'px';
-    thumb.style.height = b.offsetHeight + 'px';
-    thumb.style.transform = `translate(${b.offsetLeft}px, ${b.offsetTop - 4}px)`;
+    `<button type="button" data-e="${e.id}" aria-pressed="false">${e.t}</button>`).join('');
+  function showEngines() {
+    if (multi) engine = selected[0];
+    engBox.classList.toggle('multi', multi);
+    engBox.querySelectorAll('button').forEach(x => {
+      x.setAttribute('aria-pressed', multi ? selected.some(e => e.id === x.dataset.e) : x.dataset.e === engine.id);
+      x.tabIndex = multi || x.dataset.e === engine.id ? 0 : -1;
+    });
+    multiBtn.hidden = !desktop.matches;
+    multiBtn.setAttribute('aria-pressed', multi);
+    $('#engineInfo').textContent = multi ? `已选 ${selected.length} 个来源 · 点击站内恢复单选` : '搜索来源';
+    q.placeholder = multi ? '输入关键词，在选中的来源中搜索…' : engine.placeholder || (engine.u ? `在 ${engine.t} 中搜索…` : '搜索站内资源，支持拼音与首字母…');
+    $('.go').setAttribute('aria-label', multi ? `打开 ${selected.length} 个搜索页面` : '执行搜索');
+    $('#hint').innerHTML = multi ? `提交后打开 ${selected.length} 个搜索页 · <kbd>Esc</kbd> 清空` : engine.u ? '<kbd>Enter</kbd> 搜索 · <kbd>Esc</kbd> 清空' : '<kbd>↑</kbd><kbd>↓</kbd> 选择 · <kbd>Enter</kbd> 打开 · <kbd>Esc</kbd> 清空';
   }
   function setEngine(e) {
-    engine = e;
-    // 标签页只有选中项可 Tab 聚焦，其余用方向键切换
-    engBox.querySelectorAll('button').forEach(x => { x.setAttribute('aria-selected', x.dataset.e === e.id); x.tabIndex = x.dataset.e === e.id ? 0 : -1; });
-    q.placeholder = e.placeholder || (e.u ? `在 ${e.t} 中搜索…` : '搜索站内资源，支持拼音与首字母…');
-    moveThumb();
+    multi = false; engine = e; showEngines();
   }
+  function saveEngines() {
+    store.set('engine', engine.id);
+    store.set('engines', multi ? selected.map(e => e.id) : []);
+  }
+  multiBtn.addEventListener('click', () => {
+    multi = !multi;
+    if (multi) selected = [engine.u ? engine : ENGINES[2]];
+    showEngines(); saveEngines(); onInput();
+  });
   engBox.addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
-    setEngine(ENGINES.find(x => x.id === b.dataset.e));
-    store.set('engine', engine.id);
-    onInput(); q.focus();
+    const chosen = ENGINES.find(x => x.id === b.dataset.e);
+    if (multi && chosen.u) {
+      if (selected.includes(chosen)) {
+        if (selected.length === 1) return void toast('至少选择一个搜索来源');
+        selected = selected.filter(x => x !== chosen);
+      } else selected = ENGINES.filter(x => selected.includes(x) || x === chosen);
+      showEngines();
+    } else setEngine(chosen);
+    saveEngines(); onInput(); q.focus({ preventScroll: true });
   });
   engBox.addEventListener('keydown', e => {
-    const i = ENGINES.indexOf(engine), n = ENGINES.length;
+    const i = ENGINES.findIndex(x => x.id === e.target.dataset.e), n = ENGINES.length;
     const k = { ArrowRight: i + 1, ArrowLeft: i - 1 + n, Home: 0, End: n - 1 }[e.key];
     if (k === undefined) return;
     e.preventDefault();
-    setEngine(ENGINES[k % n]);
-    store.set('engine', engine.id);
-    onInput();
-    engBox.querySelector(`[data-e="${engine.id}"]`).focus();
+    const next = ENGINES[k % n];
+    if (!multi) { setEngine(next); saveEngines(); onInput(); }
+    engBox.querySelector(`[data-e="${next.id}"]`).focus();
   });
-  addEventListener('resize', moveThumb);
-  requestAnimationFrame(() => setEngine(engine));
+  desktop.addEventListener('change', () => { if (!desktop.matches) multi = false; showEngines(); onInput(); });
+  showEngines();
 
   // 触屏设备在当前标签页跳转，避免手机浏览器或内嵌页面拦截新窗口。
   const open = u => {
-    if (matchMedia('(pointer: coarse)').matches) location.assign(u);
+    if (window === top && matchMedia('(pointer: coarse)').matches) location.assign(u);
     else window.open(u, '_blank', 'noopener');
   };
+  const searchUrl = (e, v) => e.u + (e.id === 'scihub' ? encodeURI(v) : encodeURIComponent(v));
+  function openSearches(v) {
+    searchPages.hidden = true;
+    // 必须在提交事件内同步打开，保留浏览器的用户手势；空白页先切断 opener 再导航。
+    const blocked = selected.filter(e => {
+      const tab = window.open('about:blank', '_blank');
+      if (!tab) return true;
+      tab.opener = null;
+      tab.location.replace(searchUrl(e, v));
+      return false;
+    });
+    if (blocked.length) {
+      searchPages.innerHTML = `<p>浏览器拦截了部分新标签页，可逐个打开：</p><div>${blocked.map(e => `<a href="${esc(searchUrl(e, v))}" target="_blank" rel="noopener noreferrer">${e.t}</a>`).join('')}</div>`;
+      searchPages.hidden = false;
+    }
+  }
   let jumped = false;
   function onInput() {
     const v = q.value;
+    searchPages.hidden = true;
     terms = engine.u ? [] : parse(v);
     if (terms.length) loadExtra();
     // 同步到地址栏，便于分享或设为浏览器自定义搜索引擎
@@ -584,8 +622,9 @@
     const v = q.value.trim();
     const r = q.getBoundingClientRect();
     window.astraPulse?.(r.right - 30, r.top + r.height / 2, 1.4);
-    if (!v && access === 'all') return;
-    if (engine.u) return void open(engine.u + (engine.id === 'scihub' ? encodeURI(v) : encodeURIComponent(v)));
+    if (!v && (engine.u || access === 'all')) return;
+    if (multi) return void openSearches(v);
+    if (engine.u) return void open(searchUrl(engine, v));
     const list = visibleCells(), c = list[Math.max(active, 0)];
     if (c) {
       const a = c.querySelector('.card');

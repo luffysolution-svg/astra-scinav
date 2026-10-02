@@ -12,6 +12,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import * as status from './status.mjs';
 import * as news from './sync_news.mjs';
+import * as journalCovers from './sync_news_journal_covers.mjs';
 
 const errors = [], warns = [];
 const err = m => errors.push(m), warn = m => warns.push(m);
@@ -191,6 +192,19 @@ else {
   const covers = new Set(nData.articles.map(a => a.image).filter(Boolean));
   if (fs.existsSync('site/news')) for (const f of fs.readdirSync('site/news')) if (!covers.has(`news/${f}`)) warn(`多余的封面文件 site/news/${f}（运行 sync_news.mjs --offline 清理）`);
 }
+
+const jCovers = json('content/news-journal-covers.json');
+unique(jCovers.covers.map(c => c.journal), '期刊封面名称');
+for (const c of jCovers.covers) {
+  const w = `期刊封面 ${c.journal}`;
+  if (!nCfg.sources.some(s => s.enabled !== false && s.name === c.journal)) err(`${w}：未知期刊`);
+  checkUrl(c.source, `${w}.source`);
+  checkUrl(c.imageUrl, `${w}.imageUrl`);
+  if (!['issue', 'art'].includes(c.kind)) err(`${w}：kind 必须是 issue 或 art`);
+  if (!c.label) err(`${w}：缺少封面说明`);
+  if (!/^news-journals\/[a-z0-9-]+\.webp$/.test(c.image || '') || !fs.existsSync(`site/${c.image}`)) err(`${w}：image 必须是已存在的本地 WebP`);
+}
+same('site/data/news-journal-covers.js', journalCovers.render(jCovers));
 
 /* ---------- 5. 生成文件与源数据一致 ---------- */
 function same(file, expected) {

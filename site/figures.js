@@ -155,7 +155,7 @@
     $('#vwCount').textContent = k < 0 ? '' : `${k + 1} / ${vis.length}`;
     viewer.querySelector('.vw-body').scrollTop = 0;
     if (!viewer.open) { back = document.activeElement; viewer.showModal(); }
-    if (decodeURIComponent(location.hash.slice(1)) !== id) history.replaceState(null, '', '#' + encodeURIComponent(id));
+    if (location.hash !== '#' + encodeURIComponent(id)) history.replaceState(null, '', '#' + encodeURIComponent(id));
   }
   // 在当前筛选结果里循环切换
   function step(d) {

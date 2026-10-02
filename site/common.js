@@ -49,7 +49,7 @@ window.Astra = (() => {
     toast(msg);
   }
 
-  /* 背景动画开关：默认跟随系统"减弱动态效果" */
+  /* 背景动画默认开启；系统要求减弱动态时默认暂停，用户选择优先并持久保存。 */
   const motionBtn = $('#motion');
   function setCalm(on) {
     document.documentElement.classList.toggle('calm', on);
@@ -207,6 +207,7 @@ window.Astra = (() => {
     if (b) report({ key: b.dataset.report, name: b.dataset.name, url: b.dataset.url });
   });
   $('.foot .muted')?.insertAdjacentHTML('beforeend', ' · <button type="button" class="link" data-report="">报告失效链接</button>');
+  $('.foot p')?.insertAdjacentHTML('beforeend', ' · <a class="link" href="https://luffysolution-svg.github.io/" target="_blank" rel="noopener noreferrer">个人主页</a> · <a class="link" href="https://github.com/luffysolution-svg/astra-scinav" target="_blank" rel="noopener noreferrer">GitHub 源码（非商用）</a>');
 
   /* 脚本或数据加载失败时内容区会是空白，给出提示而不是留一片空 */
   addEventListener('error', () => {
@@ -220,7 +221,14 @@ window.Astra = (() => {
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     const had = !!navigator.serviceWorker.controller;   // 首次安装不提示
     navigator.serviceWorker.addEventListener('controllerchange', () => { if (had) toast('Astra 已更新到新版本'); });
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    const register = () => navigator.serviceWorker.register('sw.js').catch(() => {});
+    const schedule = () => {
+      if ('requestIdleCallback' in window) requestIdleCallback(register, { timeout: 2000 });
+      else setTimeout(register, 0);
+    };
+    // 预缓存等首屏资源加载完成再开始，避免与当前页面争抢网络与主线程。
+    if (document.readyState === 'complete') schedule();
+    else addEventListener('load', schedule, { once: true });
   }
   let installEvt = null;
   addEventListener('beforeinstallprompt', e => {

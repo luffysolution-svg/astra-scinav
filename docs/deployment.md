@@ -4,24 +4,24 @@
 
 ## 项目与域名
 
-团队：`luffysolution-4375s-projects`（`team_cYDpJCxe3TbR9wKh0NoiK9MP`）。
+项目标识和账号连接保存在本地 `.vercel/project.json`，该目录不提交。自行部署时请使用自己的 Vercel 账号与项目。
 
 | 项目 | 正式域名 | 默认域名 | Git 仓库 |
 | --- | --- | --- | --- |
 | astra-scinav | nav.luffysite.top | astra-scinav.vercel.app | luffysolution-svg/astra-scinav main |
 | luffy-canvas-site | canvas.luffysite.top | luffy-canvas-site.vercel.app | luffysolution-svg/infinite-canvas main |
 
-导航项目 ID 为 `prj_twslERVv4Yh1137RYU1Kj38xstpL`：Other、仓库根目录、输出 `site`、安装 `npm ci`、空 Build Command、Node.js 22。页面为原生静态文件，五类反馈使用 `/api/feedback`。
+导航项目设置：Other、仓库根目录、输出 `site`、安装 `npm ci`、空 Build Command、Node.js 22。页面为原生静态文件，五类反馈使用 `/api/feedback`。
 
-画布项目 ID 为 `prj_e81s7fdkusOCmDQlnJX2zQOKCToq`：安装 `cd web && bun install`、构建 `cd web && bun run build`、输出 `web/dist`，项目已有 SPA 回退。`.github/workflows/canvas.yml` 每小时同步 `basketikun/infinite-canvas` 到 fork；新提交由 Vercel Git 集成发布，不需要第二套构建或部署步骤。手动同步可运行 `gh workflow run canvas.yml`，定时暂停使用仓库变量 `CANVAS_SYNC_PAUSED=true`。
+画布项目设置：安装 `cd web && bun install`、构建 `cd web && bun run build`、输出 `web/dist`，项目已有 SPA 回退。`.github/workflows/canvas.yml` 每小时同步 `basketikun/infinite-canvas` 到 fork；新提交由 Vercel Git 集成发布，不需要第二套构建或部署步骤。手动同步可运行 `gh workflow run canvas.yml`，定时暂停使用仓库变量 `CANVAS_SYNC_PAUSED=true`。
 
 ## 私有反馈与自动发布
 
-Private Blob `astra-feedback`（`store_rE3bN5Afl5ymlneO`）连接导航项目的 Production / Preview，环境变量 `BLOB_READ_WRITE_TOKEN` 已注入。反馈写入 `feedback/YYYY-MM-DD/<UUID>.json`；人工审核，不提供公开读取入口。凭据、反馈正文和私有下载地址不得提交或输出。
+反馈需要连接一个 Private Blob，并在使用的环境配置 `BLOB_READ_WRITE_TOKEN`。反馈写入 `feedback/YYYY-MM-DD/<UUID>.json`；人工审核，不提供公开读取入口。凭据、反馈正文和私有下载地址不得提交或输出。
 
-旧 Netlify Forms 无历史提交，查询结果已私有归档到 `archive/netlify-forms/`；旧 Netlify 站点及发布配置已退役，不再维护备用发布链。
+项目不再维护 Netlify 发布链。
 
-Actions 保留 `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID`，画布同步保留 `CANVAS_FORK_TOKEN`。部署 Token 名称为 `astra-scinav-github-actions`，值只能通过安全输入保存。
+Actions 使用 `VERCEL_TOKEN`、`VERCEL_ORG_ID`、`VERCEL_PROJECT_ID`，画布同步另需 `CANVAS_FORK_TOKEN`。部署 Token 只能通过安全输入保存，不写入代码或命令历史。
 
 普通 main push 由 Vercel Git 发布。文献、Skill/Prompt 同步和定时/手动外链核验由 `deploy.yml` 的 `workflow_run` 接续生产 CLI 发布；普通 push 的接续发布跳过，避免重复部署。
 

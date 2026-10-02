@@ -46,7 +46,7 @@
     <div class="wb-bar">
       <div class="wb-intro">
         <h1>科研绘图工作台</h1>
-        <p>基于开源项目 <a class="link" href="https://github.com/basketikun/infinite-canvas">Infinite Canvas</a>（basketikun，MIT 协议）。作品和 API Key 只保存在本浏览器，AI 请求由画布直连你配置的接口；升级前建议先在画布里导出备份。</p>
+        <p>基于开源项目 <a class="link" href="https://github.com/basketikun/infinite-canvas">Infinite Canvas</a>（basketikun，MIT 协议）。作品和 API Key 只保存在本浏览器，AI 请求由画布直连你配置的接口；升级前建议先在画布里导出备份。切换本站页面后返回，可继续当前画布与视图。</p>
       </div>
       <div class="wb-act">
         <button type="button" class="btn" id="wbFull">全屏</button>
@@ -59,6 +59,7 @@
         allow="clipboard-read; clipboard-write; fullscreen; loopback-network; local-network-access"></iframe>
     </div>
   </main>
+  <iframe class="wb-site-frame" id="wbSiteFrame" title="Astra 站内页面" hidden></iframe>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="workbench.js"></script>

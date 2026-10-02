@@ -1208,6 +1208,9 @@
  "https://www.ip138.com/": {
   "added": "2026-09-29"
  },
+ "https://ip.net.coffee/": {
+  "added": "2026-10-02"
+ },
  "https://2fa.fan/": {
   "added": "2026-09-29"
  },
@@ -1421,11 +1424,17 @@
  "s:917Dhj/DeepPaperNote": {
   "added": "2026-09-29"
  },
+ "s:Rimagination/scansci-pdf": {
+  "added": "2026-10-02"
+ },
  "s:cookjohn/cnki-skills": {
   "added": "2026-09-29"
  },
  "s:cookjohn/gs-skills": {
   "added": "2026-09-29"
+ },
+ "s:Rimagination/instsci": {
+  "added": "2026-10-02"
  },
  "s:wp-a/nature-academic-search": {
   "added": "2026-09-29"
@@ -1462,6 +1471,9 @@
  },
  "s:Dsadd4/AgentFigureGallery": {
   "added": "2026-09-29"
+ },
+ "s:Rimagination/easyplot": {
+  "added": "2026-10-02"
  },
  "s:aipoch/medical-research-skills": {
   "added": "2026-09-29"

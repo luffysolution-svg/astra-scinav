@@ -49,6 +49,7 @@ NAV.push(
   { sec: 'kit', id: 'kit-tool', t: '在线工具箱', en: 'Utilities', hue: 175, s: [
     ['即时工具', 'https://www.67tool.com/', '安全好用的在线工具箱'],
     ['iP138 查询网', 'https://www.ip138.com/', 'IP、号码、邮编、汇率查询'],
+    ['Net.Coffee IP 查询', 'https://ip.net.coffee/', 'IP 查询、网络连通与网站分流检测'],
     ['2FA 验证器', 'https://2fa.fan/', '在线两步验证码生成'],
     ['2FA Live', 'https://2fa.live/', '双因素验证码生成'],
     ['Temp Mail', 'https://temp-mail.org/', '一次性临时邮箱'],

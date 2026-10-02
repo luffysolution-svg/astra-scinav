@@ -52,3 +52,29 @@ test('a full-length Chinese prompt is accepted and burst submissions are limited
   for (let i = 0; i < 9; i++) assert.equal((await call(handler)).status, 201);
   assert.equal((await call(handler)).status, 429);
 });
+
+test('unsafe schemes, embedded URL credentials and inherited form names are rejected', async () => {
+  const handler = createFeedbackHandler({ env: { BLOB_READ_WRITE_TOKEN: 'test-only' }, put: () => assert.fail('must not store') });
+  for (const url of ['data:text/html,test', 'file:///tmp/test', 'https://user:pass@example.org/', 'https://github.com@example.org/repo']) {
+    assert.equal((await call(handler, { ...fixtures[0], url })).status, 400);
+  }
+  for (const type of ['__proto__', 'constructor']) assert.equal((await call(handler, { ...fixtures[0], 'form-name': type })).status, 400);
+});
+
+test('same-host lookalikes, missing origin and unexpected content types cannot submit', async () => {
+  const handler = createFeedbackHandler({ env: { BLOB_READ_WRITE_TOKEN: 'test-only' }, put: () => assert.fail('must not store') });
+  for (const origin of [undefined, 'null', 'https://nav.luffysite.top.evil.example', 'https://nav.luffysite.top@evil.example']) {
+    assert.equal((await call(handler, fixtures[0], { headers: { origin, host: 'nav.luffysite.top', 'content-type': 'application/x-www-form-urlencoded' } })).status, 403);
+  }
+  assert.equal((await call(handler, fixtures[0], { headers: { origin: 'https://nav.luffysite.top', host: 'nav.luffysite.top', 'content-type': 'application/json' } })).status, 415);
+});
+
+test('streamed bodies remain bounded when Content-Length is absent or dishonest', async () => {
+  const handler = createFeedbackHandler({ env: { BLOB_READ_WRITE_TOKEN: 'test-only' }, put: () => assert.fail('must not store') });
+  const request = {
+    body: undefined,
+    async *[Symbol.asyncIterator]() { yield Buffer.alloc(32000, 97); yield Buffer.alloc(32001, 97); },
+  };
+  assert.equal((await call(handler, fixtures[0], request)).status, 413);
+  assert.equal((await call(handler, fixtures[0], { ...request, headers: { origin: 'https://nav.luffysite.top', host: 'nav.luffysite.top', 'content-type': 'application/x-www-form-urlencoded', 'content-length': '1' } })).status, 413);
+});

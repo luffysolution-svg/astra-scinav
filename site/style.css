@@ -155,22 +155,29 @@ body.scrolled .topbar {
 
 /* 搜索 */
 .search { width: min(680px, 100%); animation: rise 1.1s .36s var(--ease) both; scroll-margin-top: 84px; }
+.engine-tools { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; font-size: 12px; color: var(--ink-4); }
+.engine-tools button { padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-3); }
+.engine-tools button:hover { color: var(--ink); }
+.engine-tools button[aria-pressed="true"] { color: var(--amber); border-color: rgba(242, 166, 84, .45); background: rgba(242, 166, 84, .12); }
 .engines {
   position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 4px; margin-bottom: 12px;
   width: 100%; border-radius: 18px; background: rgba(255, 255, 255, .04); border: 1px solid var(--line);
 }
 .engines button {
   position: relative; z-index: 1; min-width: 0; padding: 7px 8px; border-radius: 999px; font-size: 13px; color: var(--ink-3);
-  white-space: nowrap; transition: color .25s;
+  white-space: nowrap; transition: color .25s, background .25s, box-shadow .25s;
 }
 .engines button:hover { color: var(--ink-2); }
-.engines button[aria-selected="true"] { color: var(--ink); }
-.engines .thumb {
-  position: absolute; top: 4px; left: 0; border-radius: 999px;
+.engines button[aria-pressed="true"] {
+  color: var(--ink);
   background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .06));
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 4px 18px rgba(242, 166, 84, .22);
-  transition: transform .45s var(--ease), width .45s var(--ease);
 }
+.engines.multi button[aria-pressed="true"] { color: var(--amber); background: rgba(242, 166, 84, .12); box-shadow: inset 0 0 0 1px rgba(242, 166, 84, .45); }
+.search-pages { margin-top: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10, 10, 14, .86); font-size: 12px; color: var(--ink-3); }
+.search-pages p { margin: 0 0 8px; }
+.search-pages div { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.search-pages a { color: var(--amber); text-decoration: underline; text-underline-offset: 3px; }
 .field {
   position: relative; display: flex; align-items: center; height: 62px; border-radius: 18px;
   /* 不用 backdrop-filter：背景每帧都在动，模糊会逐帧重算 */
@@ -637,15 +644,23 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
 .nw-dot { display: inline-block; width: 7px; height: 7px; margin: 0 7px 2px 0; border-radius: 50%; vertical-align: middle; background: hsl(var(--h) 90% 66%); box-shadow: 0 0 8px hsl(var(--h) 90% 60% / .6); }
 .nw-tag { padding: 0 6px; border-radius: 6px; font-size: 11px; color: var(--ink-3); border: 1px solid var(--line); }
 .nw-ph, .nw-img { width: 72px; height: 72px; flex: none; border-radius: 12px; }
-.nw-bar { align-items: center; gap: 8px; margin-top: 10px; }
-.nw-bar .chips { flex: 1; }
+.nw-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 12px 8px; margin-top: 12px; }
+.nw-bar .nw-journal { min-width: 0; }
+.nw-bar .nw-journal:first-child select { width: 100%; max-width: none; }
+.nw-bar .chips { grid-column: 1 / -1; flex-wrap: wrap; margin: 0; padding: 0; overflow: visible; }
+.nw-bar .chip-sep { display: none; }
+.nw-bar [data-act="readall"] { margin-left: auto; }
 .nw-js { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
 .nw-js button { padding: 3px 10px; border-radius: 999px; font-size: 12px; color: var(--ink-3); border: 1px solid var(--line); background: rgba(255, 255, 255, .02); }
 .nw-js button:hover, .nw-js button:focus-visible { color: var(--ink); border-color: hsl(var(--h) 80% 65% / .45); }
 .nw-js small { margin-left: 5px; font: 400 10.5px var(--mono); color: var(--ink-4); }
 .nw-group { margin-top: 18px; content-visibility: auto; contain-intrinsic-size: auto 280px; }
 .nw-gt { display: flex; align-items: center; gap: 9px; margin: 0 0 10px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.nw-gt-text { min-width: 0; overflow-wrap: anywhere; }
+.nw-cover { width: 36px; height: 48px; flex: none; }
+.nw-cover img { width: 100%; height: 100%; object-fit: contain; border-radius: 4px; background: rgba(255, 255, 255, .04); }
 .nw-gt small { font: 400 11.5px var(--mono); color: var(--ink-4); }
+.nw-gt-text small { display: block; margin-top: 4px; }
 /* 阅读面板：有封面时左图右文，没有封面时单栏 */
 .reader { width: min(1080px, calc(100vw - 32px)); grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
 .reader.no-img { width: min(720px, calc(100vw - 32px)); grid-template-columns: minmax(0, 1fr); }
@@ -658,6 +673,7 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
 .fig-sub .kit-t small { margin-left: 4px; font: 400 11.5px var(--mono); color: var(--ink-4); }
 .fig-sub .kit-t .src { margin-left: 8px; font-size: 12px; font-weight: 400; }
 .nw-img { object-fit: cover; background: #f6f5f1; }
+.nw-img.nw-journal-shot { object-fit: contain; }
 .nw-ph {
   display: grid; place-items: center; font: 700 18px/1 var(--sans); letter-spacing: .02em; color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .3);
   background: linear-gradient(135deg, hsl(var(--h) 70% 52%), hsl(calc(var(--h) + 40) 65% 38%));
@@ -703,10 +719,10 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
   .nw-journal, .nw-journal select { width: 100%; max-width: none; }
   .nw { padding: 12px 8px 12px 12px; gap: 12px; }
   .nw-ph, .nw-img { width: 56px; height: 56px; }
-  .nw-bar { flex-wrap: wrap; }
-  .nw-bar .nw-journal { flex: 1 1 30%; }
-  .nw-bar .nw-journal:first-child { flex-basis: 100%; }
-  .nw-bar .chips { flex-basis: 100%; }
+  .nw-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nw-bar .nw-journal:first-child { grid-column: 1 / -1; }
+  .nw-bar .chip-sep { display: block; flex-basis: 100%; height: 0; margin: 0; }
+  .nw-bar [data-act="readall"] { margin-left: 0; }
   /* 网格子项默认 min-width: auto，不换行的期刊条会把内容列撑宽，整页横向溢出 */
   .content { min-width: 0; }
   .nw-js { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
@@ -714,6 +730,7 @@ body.searching .item { opacity: 1; translate: none; animation: none; }
 }
 @media (max-width: 560px) {
   .brand-name { display: none; }
+  .news-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
 }
 
 .toast {
@@ -735,6 +752,8 @@ body[data-page="workbench"] { height: 100dvh; min-height: 0; overflow: hidden; d
 .wb-frame:fullscreen { border: 0; border-radius: 0; }
 .wb-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .wb-load { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: 20px; text-align: center; color: var(--ink-3); font-size: 14px; }
+.wb-site-frame { position: fixed; inset: 0; z-index: 50; width: 100%; height: 100%; border: 0; background: var(--bg); }
+.wb-browsing > .topbar, .wb-browsing > .wb { visibility: hidden; }
 @media (max-height: 480px) {
   .wb-intro p { display: none; }
 }

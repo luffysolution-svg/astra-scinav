@@ -14,11 +14,11 @@
   function schedule() {
     if (initialized || pending || !motion || document.hidden) return;
     pending = true;
-    const init = () => {
+    const init = async () => {
       pending = false;
       if (initialized || !motion || document.hidden) return;
       initialized = true;
-      try { start(); }
+      try { await start(); }
       catch {
         document.documentElement.classList.add('no-webgl');
         window.astraPulse = () => {};
@@ -30,7 +30,7 @@
   window.astraMotion = on => { motion = on; if (on) schedule(); };
   document.addEventListener('visibilitychange', schedule);
 
-  function start() {
+  async function start() {
     const canvas = document.getElementById('galaxy');
     const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' });
     if (!gl) { document.documentElement.classList.add('no-webgl'); window.astraPulse = () => {}; return; }
@@ -286,20 +286,28 @@
       for (const [type, src] of [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]]){
         const s = gl.createShader(type);
         gl.shaderSource(s, src); gl.compileShader(s);
-        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
         gl.attachShader(p, s);
       }
       gl.bindAttribLocation(p, 0, 'p');
       gl.linkProgram(p);
-      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
-      const u = {};
-      const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
-      for (let i = 0; i < n; i++){ const name = gl.getActiveUniform(p, i).name; u[name] = gl.getUniformLocation(p, name); }
-      return { p, u };
+      return { p, u: {} };
     }
+    const parallel = gl.getExtension('KHR_parallel_shader_compile');
     const bh = program(QUAD_VS, BH_FS);
     const post = program(QUAD_VS, POST_FS);
     const pt = program(PT_VS, PT_FS);
+    const programs = [bh, post, pt];
+    // 先提交全部着色器；支持后台编译时逐帧检查，避免首次加载同步等待大型着色器。
+    if (parallel) {
+      while (programs.some(({ p }) => !gl.getProgramParameter(p, parallel.COMPLETION_STATUS_KHR))) {
+        await new Promise(requestAnimationFrame);
+      }
+    }
+    for (const { p, u } of programs) {
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+      const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+      for (let i = 0; i < n; i++){ const name = gl.getActiveUniform(p, i).name; u[name] = gl.getUniformLocation(p, name); }
+    }
 
     /* ---------- 粒子生成 ---------- */
     const N_DUST = mobile ? 1300 : 2600, N_STAR = mobile ? 500 : 1000, N_FLARE = mobile ? 8 : 16, N_PLANET = 3;
@@ -407,13 +415,18 @@
     function resize(){
       canvas.width = Math.round(innerWidth*DPR); canvas.height = Math.round(innerHeight*DPR);
       alloc(); layout();
+      lastHole = 0;
       // 暂停时改尺寸会清空画布，补画一帧静态画面
       if (paused) draw(performance.now());
     }
     // UI 调用：卡片悬停、提交搜索时给飞船一次小加速；点击触发跃迁
     window.astraPulse = (x, y, s = 1) => { if (!reduced) boost = Math.min(2.2, boost + s*.35); };
 
-    addEventListener('resize', resize);
+    let resizeRaf = 0;
+    addEventListener('resize', () => {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => { resizeRaf = 0; resize(); });
+    });
     addEventListener('pointermove', e => {
       mouse.x = e.clientX*DPR; mouse.y = (innerHeight - e.clientY)*DPR;
       if (mouse.sx < -999){ mouse.sx = mouse.x; mouse.sy = mouse.y; }
@@ -429,7 +442,7 @@
     }, { passive: true });
     /* ---------- 渲染循环 ---------- */
     // 页面不可见或用户暂停（UI 调用 astraMotion(false)）时停止循环；暂停时保留最后一帧
-    let paused = false, raf = 0, last = 0, acc = 0, frames = 0, sim = 0;
+    let paused = !motion, raf = 0, last = 0, lastHole = 0, acc = 0, frames = 0, sim = 0;
     const t0 = performance.now();
     function sync(){
       const run = !paused && !document.hidden;
@@ -454,7 +467,7 @@
       if ((now - t0) > 2500 && !busy){
         acc += dt; frames++;
         if (frames === 60){
-          if (acc/frames > 1/45 && scale > .26){ scale *= .8; alloc(); }
+          if (acc/frames > 1/45 && scale > .26){ scale *= .8; alloc(); lastHole = 0; }
           acc = frames = 0;
         }
       }
@@ -469,26 +482,30 @@
       sScroll += (scroll - sScroll)*.06;
       const { cam, rot, hole } = camera(sim);
 
-      // 1. 黑洞 → 离屏
-      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-      gl.viewport(0, 0, fw, fh);
-      gl.disable(gl.BLEND);
-      gl.useProgram(bh.p); gl.bindVertexArray(quadVao);
-      gl.uniform2f(bh.u.uRes, fw, fh);
-      gl.uniform1f(bh.u.uTime, sim);
-      gl.uniform3fv(bh.u.uCam, cam);
-      gl.uniformMatrix3fv(bh.u.uRot, false, rot);
-      gl.uniform2fv(bh.u.uShift, shift);
-      gl.uniform1f(bh.u.uFocal, focal);
-      gl.uniform1i(bh.u.uSteps, mobile ? (busy ? 60 : 90) : (busy ? 80 : 130));
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      // 1. 黑洞缓慢变化，约 30fps 更新即可；粒子保持约 60fps，滚动时再降低黑洞更新频率。
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      if (!lastHole || now - lastHole >= (busy ? 60 : 30)) {
+        lastHole = now;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+        gl.viewport(0, 0, fw, fh);
+        gl.disable(gl.BLEND);
+        gl.useProgram(bh.p); gl.bindVertexArray(quadVao);
+        gl.uniform2f(bh.u.uRes, fw, fh);
+        gl.uniform1f(bh.u.uTime, sim);
+        gl.uniform3fv(bh.u.uCam, cam);
+        gl.uniformMatrix3fv(bh.u.uRot, false, rot);
+        gl.uniform2fv(bh.u.uShift, shift);
+        gl.uniform1f(bh.u.uFocal, focal);
+        gl.uniform1i(bh.u.uSteps, mobile ? (busy ? 60 : 90) : (busy ? 80 : 130));
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        gl.generateMipmap(gl.TEXTURE_2D);
+      }
 
       // 2. 合成到屏幕
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.useProgram(post.p);
+      gl.disable(gl.BLEND);
+      gl.useProgram(post.p); gl.bindVertexArray(quadVao);
       gl.uniform1i(post.u.uTex, 0);
       gl.uniform2f(post.u.uRes, canvas.width, canvas.height);
       gl.uniform1f(post.u.uTime, sim);

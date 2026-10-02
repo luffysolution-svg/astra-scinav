@@ -29,15 +29,18 @@ jobs:
         run: command -v ffmpeg || (sudo apt-get update -q && sudo apt-get install -y -q ffmpeg)
       - name: 同步
         run: node scripts/sync_news.mjs
+      - name: 更新期刊封面
+        run: node scripts/sync_news_journal_covers.mjs
       - name: 更新新增日期
         run: node scripts/status.mjs
       - name: 校验
         run: node scripts/validate.mjs
       - name: 有变化则提交
         run: |
-          git add -A -- content/news.json site/data/news.js site/data/news-abstracts content/status.json site/data/status.js
+          git add -A -- content/news.json site/data/news.js site/data/news-abstracts content/news-journal-covers.json site/data/news-journal-covers.js content/status.json site/data/status.js
           # 封面目录：新增与过期删除都要记录；目录被清空时只记录删除
           if [ -d site/news ]; then git add -- site/news; else git rm -r -q --cached --ignore-unmatch site/news; fi
+          if [ -d site/news-journals ]; then git add -A -- site/news-journals; else git rm -r -q --cached --ignore-unmatch site/news-journals; fi
           if git diff --cached --quiet; then echo "无变化"; exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898278+github-actions[bot]@users.noreply.github.com'

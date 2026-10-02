@@ -1,0 +1,165 @@
+{
+  "generated": "2026-10-02T05:41:06.995Z",
+  "covers": [
+    {
+      "journal": "Nature Astronomy",
+      "image": "news-journals/natastron-7af2ceb01a.webp",
+      "source": "https://www.nature.com/natastron",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41550/10/9?q=95",
+      "label": "Volume 10 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Biotechnology",
+      "image": "news-journals/nbt-c49dc5b4fe.webp",
+      "source": "https://www.nature.com/nbt",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41587/44/9?q=95",
+      "label": "Volume 44 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Cancer",
+      "image": "news-journals/natcancer-fafa9f7f92.webp",
+      "source": "https://www.nature.com/natcancer",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/43018/7/9?q=95",
+      "label": "Volume 7 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Catalysis",
+      "image": "news-journals/natcatal-ac49f15b6a.webp",
+      "source": "https://www.nature.com/natcatal",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41929/9/9?q=95",
+      "label": "Volume 9 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Chemistry",
+      "image": "news-journals/nchem-5489901811.webp",
+      "source": "https://www.nature.com/nchem",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41557/18/10?q=95",
+      "label": "Volume 18 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Energy",
+      "image": "news-journals/nenergy-0ba1e182b4.webp",
+      "source": "https://www.nature.com/nenergy",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41560/11/9?q=95",
+      "label": "Volume 11 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Immunology",
+      "image": "news-journals/ni-ae1c2c041e.webp",
+      "source": "https://www.nature.com/ni",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41590/27/10?q=95",
+      "label": "Volume 27 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Materials",
+      "image": "news-journals/nmat-da1afe020d.webp",
+      "source": "https://www.nature.com/nmat",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41563/25/10?q=95",
+      "label": "Volume 25 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Medicine",
+      "image": "news-journals/nm-4b486e04ed.webp",
+      "source": "https://www.nature.com/nm",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41591/32/9?q=95",
+      "label": "Volume 32 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Methods",
+      "image": "news-journals/nmeth-b28669758f.webp",
+      "source": "https://www.nature.com/nmeth",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41592/23/9?q=95",
+      "label": "Volume 23 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Nanotechnology",
+      "image": "news-journals/nnano-6c0693dc5c.webp",
+      "source": "https://www.nature.com/nnano",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41565/21/9?q=95",
+      "label": "Volume 21 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Neuroscience",
+      "image": "news-journals/neuro-7906af24b5.webp",
+      "source": "https://www.nature.com/neuro",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41593/29/9?q=95",
+      "label": "Volume 29 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Physics",
+      "image": "news-journals/nphys-3ffe0f1646.webp",
+      "source": "https://www.nature.com/nphys",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41567/22/9?q=95",
+      "label": "Volume 22 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Reviews Cancer",
+      "image": "news-journals/nrc-a929584be5.webp",
+      "source": "https://www.nature.com/nrc",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41568/26/10?q=95",
+      "label": "Volume 26 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Reviews Drug Discovery",
+      "image": "news-journals/nrd-5183ac10f2.webp",
+      "source": "https://www.nature.com/nrd",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41573/25/10?q=95",
+      "label": "Volume 25 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Reviews Immunology",
+      "image": "news-journals/nri-dae49a3430.webp",
+      "source": "https://www.nature.com/nri",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41577/26/10?q=95",
+      "label": "Volume 26 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Reviews Microbiology",
+      "image": "news-journals/nrmicro-f50e520317.webp",
+      "source": "https://www.nature.com/nrmicro",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41579/24/10?q=95",
+      "label": "Volume 24 Issue 10",
+      "kind": "issue"
+    },
+    {
+      "journal": "Nature Synthesis",
+      "image": "news-journals/natsynth-6d8a40e0e7.webp",
+      "source": "https://www.nature.com/natsynth",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/44160/5/9?q=95",
+      "label": "Volume 5 Issue 9",
+      "kind": "issue"
+    },
+    {
+      "journal": "Physical Review Letters",
+      "image": "news-journals/prl-a06af39204.webp",
+      "source": "https://journals.aps.org/prl/",
+      "imageUrl": "https://cdn.journals.aps.org/test/1955e9c6-07a8-4d52-bb49-8d0464aec942/tn137013-prl-new.png",
+      "label": "官网封面选图",
+      "kind": "art"
+    },
+    {
+      "journal": "Reviews of Modern Physics",
+      "image": "news-journals/rmp-5bda659eb5.webp",
+      "source": "https://journals.aps.org/rmp/",
+      "imageUrl": "https://cdn.journals.aps.org/test/b0ec91f1-5a25-4c92-97d8-191ffd162800/RMPkey-image.png",
+      "label": "官网封面选图",
+      "kind": "art"
+    }
+  ]
+}

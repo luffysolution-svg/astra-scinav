@@ -2,15 +2,15 @@
 //   node scripts/sync_news.mjs            联网同步，更新 content/news.json 并生成 site/data/news.js
 //   node scripts/sync_news.mjs --offline  不联网，只由 content/news.json 重建 site/data/news.js 与 news-abstracts/*.json
 //   node scripts/sync_news.mjs --backfill 联网同步，并为所有文章重试摘要/封面（默认补新文章，并每天重试旧文章缺失的摘要）
+//   node scripts/sync_news.mjs --images-only  仅为现有快照补论文配图，不重新抓取论文列表
 // 来源配置在 content/news-sources.json（人工维护）；每条保存标题、日期、期刊、DOI、原文链接、摘要与封面。
 // 数据源优先级：官方 RSS/Atom → Crossref（按 ISSN，或按 DOI 前缀）→ 预印本官方 API。
 // 配置了 feed 又有 issn 的来源，Feed 请求失败时自动改用 Crossref。
 // 摘要：Feed 自带 → Crossref 存档摘要 → Europe PMC → 允许抓取的落地页 meta（nature.com）。
-// 封面：Feed 里的 media:content / enclosure / 正文首图 → 落地页 og:image；下载后用 ffmpeg 转成本地小 WebP（site/news/），页面不外链图片。
+// 配图：Feed → Europe PMC 开放获取全文中的论文图 → 官方落地页图片元数据/首张论文图；下载后转成本地小 WebP。
 // 不伪装浏览器、不用无头浏览器或第三方代理绕过 Cloudflare；被拦截的主机本次跳过。
 // 单个来源失败只打印错误；全部失败时不改动现有数据并以退出码 1 结束。
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -24,8 +24,8 @@ const IMG_W = 360;        // 封面缩略图宽度（卡片 + 阅读面板共用
 const UA = 'Astra-news-sync/1.0 (Astra academic feed aggregator; +https://nav.luffysite.top)';
 // 各主机两次请求的最小间隔（毫秒）：arXiv 要求 3 秒一次；Crossref 公共池限 1 次/秒、并发 1
 const GAP = { 'export.arxiv.org': 3100, 'api.crossref.org': 1100, 'api.biorxiv.org': 1000, 'www.ebi.ac.uk': 300, 'www.nature.com': 800, 'www.cell.com': 1500, 'www.thelancet.com': 1500 };
-// 可以抓落地页 meta 补摘要/封面的主机（未被 Cloudflare 拦截，robots.txt 允许 /articles/）
-const LANDING = /^www\.nature\.com$/;
+// 仅访问来源本身或 Crossref 登记的官方落地页；先检查 robots，再按主机限速，不尝试破解验证页。
+const IMG_MAX = 12 * 1024 * 1024;
 
 const SRC_FILE = 'content/news-sources.json', FILE = 'content/news.json', OUT = 'site/data/news.js', ABS_DIR = 'site/data/news-abstracts', IMG_DIR = 'site/news';
 export const CATEGORY_IDS = ['nature', 'science', 'cell', 'medical', 'multidisciplinary', 'ecology', 'chem-materials', 'physics', 'preprints'];
@@ -108,14 +108,45 @@ function feedAbstract(x) {
   return ['dc:description', 'content:encoded', 'description', 'summary', 'content']
     .map(k => cleanAbstract(tag(x, k))).filter(Boolean).sort((a, b) => b.length - a.length)[0] || null;
 }
-const BAD_IMG = /logo|icon|avatar|spacer|pixel|badge|\.svg(\?|$)/i;
+const BAD_IMG = /logo|icon|avatar|spacer|pixel|badge|placeholder|default[-_ ]?(image|social)|main(?:[ _-]|%20)*visual|\.svg(\?|$)/i;
 const absUrl = (u, base) => { try { const x = new URL(decode(u).replace(/^\/\//, 'https://'), base); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; } };
-function feedImage(x, base) {
-  const cands = [...x.matchAll(/<(?:media:content|media:thumbnail|enclosure)\b[^>]*\burl="([^"]+)"[^>]*>/g)]
-    .filter(m => !/type="(?!image)/.test(m[0])).map(m => m[1]);
-  const body = (tag(x, 'content:encoded') || tag(x, 'description') || tag(x, 'content') || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1');
-  for (const m of decode(body).matchAll(/<img\b[^>]*\bsrc=["']?([^"'\s>]+)/gi)) cands.push(m[1]);
-  return cands.map(u => absUrl(u, base)).find(u => u && !BAD_IMG.test(u)) || null;
+const attrs = html => Object.fromEntries([...html.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g)].map(m => [m[1].toLowerCase(), decode(m[2] ?? m[3] ?? m[4])]));
+const images = (urls, base) => [...new Set(urls.filter(u => typeof u === 'string' && u.trim()).map(u => absUrl(u, base)).filter(u => u && !BAD_IMG.test(u)))].slice(0, 6);
+const imgUrls = html => [...html.matchAll(/<img\b[^>]*>/gi)].flatMap(m => {
+  const a = attrs(m[0]), set = a['data-srcset'] || a.srcset;
+  return [a['data-src'], a['data-original'], ...(set ? set.split(',').reverse().map(s => s.trim().split(/\s+/)[0]) : []), a.src];
+});
+export function feedImages(x, base) {
+  const cands = [...x.matchAll(/<(?:media:content|media:thumbnail|enclosure|link)\b[^>]*>/gi)].flatMap(m => {
+    const a = attrs(m[0]);
+    return a.type && !a.type.startsWith('image/') || m[0].startsWith('<link') && a.rel !== 'enclosure' ? [] : [a.url || a.href];
+  });
+  for (const name of ['content:encoded', 'description', 'summary', 'content']) {
+    const body = (tag(x, name) || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1');
+    cands.push(...imgUrls(decode(body)));
+  }
+  return images(cands, base);
+}
+export function pageImages(html, base) {
+  const cands = ['og:image:secure_url', 'og:image', 'twitter:image', 'twitter:image:src', 'citation_image'].map(n => meta(html, n));
+  // 只取论文 figure，避开页眉、期刊宣传图片与推荐文章。
+  for (const m of html.matchAll(/<figure\b[^>]*>[\s\S]*?<\/figure>/gi)) {
+    if (/CardJournal|related|recommend/i.test(m[0].slice(0, m[0].indexOf('>')))) continue;
+    cands.push(...imgUrls(m[0]));
+  }
+  cands.push(...imgUrls(html).filter(u => u && /(?:fig(?:ure)?[\d_-]|[-_]g\d+\.(png|jpe?g|webp|gif)|\/figures?\/|\/asset\/|\/articlerender\.fcgi\?artid=)/i.test(u)));
+  return images(cands, base);
+}
+export function pmcImages(xml) {
+  const cands = [];
+  for (const f of xml.matchAll(/<fig\b[^>]*>[\s\S]*?<\/fig>/gi)) for (const m of f[0].matchAll(/<graphic\b[^>]*?(?:\/>|>([\s\S]*?)<\/graphic>)/gi)) {
+    const a = attrs(m[0]);
+    if (a['content-type'] === 'thumb') continue;
+    const blob = m[1]?.match(/<\?cloudpmc-path\s+(blobs\/[\w/.-]+)\s*\?>/)?.[1];
+    if (blob) cands.push('https://cdn.ncbi.nlm.nih.gov/pmc/' + blob);
+    else if (/^https?:\/\//.test(a['xlink:href'] || '')) cands.push(a['xlink:href']);
+  }
+  return images(cands);
 }
 
 /* ---------- 请求：同一主机串行并留间隔；Nature 的 Feed 会先跳转到 idp.nature.com 设 Cookie，需要手动跟随跳转 ---------- */
@@ -179,7 +210,8 @@ async function fromFeed(s) {
     const url = feedLink(x);
     const doi = normDoi(tag(x, 'prism:doi')) || normDoi(tag(x, 'dc:identifier')) || normDoi(tag(x, 'guid')) || normDoi(tag(x, 'id')) || normDoi(url) || normDoi(tag(x, 'dc:source'));
     const date = feedDate(tag(x, 'dc:date') || tag(x, 'prism:publicationDate') || tag(x, 'pubDate') || tag(x, 'pubdate') || tag(x, 'published') || tag(x, 'updated') || tag(x, 'prism:coverDate'));
-    return { title: plain(tag(x, 'title') || tag(x, 'dc:title') || ''), date, doi, url, journal: s.name, source, abstract: feedAbstract(x), cover: feedImage(x, s.feed) };
+    const coverCandidates = feedImages(x, s.feed);
+    return { title: plain(tag(x, 'title') || tag(x, 'dc:title') || ''), date, doi, url, journal: s.name, source, abstract: feedAbstract(x), coverCandidates, cover: coverCandidates[0] || null };
   });
 }
 async function fromCrossref(s) {
@@ -188,7 +220,7 @@ async function fromCrossref(s) {
   const q = new URLSearchParams({
     rows: String(PER_SOURCE * 2), sort: 'created', order: 'desc',
     filter: `from-created-date:${from},type:journal-article`,
-    select: 'DOI,title,container-title,published-online,published-print,created,abstract',
+    select: 'DOI,title,container-title,published-online,published-print,created,abstract,resource',
   });
   const j = await getJson(`https://api.crossref.org/${path}/works?${q}`);
   return j.message.items.map(w => ({
@@ -197,7 +229,7 @@ async function fromCrossref(s) {
     date: parts(w['published-online']) || parts(w.created),
     doi: normDoi(w.DOI), url: `https://doi.org/${normDoi(w.DOI)}`,
     journal: s.prefix ? plain(w['container-title']?.[0] || s.name) : s.name, source: 'crossref',
-    abstract: cleanAbstract(w.abstract), cover: null,
+    abstract: cleanAbstract(w.abstract), cover: null, landing: absUrl(w.resource?.primary?.URL || ''),
   }));
 }
 async function fromArxiv(s) {
@@ -240,7 +272,7 @@ function finish(list, s) {
     try { url = normUrl(a.url); } catch { continue; }
     // image 是下载后的本地 WebP 路径；cover 是远程封面地址，只在同步过程中使用，不写入文件
     const x = { title: a.title, date: a.date, journal: a.journal, doi: a.doi || null, image: null, abstract: a.abstract || null, url, category: s.category, source: a.source };
-    out.push({ id: makeId(x), ...x, cover: a.cover || null });
+    out.push({ id: makeId(x), ...x, cover: a.cover || null, coverCandidates: a.coverCandidates || [], landing: a.landing || null });
   }
   return out.sort(byDate).slice(0, PER_SOURCE);
 }
@@ -280,6 +312,8 @@ function merge(...lists) {
     if ((a.abstract?.length || 0) > (hit.abstract?.length || 0)) hit.abstract = a.abstract;
     if (!hit.image && a.image) hit.image = a.image;
     if (!hit.cover && a.cover) hit.cover = a.cover;
+    hit.coverCandidates = [...new Set([...(hit.coverCandidates || []), ...(a.coverCandidates || [])])];
+    if (!hit.landing && a.landing) hit.landing = a.landing;
     hit.id = makeId(hit);
     keys(hit).forEach(k => seen.set(k, hit));
   }
@@ -303,75 +337,179 @@ const blocked = new Map();   // 主机 → 被拒次数；连续 3 次 403/429 �
 const allow = host => (blocked.get(host) || 0) < 3;
 const note = (host, e) => { if (/HTTP (403|429)/.test(e.message)) blocked.set(host, (blocked.get(host) || 0) + 1); };
 const chunk = (a, n) => Array.from({ length: Math.ceil(a.length / n) }, (_, i) => a.slice(i * n, i * n + n));
-const meta = (html, n) => decode((html.match(new RegExp(`<meta[^>]+(?:name|property)=["']${n}["'][^>]*>`, 'i')) || [''])[0].match(/content=["']([^"']*)["']/)?.[1] || '');
+export function meta(html, name) {
+  for (const m of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const a = attrs(m[0]);
+    if ([a.name, a.property].some(n => n?.toLowerCase() === name.toLowerCase())) return a.content || '';
+  }
+  return '';
+}
+const needsImage = a => !(a.image && fs.existsSync(`site/${a.image}`));
+export function articleUrl(a) {
+  if (a.landing) return a.landing;
+  if (a.doi?.startsWith('10.1038/')) return 'https://www.nature.com/articles/' + a.doi.slice(8);
+  if (a.doi?.startsWith('10.1371/journal.pone.')) return 'https://journals.plos.org/plosone/article?id=' + a.doi;
+  if (new URL(a.url).host !== 'doi.org') return a.url;
+  return null;
+}
+// 只实现本任务使用的 robots 指令：当前同步器 / 通配组、最长路径规则、Crawl-delay。
+export function robotPolicy(text, url) {
+  const groups = [];
+  let group = { agents: [], rules: [], delay: 0 }, directives = false;
+  for (const line of text.split(/\r?\n/)) {
+    const m = line.replace(/#.*$/, '').trim().match(/^([\w-]+)\s*:\s*(.*)$/);
+    if (!m) continue;
+    const key = m[1].toLowerCase(), value = m[2].trim();
+    if (key === 'user-agent') {
+      if (directives) { groups.push(group); group = { agents: [], rules: [], delay: 0 }; directives = false; }
+      group.agents.push(value.toLowerCase());
+    } else if (group.agents.length) {
+      directives = true;
+      if ((key === 'allow' || key === 'disallow') && value) group.rules.push({ allow: key === 'allow', path: value });
+      if (key === 'crawl-delay' && Number.isFinite(+value)) group.delay = Math.max(group.delay, +value * 1000);
+    }
+  }
+  groups.push(group);
+  const named = groups.filter(g => g.agents.some(a => a !== '*' && 'astra-news-sync'.startsWith(a)));
+  const selected = named.length ? named : groups.filter(g => g.agents.includes('*'));
+  const x = new URL(url), target = x.pathname + x.search;
+  const hits = selected.flatMap(g => g.rules).filter(r => {
+    const end = r.path.endsWith('$'), p = end ? r.path.slice(0, -1) : r.path;
+    return new RegExp('^' + p.split('*').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('.*') + (end ? '$' : '')).test(target);
+  }).sort((a, b) => b.path.replace(/[*$]/g, '').length - a.path.replace(/[*$]/g, '').length || Number(b.allow) - Number(a.allow));
+  return { allowed: hits[0]?.allow ?? true, delay: Math.max(0, ...selected.map(g => g.delay)) };
+}
+const robots = new Map();
+const pageVisits = new Map();
+async function canVisit(url) {
+  const x = new URL(url);
+  if (!allow(x.host)) return false;
+  if (!robots.has(x.origin)) robots.set(x.origin, get(x.origin + '/robots.txt', 'text/plain').catch(e => {
+    note(x.host, e);
+    return /^HTTP 404/.test(e.message) ? '' : null;
+  }));
+  const text = await robots.get(x.origin);
+  if (text === null) return false;
+  const policy = robotPolicy(text, url);
+  GAP[x.host] = Math.max(GAP[x.host] ?? 500, policy.delay);
+  return policy.allowed;
+}
 
 async function enrich(list, todo) {
   const want = a => todo(a) && (!a.abstract || a.abstract.length < 400);
   // 1. Crossref：出版社存档的 JATS 摘要，按 DOI 批量查
   let n = 0;
-  for (const g of chunk(list.filter(a => a.doi && !a.abstract && todo(a)), 20)) {
+  for (const g of chunk(list.filter(a => a.doi && ((!a.abstract && todo(a)) || (needsImage(a) && !articleUrl(a)))), 20)) {
     try {
-      const q = new URLSearchParams({ filter: g.map(a => 'doi:' + a.doi).join(','), rows: String(g.length), select: 'DOI,abstract' });
+      const q = new URLSearchParams({ filter: g.map(a => 'doi:' + a.doi).join(','), rows: String(g.length), select: 'DOI,abstract,resource' });
       for (const w of (await getJson(`https://api.crossref.org/works?${q}`)).message.items) {
         const a = g.find(x => x.doi === normDoi(w.DOI)), s = cleanAbstract(w.abstract);
-        if (a && s) { a.abstract = s; n++; }
+        if (a && todo(a) && s && s.length > (a.abstract?.length || 0)) { a.abstract = s; n++; }
+        if (a) a.landing = absUrl(w.resource?.primary?.URL || '');
       }
     } catch (e) { console.warn(`  Crossref 摘要：${e.message}`); }
   }
   // 2. Europe PMC：生物医学论文（PubMed 收录后才有，新文章可能要等几天）
-  let m = 0;
-  for (const g of chunk(list.filter(a => a.doi && !a.abstract && todo(a)), 20)) {
+  let m = 0, p = 0;
+  const pmc = new Map();
+  for (const g of chunk(list.filter(a => a.doi && ((!a.abstract && todo(a)) || needsImage(a))), 20)) {
     try {
       const q = new URLSearchParams({ query: g.map(a => `DOI:"${a.doi}"`).join(' OR '), resultType: 'core', format: 'json', pageSize: '50' });
       for (const r of (await getJson(`https://www.ebi.ac.uk/europepmc/webservices/rest/search?${q}`)).resultList.result) {
         const a = g.find(x => x.doi === r.doi?.toLowerCase()), s = cleanAbstract(r.abstractText);
-        if (a && !a.abstract && s) { a.abstract = s; m++; }
+        if (a && todo(a) && !a.abstract && s) { a.abstract = s; m++; }
+        if (a && needsImage(a) && r.isOpenAccess === 'Y' && /^PMC\d+$/.test(r.pmcid || '')) pmc.set(a, r.pmcid);
       }
     } catch (e) { console.warn(`  Europe PMC 摘要：${e.message}`); }
   }
-  // 3. 落地页 meta：Nature 系 Feed 只有一句导语，完整摘要在文章页的 dc.description；新闻类有 og:image
-  let k = 0;
-  const pages = list.filter(a => LANDING.test(new URL(a.url).host) && (want(a) || (!a.image && !a.cover && todo(a))));
-  await pool(pages, 2, async a => {
-    const host = new URL(a.url).host;
-    if (!allow(host)) return;
+  // 开放获取全文 API 自带真实的 NCBI CDN 图路径；不批量爬 Europe PMC/PMC 主站。
+  await pool([...pmc], 2, async ([a, id]) => {
     try {
-      const html = await get(a.url, 'text/html');
-      const s = cleanAbstract(meta(html, 'dc.description') || meta(html, 'citation_abstract') || meta(html, 'description'));
-      if (s && s.length > (a.abstract?.length || 0)) a.abstract = s;
-      const img = absUrl(meta(html, 'og:image'), a.url);
-      if (!a.cover && img && !BAD_IMG.test(img)) a.cover = img;
-      k++;
-    } catch (e) { note(host, e); }
+      const xml = await get(`https://www.ebi.ac.uk/europepmc/webservices/rest/${id}/fullTextXML`, 'application/xml');
+      const candidates = pmcImages(xml);
+      if (candidates.length) { a.coverCandidates = [...new Set([...(a.coverCandidates || []), ...candidates])]; p++; }
+    } catch (e) { note('www.ebi.ac.uk', e); }
   });
-  console.log(`补摘要：Crossref ${n} · Europe PMC ${m} · 落地页 ${k} 页${[...blocked].filter(([, c]) => c >= 3).map(([h]) => ` · ${h} 拒绝访问，已跳过`).join('')}`);
+  if (p) await covers(list);
+  // 3. 官方落地页：图片元数据、懒加载 figure、摘要；旧文章缺图也每天重试。
+  let k = 0;
+  // 页面补图不能拖垮每日更新；OA API 优先处理，已取得的候选图仍会在阶段结束后下载。
+  const deadline = Date.now() + 6 * 60 * 1000, pageFailures = new Map();
+  const pages = list.filter(a => articleUrl(a) && (want(a) || needsImage(a)));
+  await pool(pages, 2, async a => {
+    const url = articleUrl(a), host = new URL(url).host;
+    if (Date.now() >= deadline || (pageFailures.get(host) || 0) >= 3) return;
+    if (!await canVisit(url)) return;
+    if (Date.now() >= deadline) return;
+    // 慢站只补少量公共页面；OA API 不受此额度影响，每日优先处理仍缺图的文章。
+    const visits = pageVisits.get(host) || 0;
+    if ((GAP[host] || 0) >= 10000 && visits >= 4) return;
+    pageVisits.set(host, visits + 1);
+    try {
+      const html = await get(url, 'text/html');
+      const s = cleanAbstract(meta(html, 'dc.description') || meta(html, 'citation_abstract') || meta(html, 'description'));
+      if (todo(a) && s && s.length > (a.abstract?.length || 0)) a.abstract = s;
+      if (needsImage(a)) a.coverCandidates = [...new Set([...(a.coverCandidates || []), ...pageImages(html, url)])];
+      k++;
+      pageFailures.delete(host);
+    } catch (e) {
+      note(host, e);
+      if (['TimeoutError', 'AbortError'].includes(e.name) || /fetch failed|ECONNRESET|ECONNREFUSED|ETIMEDOUT|EAI_AGAIN/i.test(e.message)) pageFailures.set(host, (pageFailures.get(host) || 0) + 1);
+    }
+  });
+  console.log(`补摘要/配图：Crossref ${n} · Europe PMC 摘要 ${m} / 配图 ${p} · 落地页 ${k} 页${Date.now() >= deadline ? ' · 页面补图预算已用完，其余留待下次' : ''}${[...blocked].filter(([, c]) => c >= 3).map(([h]) => ` · ${h} 拒绝访问，已跳过`).join('')}${[...pageFailures].filter(([, c]) => c >= 3).map(([h]) => ` · ${h} 连续网络失败，已跳过`).join('')}`);
 }
 
 // 远程封面 → 本地 WebP（site/news/<id>.webp）；需要 ffmpeg，没有就跳过封面
+export function rasterImage(buf) {
+  return buf.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+    || buf[0] === 255 && buf[1] === 216 && buf[2] === 255
+    || /^GIF8[79]a/.test(buf.subarray(0, 6).toString())
+    || buf.subarray(0, 4).toString() === 'RIFF' && buf.subarray(8, 12).toString() === 'WEBP'
+    || buf.subarray(4, 8).toString() === 'ftyp' && /avif|avis/.test(buf.subarray(8, 32).toString());
+}
 async function covers(list) {
   try { execFileSync('ffmpeg', ['-version'], { stdio: 'ignore' }); } catch { console.warn('未找到 ffmpeg，跳过封面下载'); return; }
   fs.mkdirSync(IMG_DIR, { recursive: true });
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'astra-news-'));
+  // 与最终文件放在同一磁盘，Windows 跨盘 rename 会报 EXDEV。
+  const tmp = fs.mkdtempSync(path.join(IMG_DIR, '.tmp-'));
   let got = 0, bad = 0;
-  await pool(list.filter(a => a.cover && !(a.image && fs.existsSync(`site/${a.image}`))), 3, async a => {
-    const host = new URL(a.cover).host;
-    if (!allow(host)) return;
-    try {
-      const buf = await lane(host, async () => {
-        const r = await fetch(a.cover, { headers: { 'user-agent': UA, accept: 'image/*' }, signal: AbortSignal.timeout(30000) });
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        if (!/^image\/(png|jpe?g|gif|webp)/.test(r.headers.get('content-type') || '')) throw new Error('不是位图');
-        return Buffer.from(await r.arrayBuffer());
-      });
-      if (buf.length < 2000) throw new Error('图片过小');
-      const src = path.join(tmp, a.id), out = `${IMG_DIR}/${a.id}.webp`;
-      fs.writeFileSync(src, buf);
-      execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', src, '-frames:v', '1', '-vf', `scale='min(${IMG_W},iw)':-2`, '-c:v', 'libwebp', '-quality', '72', out]);
-      a.image = `news/${a.id}.webp`;
-      got++;
-    } catch (e) { note(host, e); bad++; }
-  });
-  fs.rmSync(tmp, { recursive: true, force: true });
+  try { await pool(list.filter(a => needsImage(a) && (a.cover || a.coverCandidates?.length)), 3, async a => {
+    const candidates = images([a.cover, ...(a.coverCandidates || [])]);
+    for (const url of candidates) {
+      const host = new URL(url).host;
+      if (!allow(host)) continue;
+      try {
+        const buf = await lane(host, async () => {
+          const r = await fetch(url, { headers: { 'user-agent': UA, accept: 'image/*' }, signal: AbortSignal.timeout(30000) });
+          if (!r.ok) { await r.body?.cancel(); throw new Error(`HTTP ${r.status}`); }
+          if (!/^image\/(png|jpe?g|gif|webp|avif)(?:;|$)/i.test(r.headers.get('content-type') || '')) { await r.body?.cancel(); throw new Error('不是位图'); }
+          if (+r.headers.get('content-length') > IMG_MAX) { await r.body?.cancel(); throw new Error('图片过大'); }
+          const chunks = [];
+          let size = 0;
+          for await (const part of r.body) {
+            size += part.length;
+            if (size > IMG_MAX) throw new Error('图片过大');
+            chunks.push(part);
+          }
+          return Buffer.concat(chunks);
+        });
+        if (buf.length < 256 || !rasterImage(buf)) throw new Error('图片格式无效');
+        const src = path.join(tmp, a.id), out = path.join(tmp, a.id + '.webp');
+        fs.writeFileSync(src, buf);
+        execFileSync('ffmpeg', ['-nostdin', '-v', 'error', '-y', '-i', src, '-frames:v', '1', '-vf', `scale='min(${IMG_W},iw)':-2`, '-c:v', 'libwebp', '-quality', '72', out], { timeout: 30000, stdio: 'ignore' });
+        if (!rasterImage(fs.readFileSync(out))) throw new Error('WebP 转换失败');
+        fs.renameSync(out, `${IMG_DIR}/${a.id}.webp`);
+        a.image = `news/${a.id}.webp`;
+        got++;
+        return;
+      } catch (e) { note(host, e); }
+    }
+    bad++;
+  }); } finally {
+    // 只清理上面创建的独立临时目录，损坏图片不会留下最终文件。
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
   console.log(`封面：新下载 ${got}${bad ? ` · 失败 ${bad}` : ''}${[...blocked].filter(([, c]) => c >= 3).map(([h]) => ` · ${h} 拒绝访问`).join('')}`);
 }
 
@@ -398,15 +536,27 @@ function write(cfg, data) {
   fs.rmSync('site/data/news-abstracts.json', { force: true });
   // 删掉已不在数据里的封面
   const keep = new Set(data.articles.map(a => a.image).filter(Boolean).map(p => path.basename(p)));
-  if (fs.existsSync(IMG_DIR)) for (const f of fs.readdirSync(IMG_DIR)) if (!keep.has(f)) fs.rmSync(`${IMG_DIR}/${f}`);
+  if (fs.existsSync(IMG_DIR)) for (const f of fs.readdirSync(IMG_DIR, { withFileTypes: true })) if (f.isFile() && !keep.has(f.name)) fs.rmSync(path.join(IMG_DIR, f.name));
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const cfg = JSON.parse(fs.readFileSync(SRC_FILE, 'utf8'));
   const old = fs.existsSync(FILE) ? JSON.parse(fs.readFileSync(FILE, 'utf8')) : { generated: null, articles: [] };
   if (process.argv.includes('--offline')) {
     write(cfg, old);
     console.log(`news（离线）: ${old.articles.length} 篇`);
+    process.exit(0);
+  }
+  if (process.argv.includes('--images-only')) {
+    const before = JSON.stringify(old.articles);
+    await enrich(old.articles, () => false);
+    await covers(old.articles);
+    // 同步过程中的候选地址和官方落地页不写进持久数据。
+    old.articles = old.articles.map(a => Object.fromEntries(FIELDS.map(k => [k, a[k] ?? null])));
+    if (JSON.stringify(old.articles) !== before) old.generated = new Date().toISOString().slice(0, 16) + 'Z';
+    fs.writeFileSync(FILE, stringify(old));
+    write(cfg, old);
+    console.log(`news（补配图）: ${old.articles.filter(a => a.image).length}/${old.articles.length} 篇有图`);
     process.exit(0);
   }
   const on = cfg.sources.filter(s => s.enabled !== false);

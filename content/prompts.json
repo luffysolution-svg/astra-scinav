@@ -1,12 +1,12 @@
 {
-  "generated": "2026-09-30",
+  "generated": "2026-10-05",
   "repos": [
     {
       "repo": "f/prompts.chat",
       "name": "prompts.chat（原 Awesome ChatGPT Prompts）",
       "desc": "全球最大社区 Prompt 库，含审稿、综述、统计等学术角色",
-      "stars": 171617,
-      "updated": "2026-09-09",
+      "stars": 172051,
+      "updated": "2026-10-03",
       "license": "其他协议",
       "branch": "main",
       "licenseNote": "提示词 CC0"
@@ -15,7 +15,7 @@
       "repo": "dair-ai/Prompt-Engineering-Guide",
       "name": "Prompt Engineering Guide",
       "desc": "提示工程指南，含论文信息抽取、科学问答等示例",
-      "stars": 78727,
+      "stars": 78833,
       "updated": "2026-03-11",
       "license": "MIT",
       "branch": "main"
@@ -24,7 +24,7 @@
       "repo": "binary-husky/gpt_academic",
       "name": "GPT 学术优化",
       "desc": "学术向 LLM 交互工具，内置润色、互译、查语法等快捷 Prompt",
-      "stars": 71392,
+      "stars": 71407,
       "updated": "2026-01-25",
       "license": "GPL-3.0",
       "branch": "master"
@@ -33,7 +33,7 @@
       "repo": "PlexPt/awesome-chatgpt-prompts-zh",
       "name": "ChatGPT 中文调教指南",
       "desc": "中文 Prompt 合集，含论文润色、学术翻译等角色",
-      "stars": 62840,
+      "stars": 62960,
       "updated": "2026-04-28",
       "license": "MIT",
       "branch": "main"
@@ -42,7 +42,7 @@
       "repo": "Leey21/awesome-ai-research-writing",
       "name": "Awesome AI Research Writing",
       "desc": "AI 科研写作 Prompt 库，覆盖翻译润色与图表",
-      "stars": 34478,
+      "stars": 34551,
       "updated": "2026-08-19",
       "license": null,
       "branch": "main"
@@ -51,7 +51,7 @@
       "repo": "kaixindelele/ChatPaper",
       "name": "ChatPaper",
       "desc": "arXiv 论文总结、翻译、润色、审稿与审稿回复全流程工具",
-      "stars": 19880,
+      "stars": 19892,
       "updated": "2026-03-02",
       "license": "其他协议",
       "branch": "main",
@@ -70,7 +70,7 @@
       "repo": "ahmetbersoz/chatgpt-prompts-for-academic-writing",
       "name": "ChatGPT Prompts for Academic Writing",
       "desc": "按论文写作环节整理的英文学术 Prompt 清单",
-      "stars": 4958,
+      "stars": 4962,
       "updated": "2024-01-25",
       "license": null,
       "branch": "main"
@@ -79,7 +79,7 @@
       "repo": "zLanqing/codex-claude-academic-skills",
       "name": "Codex/Claude 学术 Skills",
       "desc": "面向文献阅读、论文写作与科学计算的 Agent Skills",
-      "stars": 4417,
+      "stars": 4514,
       "updated": "2026-05-14",
       "license": "MIT",
       "branch": "main"
@@ -88,7 +88,7 @@
       "repo": "Kiteflyingee/academic_prompts",
       "name": "学术常用 Prompts",
       "desc": "中文学术场景常用 Prompt 汇总",
-      "stars": 970,
+      "stars": 971,
       "updated": "2026-01-18",
       "license": null,
       "branch": "main"
@@ -106,7 +106,7 @@
       "repo": "alfonso0512/research-writing-skill",
       "name": "科研论文写作助手",
       "desc": "30 个中英 Prompt 模板覆盖论文写作全流程",
-      "stars": 471,
+      "stars": 481,
       "updated": "2026-07-15",
       "license": "MIT",
       "branch": "main"
@@ -115,8 +115,8 @@
       "repo": "toddmaustin/research-prompts",
       "name": "Research Prompts",
       "desc": "密歇根大学教授整理的科研工作流 Prompt",
-      "stars": 208,
-      "updated": "2026-06-05",
+      "stars": 214,
+      "updated": "2026-10-02",
       "license": "Apache-2.0",
       "branch": "main"
     },
@@ -124,7 +124,7 @@
       "repo": "STRYXTN/awesome-ai-research-writing",
       "name": "AI 论文写作 Prompt 模板库",
       "desc": "顶尖研究机构风格的论文写作 Prompt 与 Skills",
-      "stars": 178,
+      "stars": 179,
       "updated": "2026-04-13",
       "license": null,
       "branch": "main"

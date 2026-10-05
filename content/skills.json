@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-02",
+  "generated": "2026-10-05",
   "categories": [
     {
       "id": "collections",
@@ -10,8 +10,8 @@
           "repo": "anthropics/skills",
           "name": "Anthropic 官方 Skills",
           "desc": "官方技能库，含 Word/PDF/Excel/PPT 文档处理",
-          "stars": 179005,
-          "updated": "2026-09-29",
+          "stars": 179683,
+          "updated": "2026-10-03",
           "license": null,
           "install": [
             {
@@ -61,8 +61,8 @@
           "repo": "Imbad0202/academic-research-skills",
           "name": "Academic Research Skills",
           "desc": "研究→写作→评审→修订→定稿的学术全流程技能套件",
-          "stars": 49902,
-          "updated": "2026-09-29",
+          "stars": 50417,
+          "updated": "2026-10-03",
           "license": "其他协议",
           "install": [
             {
@@ -102,8 +102,8 @@
           "repo": "K-Dense-AI/scientific-agent-skills",
           "name": "Scientific Agent Skills",
           "desc": "160+ 科学技能大合集，覆盖生信、化学、统计、写作与数据库",
-          "stars": 47133,
-          "updated": "2026-09-29",
+          "stars": 47616,
+          "updated": "2026-10-01",
           "license": "MIT",
           "install": [
             {
@@ -183,7 +183,7 @@
           "repo": "Galaxy-Dawn/claude-scholar",
           "name": "Claude Scholar",
           "desc": "CS/AI 科研助手，含 Zotero/Obsidian 工作流",
-          "stars": 5657,
+          "stars": 5663,
           "updated": "2026-09-23",
           "license": "MIT",
           "install": [
@@ -245,7 +245,7 @@
           "repo": "zLanqing/codex-claude-academic-skills",
           "name": "Codex-Claude 学术三件套",
           "desc": "文献阅读、论文写作、科学计算三大技能，中文友好",
-          "stars": 4417,
+          "stars": 4514,
           "updated": "2026-05-14",
           "license": "MIT",
           "install": [
@@ -281,7 +281,7 @@
           "repo": "google-deepmind/science-skills",
           "name": "GDM Science Skills",
           "desc": "DeepMind 出品，接入 AlphaFold、UniProt 等数据库",
-          "stars": 3171,
+          "stars": 3200,
           "updated": "2026-09-15",
           "license": "Apache-2.0",
           "install": [
@@ -353,7 +353,7 @@
           "repo": "LeonChaoX/qinyan-academic-skills",
           "name": "沁言学术 Skills",
           "desc": "182 个多语言学术技能，按中文科研流程分类",
-          "stars": 930,
+          "stars": 932,
           "updated": "2026-07-20",
           "license": "MIT",
           "install": [
@@ -426,7 +426,7 @@
           "repo": "Weizhena/Deep-Research-skills",
           "name": "Deep Research Skills",
           "desc": "带人工把关的结构化深度调研技能，含中英文版",
-          "stars": 2267,
+          "stars": 2299,
           "updated": "2026-08-23",
           "license": "MIT",
           "install": [
@@ -450,7 +450,7 @@
           "repo": "zsyggg/paper-craft-skills",
           "name": "Paper Craft Skills",
           "desc": "论文深度解读、漫画化讲解与汇报幻灯片",
-          "stars": 1238,
+          "stars": 1251,
           "updated": "2026-05-29",
           "license": null,
           "install": [
@@ -482,8 +482,8 @@
           "repo": "917Dhj/DeepPaperNote",
           "name": "DeepPaperNote",
           "desc": "单篇论文深度精读，生成高质量结构化笔记",
-          "stars": 1133,
-          "updated": "2026-09-28",
+          "stars": 1153,
+          "updated": "2026-10-04",
           "license": "MIT",
           "install": [
             {
@@ -509,8 +509,8 @@
           "repo": "Rimagination/scansci-pdf",
           "name": "ScanSci PDF",
           "desc": "论文检索、全文获取与引文导出，支持开放获取和已有机构访问权限",
-          "stars": 1052,
-          "updated": "2026-10-01",
+          "stars": 1067,
+          "updated": "2026-10-04",
           "license": "Apache-2.0",
           "install": [
             {
@@ -536,7 +536,7 @@
           "repo": "cookjohn/cnki-skills",
           "name": "CNKI Skills",
           "desc": "中国知网检索、期刊浏览、下载 PDF 与导出 Zotero",
-          "stars": 969,
+          "stars": 976,
           "updated": "2026-03-13",
           "license": null,
           "install": [
@@ -587,7 +587,7 @@
           "repo": "cookjohn/gs-skills",
           "name": "Google Scholar Skills",
           "desc": "谷歌学术检索、引用追踪、全文获取与 Zotero 导出",
-          "stars": 518,
+          "stars": 522,
           "updated": "2026-03-13",
           "license": "MIT",
           "install": [
@@ -628,7 +628,7 @@
           "repo": "Rimagination/instsci",
           "name": "InstSci",
           "desc": "开放获取优先，复用用户机构访问权限，支持批量论文下载与 MCP",
-          "stars": 368,
+          "stars": 371,
           "updated": "2026-09-29",
           "license": "MIT",
           "install": [
@@ -650,8 +650,8 @@
           "repo": "wp-a/nature-academic-search",
           "name": "Nature Academic Search",
           "desc": "跨 CrossRef/OpenAlex 等源的学术检索 Skill + MCP",
-          "stars": 282,
-          "updated": "2026-09-16",
+          "stars": 292,
+          "updated": "2026-10-01",
           "license": "MIT",
           "install": [
             {
@@ -677,8 +677,8 @@
           "repo": "Yuan1z0825/nature-skills",
           "name": "Nature Skills",
           "desc": "对标 Nature 的学术表达、润色、审稿回复与科研绘图",
-          "stars": 45256,
-          "updated": "2026-09-28",
+          "stars": 45908,
+          "updated": "2026-10-05",
           "license": "Apache-2.0",
           "install": [
             {
@@ -753,7 +753,7 @@
           "repo": "Master-cai/Research-Paper-Writing-Skills",
           "name": "Research Paper Writing",
           "desc": "改编自彭思达教授经验的 ML/CV/NLP 论文写作技能",
-          "stars": 7179,
+          "stars": 7250,
           "updated": "2026-06-23",
           "license": "MIT",
           "install": [
@@ -779,7 +779,7 @@
           "repo": "Norman-bury/research-writing-skill",
           "name": "科研写作助手",
           "desc": "中文科研写作助手，支持 Claude Code/Codex/Cursor",
-          "stars": 3288,
+          "stars": 3314,
           "updated": "2026-06-10",
           "license": "MIT",
           "install": [
@@ -795,7 +795,7 @@
           "repo": "Spark-To-Paper-Skills/paperjury",
           "name": "PaperJury",
           "desc": "投稿前 AI 审稿压力测试：评审、核验与修订",
-          "stars": 1211,
+          "stars": 1217,
           "updated": "2026-08-14",
           "license": "MIT",
           "install": [
@@ -815,7 +815,7 @@
           "repo": "labarba/sciwrite",
           "name": "SciWrite",
           "desc": "基于《Writing in the Sciences》的稿件审阅",
-          "stars": 844,
+          "stars": 850,
           "updated": "2026-08-03",
           "license": "其他协议",
           "install": [
@@ -835,8 +835,8 @@
           "repo": "ndpvt-web/latex-document-skill",
           "name": "LaTeX Document Skill",
           "desc": "通用 LaTeX 文档技能，27 个模板与脚本",
-          "stars": 771,
-          "updated": "2026-09-24",
+          "stars": 777,
+          "updated": "2026-10-03",
           "license": null,
           "install": [
             {
@@ -855,8 +855,8 @@
           "repo": "Boom5426/Nature-Paper-Skills",
           "name": "Nature Paper Skills",
           "desc": "Nature 风格稿件起草、修改、审计与重投全流程",
-          "stars": 517,
-          "updated": "2026-09-25",
+          "stars": 546,
+          "updated": "2026-10-02",
           "license": "MIT",
           "install": [
             {
@@ -912,7 +912,7 @@
           "repo": "bahayonghang/academic-writing-skills",
           "name": "Academic Writing Skills",
           "desc": "论文后期工具：格式校验、语法润色、中英文 LaTeX 学位论文",
-          "stars": 489,
+          "stars": 490,
           "updated": "2026-09-28",
           "license": null,
           "install": [
@@ -966,7 +966,7 @@
           "repo": "ChenLiu-1996/figures4papers",
           "name": "figures4papers",
           "desc": "顶会论文高质量 Python 绘图脚本，附科研绘图 Skill",
-          "stars": 7806,
+          "stars": 8028,
           "updated": "2026-09-26",
           "license": "其他协议",
           "install": [
@@ -992,7 +992,7 @@
           "repo": "jihe520/sci-box",
           "name": "sci-box",
           "desc": "科研绘图复刻模板与论文示意图，输出可编辑矢量图",
-          "stars": 240,
+          "stars": 245,
           "updated": "2026-08-17",
           "license": null,
           "install": [
@@ -1008,7 +1008,7 @@
           "repo": "Dsadd4/AgentFigureGallery",
           "name": "Agent Figure Gallery",
           "desc": "即插即用的科研绘图技能，附参考图库",
-          "stars": 158,
+          "stars": 159,
           "updated": "2026-09-05",
           "license": "MIT",
           "install": [
@@ -1028,7 +1028,7 @@
           "repo": "Rimagination/easyplot",
           "name": "EasyPlot",
           "desc": "R / Python 科研数据分析与出版级绘图，含统计检验、多面板布局与投稿检查",
-          "stars": 67,
+          "stars": 71,
           "updated": "2026-09-29",
           "license": "MIT",
           "install": [
@@ -1057,7 +1057,7 @@
           "repo": "aipoch/medical-research-skills",
           "name": "Medical Research Skills",
           "desc": "数百个医学科研技能：方案设计、数据分析、论文写作",
-          "stars": 1939,
+          "stars": 1964,
           "updated": "2026-09-17",
           "license": "MIT",
           "install": [
@@ -1094,8 +1094,8 @@
           "repo": "NVIDIA-BioNeMo/bionemo-agent-toolkit",
           "name": "BioNeMo Agent Toolkit",
           "desc": "NVIDIA BioNeMo 生命科学技能：结构预测、分子生成",
-          "stars": 469,
-          "updated": "2026-09-30",
+          "stars": 476,
+          "updated": "2026-10-03",
           "license": "其他协议",
           "install": [
             {
@@ -1150,7 +1150,7 @@
           "repo": "jaechang-hits/SciAgent-Skills",
           "name": "SciAgent Skills",
           "desc": "197 个生信与生命科学技能，BixBench 高分",
-          "stars": 368,
+          "stars": 369,
           "updated": "2026-09-29",
           "license": "其他协议",
           "install": [
@@ -1206,8 +1206,8 @@
           "repo": "Aperivue/medsci-skills",
           "name": "MedSci Skills",
           "desc": "医学研究全链条：检索、统计、报告规范、投稿",
-          "stars": 320,
-          "updated": "2026-09-30",
+          "stars": 326,
+          "updated": "2026-10-04",
           "license": "MIT",
           "install": [
             {
@@ -1288,7 +1288,7 @@
           "repo": "jinzhezenggroup/computational-chemistry-agent-skills",
           "name": "计算化学 Agent Skills",
           "desc": "DFT、分子动力学、机器学习势函数等计算化学技能",
-          "stars": 147,
+          "stars": 148,
           "updated": "2026-09-28",
           "license": "LGPL-3.0",
           "install": [
@@ -1349,7 +1349,7 @@
           "repo": "HeshamFS/materials-simulation-skills",
           "name": "Materials Simulation Skills",
           "desc": "计算材料科学：数值稳定性、求解器、网格与 HPC",
-          "stars": 68,
+          "stars": 69,
           "updated": "2026-06-25",
           "license": "Apache-2.0",
           "install": [
@@ -1400,7 +1400,7 @@
           "repo": "InternScience/ChemClaw",
           "name": "ChemClaw",
           "desc": "化学原生技能库：谱图模拟、性质预测、结构转换",
-          "stars": 52,
+          "stars": 53,
           "updated": "2026-03-31",
           "license": "MIT",
           "install": [
@@ -1468,7 +1468,7 @@
           "repo": "Orchestra-Research/AI-Research-SKILLs",
           "name": "AI Research Skills",
           "desc": "AI 研究与工程技能库：训练、微调、评测、论文写作",
-          "stars": 13132,
+          "stars": 13248,
           "updated": "2026-06-16",
           "license": "MIT",
           "install": [
@@ -1528,8 +1528,8 @@
           "repo": "brycewang-stanford/Auto-Empirical-Research-Skills",
           "name": "Auto Empirical Research Skills",
           "desc": "社科实证研究技能大合集，Python/Stata/R 全流程",
-          "stars": 4438,
-          "updated": "2026-09-28",
+          "stars": 4478,
+          "updated": "2026-09-30",
           "license": "其他协议",
           "install": [
             {
@@ -1571,8 +1571,8 @@
           "repo": "54yyyu/zotero-mcp",
           "name": "Zotero MCP",
           "desc": "将 Zotero 文献库接入 Claude 等 AI 助手的 MCP 服务",
-          "stars": 5198,
-          "updated": "2026-09-24",
+          "stars": 5242,
+          "updated": "2026-10-04",
           "license": "MIT",
           "install": [
             {
@@ -1591,7 +1591,7 @@
           "repo": "K-Dense-AI/claude-skills-mcp",
           "name": "Claude Skills MCP",
           "desc": "以向量检索方式按需调用科学技能的 MCP 服务",
-          "stars": 406,
+          "stars": 407,
           "updated": "2026-07-20",
           "license": "Apache-2.0",
           "install": [
@@ -1614,7 +1614,7 @@
           "repo": "ComposioHQ/awesome-claude-skills",
           "name": "Awesome Claude Skills (Composio)",
           "desc": "综合 Claude Skills 精选清单",
-          "stars": 75895,
+          "stars": 76514,
           "updated": "2026-09-18",
           "license": null,
           "install": [],
@@ -1645,7 +1645,7 @@
           "repo": "BioTender-max/awesome-bio-agent-skills",
           "name": "Awesome Bio Agent Skills",
           "desc": "生物医学研究 Agent 技能精选清单",
-          "stars": 193,
+          "stars": 196,
           "updated": "2026-07-01",
           "license": "其他协议",
           "install": [
@@ -1661,8 +1661,8 @@
           "repo": "kael-odin/awesome-academic-research-skills",
           "name": "学术科研 Skill 排行榜",
           "desc": "面向中文用户的科研 Skill 每日自动排行榜",
-          "stars": 119,
-          "updated": "2026-09-29",
+          "stars": 125,
+          "updated": "2026-10-04",
           "license": "MIT",
           "install": [],
           "doc": true,
@@ -1672,7 +1672,7 @@
           "repo": "GoekeLab/awesome-genomic-skills",
           "name": "Awesome Genomic Skills",
           "desc": "基因组学与生信技能、MCP 与基准清单",
-          "stars": 114,
+          "stars": 118,
           "updated": "2026-09-22",
           "license": "CC0-1.0",
           "install": [],

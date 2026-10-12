@@ -579,40 +579,50 @@
   "added": "2026-09-29"
  },
  "https://core.ac.uk/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://unpaywall.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.academia.edu/": {
   "added": "2026-09-29"
  },
  "http://www.paper.edu.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://chinaxiv.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.researchsquare.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.preprints.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://osf.io/preprints/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://hal.science/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.scielo.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.sciencedirect.com/": {
   "added": "2026-09-29"
  },
  "https://www.nature.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.science.org/": {
   "added": "2026-09-29"
@@ -630,76 +640,95 @@
   "added": "2026-09-29"
  },
  "https://link.springer.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://ieeexplore.ieee.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.tandfonline.com/": {
   "added": "2026-09-29"
  },
  "https://www.mdpi.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://plos.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.pnas.org/": {
   "added": "2026-09-29"
  },
  "https://journals.aps.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://iopscience.iop.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://academic.oup.com/": {
   "added": "2026-09-29"
  },
  "https://www.cambridge.org/core": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.sciengine.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.letpub.com.cn/index.php?page=journalapp": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ablesci.com/journal": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://jcr.clarivate.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.scimagojr.com/": {
   "added": "2026-09-29"
  },
  "https://www.fenqubiao.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "https://journalfinder.elsevier.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://journalsuggester.springer.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://mjl.clarivate.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.sherpa.ac.uk/romeo/": {
   "added": "2026-09-29"
  },
  "https://retractionwatch.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://sci-hub.st/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://tool.yovisun.com/scihub/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://zh.annas-archive.gd/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://z-library.sk/": {
   "added": "2026-09-29"
@@ -708,325 +737,420 @@
   "added": "2026-09-29"
  },
  "http://www.wytsg.com/e/action/ListInfo/?classid=62": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.pidantuan.com/": {
   "added": "2026-09-29"
  },
  "https://jbiaojerry.github.io/ebook-treasure-chest/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://openaccessbutton.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.nlc.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.zjlib.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "http://www.whlib.org.cn/": {
   "added": "2026-09-29"
  },
  "http://www.gxlib.org.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "http://www.gzlib.com.cn/": {
   "added": "2026-09-29"
  },
  "https://wenku.baidu.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.doc88.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.docin.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://ishare.iask.sina.com.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "http://www.calis.edu.cn/": {
   "added": "2026-09-29"
  },
  "https://archive.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.hathitrust.org/": {
   "added": "2026-09-29"
  },
  "https://cn.overleaf.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://oleafly.com/zh-cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://typst.app/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.zotero.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://endnote.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.grammarly.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://quillbot.com/": {
   "added": "2026-09-29"
  },
  "https://www.writefull.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "http://www.1checker.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://linggle.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.phrasebank.manchester.ac.uk/": {
   "added": "2026-09-29"
  },
  "https://www.zerogpt.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.mendeley.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.inoteexpress.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.jabref.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://zbib.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://languagetool.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.deepl.com/translator": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://immersivetranslate.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://pdf2zh.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://translate.google.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://fanyi.baidu.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://cidian.youdao.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://cn.bing.com/dict": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://dict.cnki.net/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "https://fanyi.caiyunapp.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://niutrans.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://fanyi.qq.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://dictionary.cambridge.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.termonline.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://mineru.net/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://doc2x.noedgeai.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://aistudio.baidu.com/paddleocr": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.textin.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://snip.mathpix.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ilovepdf.com/zh-cn": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://smallpdf.com/cn": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://tools.pdf24.org/zh/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://lookscanned.io/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://markdown.com.cn/editor": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://aippt.wps.cn/aippt/convert-ppt/home": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://simpletex.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.stirlingpdf.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://cloudconvert.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://pubchem.ncbi.nlm.nih.gov/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.reaxys.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://scifinder-n.cas.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.chemspider.com/": {
   "added": "2026-09-29"
  },
  "https://webbook.nist.gov/chemistry/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://next-gen.materialsproject.org/": {
   "added": "2026-09-29"
  },
  "https://www.ccdc.cam.ac.uk/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.crystallography.net/cod/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.drugfuture.com/chemdata/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://dianshi.opendatalab.org.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.chemcalc.org/": {
   "added": "2026-09-29"
  },
  "https://ptable.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://icsd.products.fiz-karlsruhe.de/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://aflowlib.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://oqmd.org/": {
   "added": "2026-09-29"
  },
  "https://nomad-lab.eu/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://jarvis.nist.gov/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://materials.springer.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ebi.ac.uk/chembl/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://commonchemistry.cas.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://sdbs.db.aist.go.jp/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://srdata.nist.gov/xps/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://molview.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://jp-minerals.org/vesta/en/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.crystalimpact.com/diamond/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://avogadro.cc/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.pymol.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.blender.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://revvitysignals.com/products/research/chemdraw": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.kingdraw.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.cgl.ucsf.edu/chimerax/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://molstar.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ks.uiuc.edu/Research/vmd/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ovito.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ncbi.nlm.nih.gov/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.rcsb.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.uniprot.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://alphafold.ebi.ac.uk/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://datasetsearch.research.google.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://zenodo.org/": {
   "added": "2026-09-29"
  },
  "https://figshare.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.kaggle.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.ensembl.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://genome.ucsc.edu/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://www.kegg.jp/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://reactome.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://string-db.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-12"
  },
  "https://ngdc.cncb.ac.cn/": {
   "added": "2026-09-29"

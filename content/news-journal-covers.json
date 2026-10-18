@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-15T00:24:30.472Z",
+  "generated": "2026-10-18T23:58:30.976Z",
   "covers": [
     {
       "journal": "Nature Astronomy",
@@ -147,17 +147,17 @@
     },
     {
       "journal": "Physical Review Letters",
-      "image": "news-journals/prl-32f197d4f7.webp",
+      "image": "news-journals/prl-68a7b587b0.webp",
       "source": "https://journals.aps.org/prl/",
-      "imageUrl": "https://cdn.journals.aps.org/test/63f10657-a61e-4c4f-a007-88f0b24b19cd/cover-image.png",
+      "imageUrl": "https://cdn.journals.aps.org/test/8fa92d3e-3524-4bd2-b2a8-c3a1306ad316/cover-image.png",
       "label": "官网封面选图",
       "kind": "art"
     },
     {
       "journal": "Reviews of Modern Physics",
-      "image": "news-journals/rmp-5bda659eb5.webp",
+      "image": "news-journals/rmp-73445ffecb.webp",
       "source": "https://journals.aps.org/rmp/",
-      "imageUrl": "https://cdn.journals.aps.org/test/b0ec91f1-5a25-4c92-97d8-191ffd162800/RMPkey-image.png",
+      "imageUrl": "https://cdn.journals.aps.org/test/97e9133f-d5b8-48bf-82b5-d17eb307423c/cover_RMP_current.png",
       "label": "官网封面选图",
       "kind": "art"
     }

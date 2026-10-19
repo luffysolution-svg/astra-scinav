@@ -1156,40 +1156,50 @@
   "added": "2026-09-29"
  },
  "https://datadryad.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://data.mendeley.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://dataverse.harvard.edu/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.scidb.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://patents.google.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://worldwide.espacenet.com/": {
   "added": "2026-09-29"
  },
  "http://www.soopat.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://pss-system.cponline.cnipa.gov.cn/": {
   "added": "2026-09-29"
  },
  "https://www.drugfuture.com/cnpat/cn_patent.asp": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.drugfuture.com/uspat/us_patent.asp": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.drugfuture.com/eppat/patent.asp": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://openstd.samr.gov.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://www.csres.com/": {
   "added": "2026-09-29"
@@ -1198,76 +1208,97 @@
   "added": "2026-09-29"
  },
  "https://www.sacinfo.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://www.bzko.com/": {
   "added": "2026-09-29"
  },
  "https://patentscope.wipo.int/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.uspto.gov/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://std.samr.gov.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.nsfc.gov.cn/": {
   "added": "2026-09-29"
  },
  "https://kd.nsfc.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://fz.people.com.cn/skygb/sk/index.php/Index/index": {
   "added": "2026-09-29"
  },
  "https://www.funresearch.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.most.gov.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://service.most.gov.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://reporter.nih.gov/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.nsf.gov/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.biorender.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.figdraw.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://app.diagrams.net/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://excalidraw.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.tldraw.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.mermaidchart.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://markmap.js.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.edrawmax.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.edraw.ai/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://ai-draw-nexus.aizhi.site/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.vectorizer.io/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://bioicons.com/": {
   "added": "2026-09-29"
@@ -1276,64 +1307,80 @@
   "added": "2026-09-29"
  },
  "https://www.originlab.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.graphpad.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://imagej.net/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://inkscape.org/": {
   "added": "2026-09-29"
  },
  "https://automeris.io/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://smart.servier.com/": {
   "added": "2026-09-29"
  },
  "https://hiplot.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.bioinformatics.com.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.canva.cn/": {
   "added": "2026-09-29"
  },
  "https://www.figma.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://open-design.ai/zh/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://coolors.co/": {
   "added": "2026-09-29"
  },
  "https://mycolor.space/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://flatuicolors.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://color.adobe.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://colorbrewer2.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.remove.bg/zh": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://tinypng.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://ezgif.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.photopea.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.iconfont.cn/": {
   "added": "2026-09-29"
@@ -1342,217 +1389,282 @@
   "added": "2026-09-29"
  },
  "https://orcid.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://www.globalauthorid.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://papers.cnki.net/CAuthor": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "https://xueshu.baidu.com/usercenter/data/authorchannel?cmd=frontpage": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://muchong.com/bbs": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://portal.dxy.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.sciencenet.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.zhihu.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.jianshu.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://pubpeer.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.gaoxiaojob.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.icourse163.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.xuetangx.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://open.163.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.coursera.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.edx.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://ocw.mit.edu/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.khanacademy.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://coursegraph.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.smartedu.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.icourses.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.deeplearning.ai/": {
   "added": "2026-09-29"
  },
  "https://openstax.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://github.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://stackoverflow.com/": {
   "added": "2026-09-29"
  },
  "https://colab.research.google.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.netlify.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://vercel.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://dash.cloudflare.com/": {
   "added": "2026-09-29"
  },
  "https://www.aliyun.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.semanticscholar.org/product/api": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://dev.springernature.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://dev.elsevier.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.crossref.org/documentation/retrieve-metadata/rest-api/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://infini-cloud.net/en/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://gitee.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.autodl.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://mirrors.tuna.tsinghua.edu.cn/": {
   "added": "2026-09-29"
  },
  "https://www.67tool.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.ip138.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://ip.net.coffee/": {
-  "added": "2026-10-02"
+  "added": "2026-10-02",
+  "checked": "2026-10-19"
  },
  "https://2fa.fan/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://2fa.live/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://temp-mail.org/": {
   "added": "2026-09-29"
  },
  "https://tejaswigowda.com/ffmpeg-webCLI/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://appstoreprice.org/zh": {
   "added": "2026-09-29"
  },
  "https://search-sharp.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://zh.ifixit.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "http://www.757dy.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://fmhy.net/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.tgzhidao.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "https://vpn.314500.xyz/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.wolframalpha.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.desmos.com/calculator": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.wenshushu.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://nav.edumails.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://education.github.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://huiyuan.edu.gr/zh-CN": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.umgc.edu/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.liberty.edu/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.google.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.baidu.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.bing.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.so.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://mail.google.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://outlook.live.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://mail.qq.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://mail.163.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://mail.126.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://mail.sina.com.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.mail.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://unsplash.com/": {
   "added": "2026-09-29"
@@ -1564,43 +1676,52 @@
   "added": "2026-09-29"
  },
  "https://www.pinterest.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://wallroom.io/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://4kwallpapers.com/": {
   "added": "2026-09-29"
  },
  "https://www.2dwallpapers.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "fails": 1
  },
  "https://cobalt.tools/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://greenvideo.cc/": {
   "added": "2026-09-29"
  },
  "https://www.parsevideo.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://dyxhsdownloader.com/": {
   "added": "2026-09-29"
  },
  "https://tiktokio.bio/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.gequbao.com/": {
   "added": "2026-09-29"
  },
  "https://quanpan.xyz/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.ghxi.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.omoc.top/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-19"
  },
  "https://www.gamer520.com/": {
   "added": "2026-09-29"

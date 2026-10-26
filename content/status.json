@@ -1727,187 +1727,247 @@
   "added": "2026-09-29"
  },
  "https://mycomic.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.wikipedia.org/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.bilibili.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.youtube.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://v.qq.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.iqiyi.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.youku.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.jd.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.taobao.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.amazon.cn/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.vip.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.58.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.ke.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "https://www.anjuke.com/": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:anthropics/skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Imbad0202/academic-research-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:K-Dense-AI/scientific-agent-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Galaxy-Dawn/claude-scholar": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:zLanqing/codex-claude-academic-skills": {
   "added": "2026-09-29"
  },
  "s:google-deepmind/science-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:LeonChaoX/qinyan-academic-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Weizhena/Deep-Research-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:zsyggg/paper-craft-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:917Dhj/DeepPaperNote": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Rimagination/scansci-pdf": {
-  "added": "2026-10-02"
+  "added": "2026-10-02",
+  "checked": "2026-10-26"
  },
  "s:cookjohn/cnki-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:cookjohn/gs-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Rimagination/instsci": {
-  "added": "2026-10-02"
+  "added": "2026-10-02",
+  "checked": "2026-10-26"
  },
  "s:wp-a/nature-academic-search": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Yuan1z0825/nature-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Master-cai/Research-Paper-Writing-Skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Norman-bury/research-writing-skill": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Spark-To-Paper-Skills/paperjury": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:labarba/sciwrite": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:ndpvt-web/latex-document-skill": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Boom5426/Nature-Paper-Skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:bahayonghang/academic-writing-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:ChenLiu-1996/figures4papers": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:jihe520/sci-box": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Dsadd4/AgentFigureGallery": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Rimagination/easyplot": {
-  "added": "2026-10-02"
+  "added": "2026-10-02",
+  "checked": "2026-10-26"
  },
  "s:aipoch/medical-research-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:NVIDIA-BioNeMo/bionemo-agent-toolkit": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:jaechang-hits/SciAgent-Skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Aperivue/medsci-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:jinzhezenggroup/computational-chemistry-agent-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:HeshamFS/materials-simulation-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:InternScience/ChemClaw": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:Orchestra-Research/AI-Research-SKILLs": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:brycewang-stanford/Auto-Empirical-Research-Skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:54yyyu/zotero-mcp": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:K-Dense-AI/claude-skills-mcp": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:ComposioHQ/awesome-claude-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:InternScience/Awesome-Scientific-Skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:BioTender-max/awesome-bio-agent-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:kael-odin/awesome-academic-research-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "s:GoekeLab/awesome-genomic-skills": {
-  "added": "2026-09-29"
+  "added": "2026-09-29",
+  "checked": "2026-10-26"
  },
  "p:literature-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:literature-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:literature-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:literature-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:literature-5": {
   "added": "2026-09-30"
@@ -1922,37 +1982,48 @@
   "added": "2026-09-30"
  },
  "p:literature-9": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:literature-10": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:literature-11": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-5": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-6": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-7": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-8": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:writing-9": {
   "added": "2026-09-30"
@@ -1967,31 +2038,40 @@
   "added": "2026-09-30"
  },
  "p:polish-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-5": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-6": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-7": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-8": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-9": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-10": {
   "added": "2026-09-30"
@@ -2006,34 +2086,43 @@
   "added": "2026-09-30"
  },
  "p:polish-14": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:polish-15": {
   "added": "2026-09-30"
  },
  "p:polish-16": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-5": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-6": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-7": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:review-8": {
   "added": "2026-09-30"
@@ -2048,10 +2137,12 @@
   "added": "2026-09-30"
  },
  "p:data-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:data-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:data-3": {
   "added": "2026-09-30"
@@ -2060,127 +2151,166 @@
   "added": "2026-09-30"
  },
  "p:grant-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:grant-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:grant-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:talk-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:talk-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:talk-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:talk-4": {
   "added": "2026-09-30"
  },
  "p:assistant-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:assistant-2": {
   "added": "2026-09-30"
  },
  "p:assistant-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:assistant-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "p:assistant-5": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-5": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-6": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-7": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-8": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-9": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-10": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-11": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-12": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-13": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-14": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-15": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-16": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-17": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-18": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-19": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-20": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-21": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-22": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-23": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:origin-24": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:python-1": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:python-2": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:python-3": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:python-4": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:python-5": {
-  "added": "2026-09-30"
+  "added": "2026-09-30",
+  "checked": "2026-10-26"
  },
  "f:python-6": {
   "added": "2026-09-30"

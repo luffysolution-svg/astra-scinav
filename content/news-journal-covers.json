@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T00:29:52.189Z",
+  "generated": "2026-11-04T02:05:30.305Z",
   "covers": [
     {
       "journal": "Nature Astronomy",
@@ -19,42 +19,42 @@
     },
     {
       "journal": "Nature Cancer",
-      "image": "news-journals/natcancer-fafa9f7f92.webp",
+      "image": "news-journals/natcancer-76958f989d.webp",
       "source": "https://www.nature.com/natcancer",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/43018/7/9?q=95",
-      "label": "Volume 7 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/43018/7/10?q=95",
+      "label": "Volume 7 Issue 10",
       "kind": "issue"
     },
     {
       "journal": "Nature Catalysis",
-      "image": "news-journals/natcatal-ac49f15b6a.webp",
+      "image": "news-journals/natcatal-a6e5a233af.webp",
       "source": "https://www.nature.com/natcatal",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41929/9/9?q=95",
-      "label": "Volume 9 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41929/9/10?q=95",
+      "label": "Volume 9 Issue 10",
       "kind": "issue"
     },
     {
       "journal": "Nature Chemistry",
-      "image": "news-journals/nchem-5489901811.webp",
+      "image": "news-journals/nchem-af972524f5.webp",
       "source": "https://www.nature.com/nchem",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41557/18/10?q=95",
-      "label": "Volume 18 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41557/18/11?q=95",
+      "label": "Volume 18 Issue 11",
       "kind": "issue"
     },
     {
       "journal": "Nature Energy",
-      "image": "news-journals/nenergy-0ba1e182b4.webp",
+      "image": "news-journals/nenergy-e9ced90c78.webp",
       "source": "https://www.nature.com/nenergy",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41560/11/9?q=95",
-      "label": "Volume 11 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41560/11/10?q=95",
+      "label": "Volume 11 Issue 10",
       "kind": "issue"
     },
     {
       "journal": "Nature Immunology",
-      "image": "news-journals/ni-ae1c2c041e.webp",
+      "image": "news-journals/ni-c0d1a922a4.webp",
       "source": "https://www.nature.com/ni",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41590/27/10?q=95",
-      "label": "Volume 27 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41590/27/11?q=95",
+      "label": "Volume 27 Issue 11",
       "kind": "issue"
     },
     {
@@ -83,10 +83,10 @@
     },
     {
       "journal": "Nature Nanotechnology",
-      "image": "news-journals/nnano-6c0693dc5c.webp",
+      "image": "news-journals/nnano-3f27777d0c.webp",
       "source": "https://www.nature.com/nnano",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41565/21/9?q=95",
-      "label": "Volume 21 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41565/21/10?q=95",
+      "label": "Volume 21 Issue 10",
       "kind": "issue"
     },
     {
@@ -107,42 +107,42 @@
     },
     {
       "journal": "Nature Reviews Cancer",
-      "image": "news-journals/nrc-a929584be5.webp",
+      "image": "news-journals/nrc-1fc62416ba.webp",
       "source": "https://www.nature.com/nrc",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41568/26/10?q=95",
-      "label": "Volume 26 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41568/26/11?q=95",
+      "label": "Volume 26 Issue 11",
       "kind": "issue"
     },
     {
       "journal": "Nature Reviews Drug Discovery",
-      "image": "news-journals/nrd-5183ac10f2.webp",
+      "image": "news-journals/nrd-3f096e68c2.webp",
       "source": "https://www.nature.com/nrd",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41573/25/10?q=95",
-      "label": "Volume 25 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41573/25/11?q=95",
+      "label": "Volume 25 Issue 11",
       "kind": "issue"
     },
     {
       "journal": "Nature Reviews Immunology",
-      "image": "news-journals/nri-dae49a3430.webp",
+      "image": "news-journals/nri-ea7388ef7f.webp",
       "source": "https://www.nature.com/nri",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41577/26/10?q=95",
-      "label": "Volume 26 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41577/26/11?q=95",
+      "label": "Volume 26 Issue 11",
       "kind": "issue"
     },
     {
       "journal": "Nature Reviews Microbiology",
-      "image": "news-journals/nrmicro-f50e520317.webp",
+      "image": "news-journals/nrmicro-a814d5c923.webp",
       "source": "https://www.nature.com/nrmicro",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41579/24/10?q=95",
-      "label": "Volume 24 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41579/24/11?q=95",
+      "label": "Volume 24 Issue 11",
       "kind": "issue"
     },
     {
       "journal": "Nature Synthesis",
-      "image": "news-journals/natsynth-6d8a40e0e7.webp",
+      "image": "news-journals/natsynth-b9c0317f06.webp",
       "source": "https://www.nature.com/natsynth",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/44160/5/9?q=95",
-      "label": "Volume 5 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/44160/5/10?q=95",
+      "label": "Volume 5 Issue 10",
       "kind": "issue"
     },
     {

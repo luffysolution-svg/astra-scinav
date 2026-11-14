@@ -1,20 +1,20 @@
 {
-  "generated": "2026-11-12T03:00:34.619Z",
+  "generated": "2026-11-14T02:16:36.160Z",
   "covers": [
     {
       "journal": "Nature Astronomy",
-      "image": "news-journals/natastron-7af2ceb01a.webp",
+      "image": "news-journals/natastron-8a6fcb69f3.webp",
       "source": "https://www.nature.com/natastron",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41550/10/9?q=95",
-      "label": "Volume 10 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41550/10/10?q=95",
+      "label": "Volume 10 Issue 10",
       "kind": "issue"
     },
     {
       "journal": "Nature Biotechnology",
-      "image": "news-journals/nbt-c49dc5b4fe.webp",
+      "image": "news-journals/nbt-7f36aad52f.webp",
       "source": "https://www.nature.com/nbt",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41587/44/9?q=95",
-      "label": "Volume 44 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41587/44/11?q=95",
+      "label": "Volume 44 Issue 11",
       "kind": "issue"
     },
     {
@@ -59,10 +59,10 @@
     },
     {
       "journal": "Nature Materials",
-      "image": "news-journals/nmat-da1afe020d.webp",
+      "image": "news-journals/nmat-3c64992999.webp",
       "source": "https://www.nature.com/nmat",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41563/25/10?q=95",
-      "label": "Volume 25 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41563/25/11?q=95",
+      "label": "Volume 25 Issue 11",
       "kind": "issue"
     },
     {
@@ -83,10 +83,10 @@
     },
     {
       "journal": "Nature Nanotechnology",
-      "image": "news-journals/nnano-3f27777d0c.webp",
+      "image": "news-journals/nnano-42fe20eb4b.webp",
       "source": "https://www.nature.com/nnano",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41565/21/10?q=95",
-      "label": "Volume 21 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41565/21/11?q=95",
+      "label": "Volume 21 Issue 11",
       "kind": "issue"
     },
     {
@@ -99,10 +99,10 @@
     },
     {
       "journal": "Nature Physics",
-      "image": "news-journals/nphys-3ffe0f1646.webp",
+      "image": "news-journals/nphys-fec3b94643.webp",
       "source": "https://www.nature.com/nphys",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41567/22/9?q=95",
-      "label": "Volume 22 Issue 9",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41567/22/11?q=95",
+      "label": "Volume 22 Issue 11",
       "kind": "issue"
     },
     {
@@ -131,25 +131,25 @@
     },
     {
       "journal": "Nature Reviews Microbiology",
-      "image": "news-journals/nrmicro-a814d5c923.webp",
+      "image": "news-journals/nrmicro-9a1899ac79.webp",
       "source": "https://www.nature.com/nrmicro",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41579/24/11?q=95",
-      "label": "Volume 24 Issue 11",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/41579/24/12?q=95",
+      "label": "Volume 24 Issue 12",
       "kind": "issue"
     },
     {
       "journal": "Nature Synthesis",
-      "image": "news-journals/natsynth-b9c0317f06.webp",
+      "image": "news-journals/natsynth-7cdb7f1ba8.webp",
       "source": "https://www.nature.com/natsynth",
-      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/44160/5/10?q=95",
-      "label": "Volume 5 Issue 10",
+      "imageUrl": "https://media.springernature.com/w440/springer-static/cover-hires/journal/44160/5/11?q=95",
+      "label": "Volume 5 Issue 11",
       "kind": "issue"
     },
     {
       "journal": "Physical Review Letters",
-      "image": "news-journals/prl-34a050f878.webp",
+      "image": "news-journals/prl-8d992d068a.webp",
       "source": "https://journals.aps.org/prl/",
-      "imageUrl": "https://cdn.journals.aps.org/test/46bb47cc-3910-4d05-a769-e0eebc622647/cover-image.png",
+      "imageUrl": "https://cdn.journals.aps.org/test/2c65832e-0367-4bca-b863-d22646cb6779/cover-image.png",
       "label": "官网封面选图",
       "kind": "art"
     },
